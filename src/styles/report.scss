@@ -1,0 +1,73 @@
+.report {
+  position: fixed;
+  top: 50px;
+  left: 50px;
+  z-index: 100000000000;
+  border: 1px solid #777;
+  min-width: 300px;
+  max-height: 600px;
+  overflow: scroll;
+  background: white;
+  &.small {
+    max-height: 20px;
+    max-width: 20px;
+  }
+  h4 {
+
+  }
+  .inputs {
+    display: flex;
+    flex-direction: column;
+  }
+  .group {
+    display: flex;
+    flex-direction: row;
+    margin: 10px 0;
+    .label {
+      width: 80px;
+      text-align: right;
+      padding-right: 10px;
+    }
+    input, textarea {
+      flex: 1 0;
+      margin-right: 10px;
+    }
+    textarea {
+      height: 100px;
+      overflow-y: auto;
+      resize: none;
+    }
+    .screenshot {
+      width: 100%;
+      margin: 10px 10px 10px 80px;
+    }
+    .submit {
+      width: 100%;
+      margin: 10px;
+    }
+  }
+  .screenshots {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 320px !important;
+    img {
+      flex: 0 1;
+      // height: auto;
+      // width: auto;
+      max-width: 100%;
+      border: 3px solid #777;
+      margin: 10px 0;
+    }
+  }
+  .screenshot_overlay {
+    z-index: 100000000000;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    color: black;
+    opacity: 0.2;
+  }
+}
