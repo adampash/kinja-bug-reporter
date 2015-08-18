@@ -2,18 +2,24 @@ React = require 'react'
 Draggable = require 'react-draggable'
 InputGroup = require './InputGroup'
 Screenshot = require './screenshot'
+OnResize = require("react-window-mixins").OnResize
 $ = require 'jquery'
 classnames = require 'classnames'
 
 
 module.exports = React.createClass
+  mixins: [OnResize]
   getInitialState: ->
     screenshots: []
     urls: []
     screenshotting: false
+    yPos: 50
 
   handleChange: (obj) ->
     @setState obj
+
+  recordY: (e) ->
+    @setState yPos: e.clientY
 
   componentDidMount: ->
     chrome.runtime.onMessage.addListener (request, sender, sendResponse) =>
@@ -65,8 +71,11 @@ module.exports = React.createClass
         <img src={image} key={index} />
     <Draggable
       zIndex={1000000000000}
+      onStop={@recordY}
     >
-      <div className={classnames("report", small: @state.screenshotting)}>
+      <div className={classnames("report", small: @state.screenshotting)}
+        style={maxHeight: @state.window.height - @state.yPos - 50}
+      >
         <h4>Kinja Bug Report</h4>
         {setup}
         <h4>The Bug</h4>

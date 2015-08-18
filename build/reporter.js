@@ -95,7 +95,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(3)();
-	exports.push([module.id, ".report {\n  position: fixed;\n  top: 50px;\n  left: 50px;\n  z-index: 100000000000;\n  border: 1px solid #777;\n  min-width: 300px;\n  max-height: 600px;\n  overflow: scroll;\n  background: white; }\n  .report.small {\n    max-height: 20px;\n    max-width: 20px; }\n  .report .inputs {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column; }\n  .report .group {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: row;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    margin: 10px 0; }\n    .report .group .label {\n      width: 80px;\n      text-align: right;\n      padding-right: 10px; }\n    .report .group input, .report .group textarea {\n      -webkit-box-flex: 1;\n      -webkit-flex: 1 0;\n          -ms-flex: 1 0;\n              flex: 1 0;\n      margin-right: 10px; }\n    .report .group textarea {\n      height: 100px;\n      overflow-y: auto;\n      resize: none; }\n    .report .group .screenshot {\n      width: 100%;\n      margin: 10px 10px 10px 80px; }\n    .report .group .submit {\n      width: 100%;\n      margin: 10px; }\n  .report .screenshots {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    width: 320px !important; }\n    .report .screenshots img {\n      -webkit-box-flex: 0;\n      -webkit-flex: 0 1;\n          -ms-flex: 0 1;\n              flex: 0 1;\n      max-width: 100%;\n      border: 3px solid #777;\n      margin: 10px 0; }\n  .report .screenshot_overlay {\n    z-index: 100000000000;\n    position: fixed;\n    top: 0;\n    bottom: 0;\n    right: 0;\n    left: 0;\n    color: black;\n    opacity: 0.2; }\n\n\n", "", {"version":3,"sources":["/Users/ap/code/labs/active/KinjaBugReporter/src/styles/report.scss"],"names":[],"mappings":"AAAA;EACE,gBAAe;EACf,UAAS;EACT,WAAU;EACV,sBAAqB;EACrB,uBAAsB;EACtB,iBAAgB;EAChB,kBAAiB;EACjB,iBAAgB;EAChB,kBAAiB,EAAA;EACjB;IACE,iBAAgB;IAChB,gBAAe,EAAA;EAKjB;IACE,qBAAa;IAAb,sBAAa;IAAb,qBAAa;IAAb,cAAa;IACb,6BAAsB;IAAtB,8BAAsB;IAAtB,+BAAsB;QAAtB,2BAAsB;YAAtB,uBAAsB,EAAA;EAExB;IACE,qBAAa;IAAb,sBAAa;IAAb,qBAAa;IAAb,cAAa;IACb,+BAAmB;IAAnB,8BAAmB;IAAnB,4BAAmB;QAAnB,wBAAmB;YAAnB,oBAAmB;IACnB,eAAc,EAAA;IACd;MACE,YAAW;MACX,kBAAiB;MACjB,oBAAmB,EAAA;IAErB;MACE,oBAAS;MAAT,kBAAS;UAAT,cAAS;cAAT,UAAS;MACT,mBAAkB,EAAA;IAEpB;MACE,cAAa;MACb,iBAAgB;MAChB,aAAY,EAAA;IAEd;MACE,YAAW;MACX,4BAA2B,EAAA;IAE7B;MACE,YAAW;MACX,aAAY,EAAA;EAGhB;IACE,qBAAa;IAAb,sBAAa;IAAb,qBAAa;IAAb,cAAa;IACb,6BAAsB;IAAtB,8BAAsB;IAAtB,+BAAsB;QAAtB,2BAAsB;YAAtB,uBAAsB;IACtB,0BAAmB;IAAnB,4BAAmB;QAAnB,uBAAmB;YAAnB,oBAAmB;IACnB,wBAAuB,EAAA;IACvB;MACE,oBAAS;MAAT,kBAAS;UAAT,cAAS;cAAT,UAAS;MAGT,gBAAe;MACf,uBAAsB;MACtB,eAAc,EAAA;EAGlB;IACE,sBAAqB;IACrB,gBAAe;IACf,OAAM;IACN,UAAS;IACT,SAAQ;IACR,QAAO;IACP,aAAY;IACZ,aAAY,EAAA","file":"styles/report.scss","sourcesContent":[".report {\n  position: fixed;\n  top: 50px;\n  left: 50px;\n  z-index: 100000000000;\n  border: 1px solid #777;\n  min-width: 300px;\n  max-height: 600px;\n  overflow: scroll;\n  background: white;\n  &.small {\n    max-height: 20px;\n    max-width: 20px;\n  }\n  h4 {\n\n  }\n  .inputs {\n    display: flex;\n    flex-direction: column;\n  }\n  .group {\n    display: flex;\n    flex-direction: row;\n    margin: 10px 0;\n    .label {\n      width: 80px;\n      text-align: right;\n      padding-right: 10px;\n    }\n    input, textarea {\n      flex: 1 0;\n      margin-right: 10px;\n    }\n    textarea {\n      height: 100px;\n      overflow-y: auto;\n      resize: none;\n    }\n    .screenshot {\n      width: 100%;\n      margin: 10px 10px 10px 80px;\n    }\n    .submit {\n      width: 100%;\n      margin: 10px;\n    }\n  }\n  .screenshots {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    width: 320px !important;\n    img {\n      flex: 0 1;\n      // height: auto;\n      // width: auto;\n      max-width: 100%;\n      border: 3px solid #777;\n      margin: 10px 0;\n    }\n  }\n  .screenshot_overlay {\n    z-index: 100000000000;\n    position: fixed;\n    top: 0;\n    bottom: 0;\n    right: 0;\n    left: 0;\n    color: black;\n    opacity: 0.2;\n  }\n}\n"]}]);
+	exports.push([module.id, ".report {\n  position: fixed;\n  top: 50px;\n  left: 50px;\n  z-index: 100000000000;\n  border: 1px solid #777;\n  min-width: 300px;\n  overflow: scroll;\n  background: white; }\n  .report.small {\n    max-height: 20px;\n    max-width: 20px; }\n  .report .inputs {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column; }\n  .report .group {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: row;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    margin: 10px 0; }\n    .report .group .label {\n      width: 80px;\n      text-align: right;\n      padding-right: 10px; }\n    .report .group input, .report .group textarea {\n      -webkit-box-flex: 1;\n      -webkit-flex: 1 0;\n          -ms-flex: 1 0;\n              flex: 1 0;\n      margin-right: 10px; }\n    .report .group textarea {\n      height: 100px;\n      overflow-y: auto;\n      resize: none; }\n    .report .group .screenshot {\n      width: 100%;\n      margin: 10px 10px 10px 80px; }\n    .report .group .submit {\n      width: 100%;\n      margin: 10px; }\n  .report .screenshots {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    width: 320px !important; }\n    .report .screenshots img {\n      -webkit-box-flex: 0;\n      -webkit-flex: 0 1;\n          -ms-flex: 0 1;\n              flex: 0 1;\n      max-width: 100%;\n      border: 3px solid #777;\n      margin: 10px 0; }\n  .report .screenshot_overlay {\n    z-index: 100000000000;\n    position: fixed;\n    top: 0;\n    bottom: 0;\n    right: 0;\n    left: 0;\n    color: black;\n    opacity: 0.2; }\n\n\n", "", {"version":3,"sources":["/Users/ap/code/labs/active/KinjaBugReporter/src/styles/report.scss"],"names":[],"mappings":"AAAA;EACE,gBAAe;EACf,UAAS;EACT,WAAU;EACV,sBAAqB;EACrB,uBAAsB;EACtB,iBAAgB;EAChB,iBAAgB;EAChB,kBAAiB,EAAA;EACjB;IACE,iBAAgB;IAChB,gBAAe,EAAA;EAKjB;IACE,qBAAa;IAAb,sBAAa;IAAb,qBAAa;IAAb,cAAa;IACb,6BAAsB;IAAtB,8BAAsB;IAAtB,+BAAsB;QAAtB,2BAAsB;YAAtB,uBAAsB,EAAA;EAExB;IACE,qBAAa;IAAb,sBAAa;IAAb,qBAAa;IAAb,cAAa;IACb,+BAAmB;IAAnB,8BAAmB;IAAnB,4BAAmB;QAAnB,wBAAmB;YAAnB,oBAAmB;IACnB,eAAc,EAAA;IACd;MACE,YAAW;MACX,kBAAiB;MACjB,oBAAmB,EAAA;IAErB;MACE,oBAAS;MAAT,kBAAS;UAAT,cAAS;cAAT,UAAS;MACT,mBAAkB,EAAA;IAEpB;MACE,cAAa;MACb,iBAAgB;MAChB,aAAY,EAAA;IAEd;MACE,YAAW;MACX,4BAA2B,EAAA;IAE7B;MACE,YAAW;MACX,aAAY,EAAA;EAGhB;IACE,qBAAa;IAAb,sBAAa;IAAb,qBAAa;IAAb,cAAa;IACb,6BAAsB;IAAtB,8BAAsB;IAAtB,+BAAsB;QAAtB,2BAAsB;YAAtB,uBAAsB;IACtB,0BAAmB;IAAnB,4BAAmB;QAAnB,uBAAmB;YAAnB,oBAAmB;IACnB,wBAAuB,EAAA;IACvB;MACE,oBAAS;MAAT,kBAAS;UAAT,cAAS;cAAT,UAAS;MAGT,gBAAe;MACf,uBAAsB;MACtB,eAAc,EAAA;EAGlB;IACE,sBAAqB;IACrB,gBAAe;IACf,OAAM;IACN,UAAS;IACT,SAAQ;IACR,QAAO;IACP,aAAY;IACZ,aAAY,EAAA","file":"styles/report.scss","sourcesContent":[".report {\n  position: fixed;\n  top: 50px;\n  left: 50px;\n  z-index: 100000000000;\n  border: 1px solid #777;\n  min-width: 300px;\n  overflow: scroll;\n  background: white;\n  &.small {\n    max-height: 20px;\n    max-width: 20px;\n  }\n  h4 {\n\n  }\n  .inputs {\n    display: flex;\n    flex-direction: column;\n  }\n  .group {\n    display: flex;\n    flex-direction: row;\n    margin: 10px 0;\n    .label {\n      width: 80px;\n      text-align: right;\n      padding-right: 10px;\n    }\n    input, textarea {\n      flex: 1 0;\n      margin-right: 10px;\n    }\n    textarea {\n      height: 100px;\n      overflow-y: auto;\n      resize: none;\n    }\n    .screenshot {\n      width: 100%;\n      margin: 10px 10px 10px 80px;\n    }\n    .submit {\n      width: 100%;\n      margin: 10px;\n    }\n  }\n  .screenshots {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    width: 320px !important;\n    img {\n      flex: 0 1;\n      // height: auto;\n      // width: auto;\n      max-width: 100%;\n      border: 3px solid #777;\n      margin: 10px 0;\n    }\n  }\n  .screenshot_overlay {\n    z-index: 100000000000;\n    position: fixed;\n    top: 0;\n    bottom: 0;\n    right: 0;\n    left: 0;\n    color: black;\n    opacity: 0.2;\n  }\n}\n"]}]);
 
 /***/ },
 /* 3 */
@@ -20695,7 +20695,7 @@
 
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/ap/code/labs/active/KinjaBugReporter/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/ap/code/labs/active/KinjaBugReporter/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } (function () {
 
-	var $, Draggable, InputGroup, React, Screenshot, classnames,
+	var $, Draggable, InputGroup, OnResize, React, Screenshot, classnames,
 	  slice = [].slice;
 
 	React = __webpack_require__(5);
@@ -20706,20 +20706,29 @@
 
 	Screenshot = __webpack_require__(167);
 
+	OnResize = __webpack_require__(170).OnResize;
+
 	$ = __webpack_require__(168);
 
 	classnames = __webpack_require__(169);
 
 	module.exports = React.createClass({
+	  mixins: [OnResize],
 	  getInitialState: function() {
 	    return {
 	      screenshots: [],
 	      urls: [],
-	      screenshotting: false
+	      screenshotting: false,
+	      yPos: 50
 	    };
 	  },
 	  handleChange: function(obj) {
 	    return this.setState(obj);
+	  },
+	  recordY: function(e) {
+	    return this.setState({
+	      yPos: e.clientY
+	    });
 	  },
 	  componentDidMount: function() {
 	    return chrome.runtime.onMessage.addListener((function(_this) {
@@ -20793,11 +20802,15 @@
 	      });
 	    }
 	    return React.createElement(Draggable, {
-	      "zIndex": 1000000000000.
+	      "zIndex": 1000000000000.,
+	      "onStop": this.recordY
 	    }, React.createElement("div", {
 	      "className": classnames("report", {
 	        small: this.state.screenshotting
-	      })
+	      }),
+	      "style": {
+	        maxHeight: this.state.window.height - this.state.yPos - 50
+	      }
 	    }, React.createElement("h4", null, "Kinja Bug Report"), setup, React.createElement("h4", null, "The Bug"), React.createElement(InputGroup, {
 	      "name": "description",
 	      "handleChange": this.handleChange,
@@ -31048,6 +31061,529 @@
 		}
 
 	}());
+
+
+/***/ },
+/* 170 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = {
+	  OnResize: __webpack_require__(171),
+	  OnScroll: __webpack_require__(179),
+	  OnUnload: __webpack_require__(180)
+	};
+
+
+
+/***/ },
+/* 171 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*global window */
+
+	var throttle = __webpack_require__(172);
+
+	module.exports = {
+	  getInitialState: function() {
+	    var defaults = { window: { height: 0, width: 0 }, document: { height: 0, width: 0 } };
+	    return !this.onResize ? defaults : null;
+	  },
+
+	  componentDidMount: function() {
+	    if (!this.onResize) {
+	      this.onResize = function() {
+	        this.setState({
+	          window: { height: window.innerHeight, width: window.innerWidth },
+	          document: { height: document.body.clientHeight, width: document.body.clientWidth }
+	        });
+	      }.bind(this);
+	    }
+
+	    this.onResize();
+	    this.onResizeThrottled = throttle(this.onResize, 10);
+	    window.addEventListener("resize", this.onResizeThrottled);
+	  },
+
+	  componentWillUnmount: function() {
+	    window.removeEventListener("resize", this.onResizeThrottled);
+	  }
+	};
+
+
+
+/***/ },
+/* 172 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+	 * Build: `lodash modularize modern exports="npm" -o ./npm/`
+	 * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+	 * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+	 * Available under MIT license <http://lodash.com/license>
+	 */
+	var debounce = __webpack_require__(173),
+	    isFunction = __webpack_require__(174),
+	    isObject = __webpack_require__(175);
+
+	/** Used as an internal `_.debounce` options object */
+	var debounceOptions = {
+	  'leading': false,
+	  'maxWait': 0,
+	  'trailing': false
+	};
+
+	/**
+	 * Creates a function that, when executed, will only call the `func` function
+	 * at most once per every `wait` milliseconds. Provide an options object to
+	 * indicate that `func` should be invoked on the leading and/or trailing edge
+	 * of the `wait` timeout. Subsequent calls to the throttled function will
+	 * return the result of the last `func` call.
+	 *
+	 * Note: If `leading` and `trailing` options are `true` `func` will be called
+	 * on the trailing edge of the timeout only if the the throttled function is
+	 * invoked more than once during the `wait` timeout.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Functions
+	 * @param {Function} func The function to throttle.
+	 * @param {number} wait The number of milliseconds to throttle executions to.
+	 * @param {Object} [options] The options object.
+	 * @param {boolean} [options.leading=true] Specify execution on the leading edge of the timeout.
+	 * @param {boolean} [options.trailing=true] Specify execution on the trailing edge of the timeout.
+	 * @returns {Function} Returns the new throttled function.
+	 * @example
+	 *
+	 * // avoid excessively updating the position while scrolling
+	 * var throttled = _.throttle(updatePosition, 100);
+	 * jQuery(window).on('scroll', throttled);
+	 *
+	 * // execute `renewToken` when the click event is fired, but not more than once every 5 minutes
+	 * jQuery('.interactive').on('click', _.throttle(renewToken, 300000, {
+	 *   'trailing': false
+	 * }));
+	 */
+	function throttle(func, wait, options) {
+	  var leading = true,
+	      trailing = true;
+
+	  if (!isFunction(func)) {
+	    throw new TypeError;
+	  }
+	  if (options === false) {
+	    leading = false;
+	  } else if (isObject(options)) {
+	    leading = 'leading' in options ? options.leading : leading;
+	    trailing = 'trailing' in options ? options.trailing : trailing;
+	  }
+	  debounceOptions.leading = leading;
+	  debounceOptions.maxWait = wait;
+	  debounceOptions.trailing = trailing;
+
+	  return debounce(func, wait, debounceOptions);
+	}
+
+	module.exports = throttle;
+
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+	 * Build: `lodash modularize modern exports="npm" -o ./npm/`
+	 * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+	 * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+	 * Available under MIT license <http://lodash.com/license>
+	 */
+	var isFunction = __webpack_require__(174),
+	    isObject = __webpack_require__(175),
+	    now = __webpack_require__(177);
+
+	/* Native method shortcuts for methods with the same name as other `lodash` methods */
+	var nativeMax = Math.max;
+
+	/**
+	 * Creates a function that will delay the execution of `func` until after
+	 * `wait` milliseconds have elapsed since the last time it was invoked.
+	 * Provide an options object to indicate that `func` should be invoked on
+	 * the leading and/or trailing edge of the `wait` timeout. Subsequent calls
+	 * to the debounced function will return the result of the last `func` call.
+	 *
+	 * Note: If `leading` and `trailing` options are `true` `func` will be called
+	 * on the trailing edge of the timeout only if the the debounced function is
+	 * invoked more than once during the `wait` timeout.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Functions
+	 * @param {Function} func The function to debounce.
+	 * @param {number} wait The number of milliseconds to delay.
+	 * @param {Object} [options] The options object.
+	 * @param {boolean} [options.leading=false] Specify execution on the leading edge of the timeout.
+	 * @param {number} [options.maxWait] The maximum time `func` is allowed to be delayed before it's called.
+	 * @param {boolean} [options.trailing=true] Specify execution on the trailing edge of the timeout.
+	 * @returns {Function} Returns the new debounced function.
+	 * @example
+	 *
+	 * // avoid costly calculations while the window size is in flux
+	 * var lazyLayout = _.debounce(calculateLayout, 150);
+	 * jQuery(window).on('resize', lazyLayout);
+	 *
+	 * // execute `sendMail` when the click event is fired, debouncing subsequent calls
+	 * jQuery('#postbox').on('click', _.debounce(sendMail, 300, {
+	 *   'leading': true,
+	 *   'trailing': false
+	 * });
+	 *
+	 * // ensure `batchLog` is executed once after 1 second of debounced calls
+	 * var source = new EventSource('/stream');
+	 * source.addEventListener('message', _.debounce(batchLog, 250, {
+	 *   'maxWait': 1000
+	 * }, false);
+	 */
+	function debounce(func, wait, options) {
+	  var args,
+	      maxTimeoutId,
+	      result,
+	      stamp,
+	      thisArg,
+	      timeoutId,
+	      trailingCall,
+	      lastCalled = 0,
+	      maxWait = false,
+	      trailing = true;
+
+	  if (!isFunction(func)) {
+	    throw new TypeError;
+	  }
+	  wait = nativeMax(0, wait) || 0;
+	  if (options === true) {
+	    var leading = true;
+	    trailing = false;
+	  } else if (isObject(options)) {
+	    leading = options.leading;
+	    maxWait = 'maxWait' in options && (nativeMax(wait, options.maxWait) || 0);
+	    trailing = 'trailing' in options ? options.trailing : trailing;
+	  }
+	  var delayed = function() {
+	    var remaining = wait - (now() - stamp);
+	    if (remaining <= 0) {
+	      if (maxTimeoutId) {
+	        clearTimeout(maxTimeoutId);
+	      }
+	      var isCalled = trailingCall;
+	      maxTimeoutId = timeoutId = trailingCall = undefined;
+	      if (isCalled) {
+	        lastCalled = now();
+	        result = func.apply(thisArg, args);
+	        if (!timeoutId && !maxTimeoutId) {
+	          args = thisArg = null;
+	        }
+	      }
+	    } else {
+	      timeoutId = setTimeout(delayed, remaining);
+	    }
+	  };
+
+	  var maxDelayed = function() {
+	    if (timeoutId) {
+	      clearTimeout(timeoutId);
+	    }
+	    maxTimeoutId = timeoutId = trailingCall = undefined;
+	    if (trailing || (maxWait !== wait)) {
+	      lastCalled = now();
+	      result = func.apply(thisArg, args);
+	      if (!timeoutId && !maxTimeoutId) {
+	        args = thisArg = null;
+	      }
+	    }
+	  };
+
+	  return function() {
+	    args = arguments;
+	    stamp = now();
+	    thisArg = this;
+	    trailingCall = trailing && (timeoutId || !leading);
+
+	    if (maxWait === false) {
+	      var leadingCall = leading && !timeoutId;
+	    } else {
+	      if (!maxTimeoutId && !leading) {
+	        lastCalled = stamp;
+	      }
+	      var remaining = maxWait - (stamp - lastCalled),
+	          isCalled = remaining <= 0;
+
+	      if (isCalled) {
+	        if (maxTimeoutId) {
+	          maxTimeoutId = clearTimeout(maxTimeoutId);
+	        }
+	        lastCalled = stamp;
+	        result = func.apply(thisArg, args);
+	      }
+	      else if (!maxTimeoutId) {
+	        maxTimeoutId = setTimeout(maxDelayed, remaining);
+	      }
+	    }
+	    if (isCalled && timeoutId) {
+	      timeoutId = clearTimeout(timeoutId);
+	    }
+	    else if (!timeoutId && wait !== maxWait) {
+	      timeoutId = setTimeout(delayed, wait);
+	    }
+	    if (leadingCall) {
+	      isCalled = true;
+	      result = func.apply(thisArg, args);
+	    }
+	    if (isCalled && !timeoutId && !maxTimeoutId) {
+	      args = thisArg = null;
+	    }
+	    return result;
+	  };
+	}
+
+	module.exports = debounce;
+
+
+/***/ },
+/* 174 */
+/***/ function(module, exports) {
+
+	/**
+	 * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+	 * Build: `lodash modularize modern exports="npm" -o ./npm/`
+	 * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+	 * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+	 * Available under MIT license <http://lodash.com/license>
+	 */
+
+	/**
+	 * Checks if `value` is a function.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Objects
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if the `value` is a function, else `false`.
+	 * @example
+	 *
+	 * _.isFunction(_);
+	 * // => true
+	 */
+	function isFunction(value) {
+	  return typeof value == 'function';
+	}
+
+	module.exports = isFunction;
+
+
+/***/ },
+/* 175 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+	 * Build: `lodash modularize modern exports="npm" -o ./npm/`
+	 * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+	 * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+	 * Available under MIT license <http://lodash.com/license>
+	 */
+	var objectTypes = __webpack_require__(176);
+
+	/**
+	 * Checks if `value` is the language type of Object.
+	 * (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Objects
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if the `value` is an object, else `false`.
+	 * @example
+	 *
+	 * _.isObject({});
+	 * // => true
+	 *
+	 * _.isObject([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isObject(1);
+	 * // => false
+	 */
+	function isObject(value) {
+	  // check if the value is the ECMAScript language type of Object
+	  // http://es5.github.io/#x8
+	  // and avoid a V8 bug
+	  // http://code.google.com/p/v8/issues/detail?id=2291
+	  return !!(value && objectTypes[typeof value]);
+	}
+
+	module.exports = isObject;
+
+
+/***/ },
+/* 176 */
+/***/ function(module, exports) {
+
+	/**
+	 * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+	 * Build: `lodash modularize modern exports="npm" -o ./npm/`
+	 * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+	 * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+	 * Available under MIT license <http://lodash.com/license>
+	 */
+
+	/** Used to determine if values are of the language type Object */
+	var objectTypes = {
+	  'boolean': false,
+	  'function': true,
+	  'object': true,
+	  'number': false,
+	  'string': false,
+	  'undefined': false
+	};
+
+	module.exports = objectTypes;
+
+
+/***/ },
+/* 177 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+	 * Build: `lodash modularize modern exports="npm" -o ./npm/`
+	 * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+	 * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+	 * Available under MIT license <http://lodash.com/license>
+	 */
+	var isNative = __webpack_require__(178);
+
+	/**
+	 * Gets the number of milliseconds that have elapsed since the Unix epoch
+	 * (1 January 1970 00:00:00 UTC).
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Utilities
+	 * @example
+	 *
+	 * var stamp = _.now();
+	 * _.defer(function() { console.log(_.now() - stamp); });
+	 * // => logs the number of milliseconds it took for the deferred function to be called
+	 */
+	var now = isNative(now = Date.now) && now || function() {
+	  return new Date().getTime();
+	};
+
+	module.exports = now;
+
+
+/***/ },
+/* 178 */
+/***/ function(module, exports) {
+
+	/**
+	 * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+	 * Build: `lodash modularize modern exports="npm" -o ./npm/`
+	 * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+	 * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+	 * Available under MIT license <http://lodash.com/license>
+	 */
+
+	/** Used for native method references */
+	var objectProto = Object.prototype;
+
+	/** Used to resolve the internal [[Class]] of values */
+	var toString = objectProto.toString;
+
+	/** Used to detect if a method is native */
+	var reNative = RegExp('^' +
+	  String(toString)
+	    .replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+	    .replace(/toString| for [^\]]+/g, '.*?') + '$'
+	);
+
+	/**
+	 * Checks if `value` is a native function.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if the `value` is a native function, else `false`.
+	 */
+	function isNative(value) {
+	  return typeof value == 'function' && reNative.test(value);
+	}
+
+	module.exports = isNative;
+
+
+/***/ },
+/* 179 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*global window */
+
+	var throttle = __webpack_require__(172);
+
+	module.exports = {
+	  getInitialState: function() {
+	    return !this.onScroll ? { scroll: { x: 0, y: 0 } } : null;
+	  },
+
+	  componentDidMount: function() {
+	    if (!this.onScroll) {
+	      this.onScroll = function() {
+	        this.setState({ scroll: { x: window.pageXOffset, y: window.pageYOffset } });
+	      }.bind(this);
+	    }
+
+	    this.onScroll();
+	    this.onScrollThrottled = throttle(this.onScroll, 10);
+	    window.addEventListener("scroll", this.onScrollThrottled);
+	  },
+
+	  componentWillUnmount: function() {
+	    window.removeEventListener("scroll", this.onScrollThrottled);
+	  }
+	};
+
+
+/***/ },
+/* 180 */
+/***/ function(module, exports) {
+
+	/*global window */
+
+	module.exports = {
+	  componentDidMount: function() {
+	    if (this.onUnload) {
+	      window.addEventListener("unload", this.onUnload);
+	    }
+	    if (this.onBeforeUnload) {
+	      window.addEventListener("beforeunload", this.onBeforeUnload);
+	    }
+	  },
+
+	  componentWillUnmount: function() {
+	    if (this.onUnload) {
+	      window.removeEventListener("unload", this.onUnload);
+	    }
+	    if (this.onBeforeUnload) {
+	      window.removeEventListener("beforeunload", this.onBeforeUnload);
+	    }
+	  }
+	};
 
 
 /***/ }
