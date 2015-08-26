@@ -58,11 +58,26 @@
 
 	child.id = "kinja_bug_reporter";
 
+	child.setAttribute('style', "height: " + window.innerHeight + "px; position: relative");
+
 	document.body.appendChild(child);
 
-	React.render(React.createElement(Report, {
-	  "setupComplete": false
-	}), document.querySelector('#kinja_bug_reporter'));
+	window.addEventListener('resize', function() {
+	  var el;
+	  console.log('hi');
+	  el = document.querySelector('#kinja_bug_reporter');
+	  return el.setAttribute('style', "height: " + window.innerHeight + "px;");
+	});
+
+	chrome.storage.sync.get(['kinja', 'slack'], function(result) {
+	  var setupComplete;
+	  setupComplete = (result.kinja != null) && (result.slack != null);
+	  return React.render(React.createElement(Report, {
+	    "setupComplete": setupComplete,
+	    "kinja": result.kinja,
+	    "slack": result.slack
+	  }), document.querySelector('#kinja_bug_reporter'));
+	});
 
 
 	/* REACT HOT LOADER */ }).call(this); if (false) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/ap/code/labs/active/KinjaBugReporter/node_modules/react-hot-loader/makeExportsHot.js"), foundReactClasses = false; if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "reporter.cjsx" + ": " + err.message); } }); } } })(); }
@@ -95,7 +110,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(3)();
-	exports.push([module.id, ".report {\n  position: fixed;\n  top: 50px;\n  left: 50px;\n  z-index: 100000000000;\n  border: 1px solid #777;\n  min-width: 300px;\n  overflow: scroll;\n  background: white; }\n  .report.small {\n    max-height: 20px;\n    max-width: 20px; }\n  .report .inputs {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column; }\n  .report .group {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: row;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    margin: 10px 0; }\n    .report .group .label {\n      width: 80px;\n      text-align: right;\n      padding-right: 10px; }\n    .report .group input, .report .group textarea {\n      -webkit-box-flex: 1;\n      -webkit-flex: 1 0;\n          -ms-flex: 1 0;\n              flex: 1 0;\n      margin-right: 10px; }\n    .report .group textarea {\n      height: 100px;\n      overflow-y: auto;\n      resize: none; }\n    .report .group .screenshot {\n      width: 100%;\n      margin: 10px 10px 10px 80px; }\n    .report .group .submit {\n      width: 100%;\n      margin: 10px; }\n  .report .screenshots {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    width: 320px !important; }\n    .report .screenshots img {\n      -webkit-box-flex: 0;\n      -webkit-flex: 0 1;\n          -ms-flex: 0 1;\n              flex: 0 1;\n      max-width: 100%;\n      border: 3px solid #777;\n      margin: 10px 0; }\n  .report .screenshot_overlay {\n    z-index: 100000000000;\n    position: fixed;\n    top: 0;\n    bottom: 0;\n    right: 0;\n    left: 0;\n    color: black;\n    opacity: 0.2; }\n\n\n", "", {"version":3,"sources":["/Users/ap/code/labs/active/KinjaBugReporter/src/styles/report.scss"],"names":[],"mappings":"AAAA;EACE,gBAAe;EACf,UAAS;EACT,WAAU;EACV,sBAAqB;EACrB,uBAAsB;EACtB,iBAAgB;EAChB,iBAAgB;EAChB,kBAAiB,EAAA;EACjB;IACE,iBAAgB;IAChB,gBAAe,EAAA;EAKjB;IACE,qBAAa;IAAb,sBAAa;IAAb,qBAAa;IAAb,cAAa;IACb,6BAAsB;IAAtB,8BAAsB;IAAtB,+BAAsB;QAAtB,2BAAsB;YAAtB,uBAAsB,EAAA;EAExB;IACE,qBAAa;IAAb,sBAAa;IAAb,qBAAa;IAAb,cAAa;IACb,+BAAmB;IAAnB,8BAAmB;IAAnB,4BAAmB;QAAnB,wBAAmB;YAAnB,oBAAmB;IACnB,eAAc,EAAA;IACd;MACE,YAAW;MACX,kBAAiB;MACjB,oBAAmB,EAAA;IAErB;MACE,oBAAS;MAAT,kBAAS;UAAT,cAAS;cAAT,UAAS;MACT,mBAAkB,EAAA;IAEpB;MACE,cAAa;MACb,iBAAgB;MAChB,aAAY,EAAA;IAEd;MACE,YAAW;MACX,4BAA2B,EAAA;IAE7B;MACE,YAAW;MACX,aAAY,EAAA;EAGhB;IACE,qBAAa;IAAb,sBAAa;IAAb,qBAAa;IAAb,cAAa;IACb,6BAAsB;IAAtB,8BAAsB;IAAtB,+BAAsB;QAAtB,2BAAsB;YAAtB,uBAAsB;IACtB,0BAAmB;IAAnB,4BAAmB;QAAnB,uBAAmB;YAAnB,oBAAmB;IACnB,wBAAuB,EAAA;IACvB;MACE,oBAAS;MAAT,kBAAS;UAAT,cAAS;cAAT,UAAS;MAGT,gBAAe;MACf,uBAAsB;MACtB,eAAc,EAAA;EAGlB;IACE,sBAAqB;IACrB,gBAAe;IACf,OAAM;IACN,UAAS;IACT,SAAQ;IACR,QAAO;IACP,aAAY;IACZ,aAAY,EAAA","file":"styles/report.scss","sourcesContent":[".report {\n  position: fixed;\n  top: 50px;\n  left: 50px;\n  z-index: 100000000000;\n  border: 1px solid #777;\n  min-width: 300px;\n  overflow: scroll;\n  background: white;\n  &.small {\n    max-height: 20px;\n    max-width: 20px;\n  }\n  h4 {\n\n  }\n  .inputs {\n    display: flex;\n    flex-direction: column;\n  }\n  .group {\n    display: flex;\n    flex-direction: row;\n    margin: 10px 0;\n    .label {\n      width: 80px;\n      text-align: right;\n      padding-right: 10px;\n    }\n    input, textarea {\n      flex: 1 0;\n      margin-right: 10px;\n    }\n    textarea {\n      height: 100px;\n      overflow-y: auto;\n      resize: none;\n    }\n    .screenshot {\n      width: 100%;\n      margin: 10px 10px 10px 80px;\n    }\n    .submit {\n      width: 100%;\n      margin: 10px;\n    }\n  }\n  .screenshots {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    width: 320px !important;\n    img {\n      flex: 0 1;\n      // height: auto;\n      // width: auto;\n      max-width: 100%;\n      border: 3px solid #777;\n      margin: 10px 0;\n    }\n  }\n  .screenshot_overlay {\n    z-index: 100000000000;\n    position: fixed;\n    top: 0;\n    bottom: 0;\n    right: 0;\n    left: 0;\n    color: black;\n    opacity: 0.2;\n  }\n}\n"]}]);
+	exports.push([module.id, "@charset \"UTF-8\";\n/*!\n *  Font Awesome 4.4.0 by @davegandy - http://fontawesome.io - @fontawesome\n *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)\n */\n/* FONT PATH\n * -------------------------- */\n@font-face {\n  font-family: 'FontAwesome';\n  src: url(\"//netdna.bootstrapcdn.com/font-awesome/4.4.0/fonts/fontawesome-webfont.eot?v=4.4.0\");\n  src: url(\"//netdna.bootstrapcdn.com/font-awesome/4.4.0/fonts/fontawesome-webfont.eot?#iefix&v=4.4.0\") format(\"embedded-opentype\"), url(\"//netdna.bootstrapcdn.com/font-awesome/4.4.0/fonts/fontawesome-webfont.woff2?v=4.4.0\") format(\"woff2\"), url(\"//netdna.bootstrapcdn.com/font-awesome/4.4.0/fonts/fontawesome-webfont.woff?v=4.4.0\") format(\"woff\"), url(\"//netdna.bootstrapcdn.com/font-awesome/4.4.0/fonts/fontawesome-webfont.ttf?v=4.4.0\") format(\"truetype\"), url(\"//netdna.bootstrapcdn.com/font-awesome/4.4.0/fonts/fontawesome-webfont.svg?v=4.4.0#fontawesomeregular\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal; }\n.fa {\n  display: inline-block;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale; }\n\n/* makes the font 33% larger relative to the icon container */\n.fa-lg {\n  font-size: 1.33333em;\n  line-height: 0.75em;\n  vertical-align: -15%; }\n\n.fa-2x {\n  font-size: 2em; }\n\n.fa-3x {\n  font-size: 3em; }\n\n.fa-4x {\n  font-size: 4em; }\n\n.fa-5x {\n  font-size: 5em; }\n\n.fa-fw {\n  width: 1.28571em;\n  text-align: center; }\n\n.fa-ul {\n  padding-left: 0;\n  margin-left: 2.14286em;\n  list-style-type: none; }\n  .fa-ul > li {\n    position: relative; }\n\n.fa-li {\n  position: absolute;\n  left: -2.14286em;\n  width: 2.14286em;\n  top: 0.14286em;\n  text-align: center; }\n  .fa-li.fa-lg {\n    left: -1.85714em; }\n\n.fa-border {\n  padding: .2em .25em .15em;\n  border: solid 0.08em #eee;\n  border-radius: .1em; }\n\n.fa-pull-left {\n  float: left; }\n\n.fa-pull-right {\n  float: right; }\n\n.fa.fa-pull-left {\n  margin-right: .3em; }\n.fa.fa-pull-right {\n  margin-left: .3em; }\n\n/* Deprecated as of 4.4.0 */\n.pull-right {\n  float: right; }\n\n.pull-left {\n  float: left; }\n\n.fa.pull-left {\n  margin-right: .3em; }\n.fa.pull-right {\n  margin-left: .3em; }\n\n.fa-spin {\n  -webkit-animation: fa-spin 2s infinite linear;\n  animation: fa-spin 2s infinite linear; }\n\n.fa-pulse {\n  -webkit-animation: fa-spin 1s infinite steps(8);\n  animation: fa-spin 1s infinite steps(8); }\n\n@-webkit-keyframes fa-spin {\n  0% {\n    -webkit-transform: rotate(0deg);\n    transform: rotate(0deg); }\n  100% {\n    -webkit-transform: rotate(359deg);\n    transform: rotate(359deg); } }\n@keyframes fa-spin {\n  0% {\n    -webkit-transform: rotate(0deg);\n    transform: rotate(0deg); }\n  100% {\n    -webkit-transform: rotate(359deg);\n    transform: rotate(359deg); } }\n.fa-rotate-90 {\n  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);\n  -webkit-transform: rotate(90deg);\n  -ms-transform: rotate(90deg);\n  transform: rotate(90deg); }\n\n.fa-rotate-180 {\n  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);\n  -webkit-transform: rotate(180deg);\n  -ms-transform: rotate(180deg);\n  transform: rotate(180deg); }\n\n.fa-rotate-270 {\n  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);\n  -webkit-transform: rotate(270deg);\n  -ms-transform: rotate(270deg);\n  transform: rotate(270deg); }\n\n.fa-flip-horizontal {\n  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0);\n  -webkit-transform: scale(-1, 1);\n  -ms-transform: scale(-1, 1);\n  transform: scale(-1, 1); }\n\n.fa-flip-vertical {\n  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);\n  -webkit-transform: scale(1, -1);\n  -ms-transform: scale(1, -1);\n  transform: scale(1, -1); }\n\n:root .fa-rotate-90,\n:root .fa-rotate-180,\n:root .fa-rotate-270,\n:root .fa-flip-horizontal,\n:root .fa-flip-vertical {\n  -webkit-filter: none;\n          filter: none; }\n\n.fa-stack {\n  position: relative;\n  display: inline-block;\n  width: 2em;\n  height: 2em;\n  line-height: 2em;\n  vertical-align: middle; }\n\n.fa-stack-1x, .fa-stack-2x {\n  position: absolute;\n  left: 0;\n  width: 100%;\n  text-align: center; }\n\n.fa-stack-1x {\n  line-height: inherit; }\n\n.fa-stack-2x {\n  font-size: 2em; }\n\n.fa-inverse {\n  color: #fff; }\n\n/* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen\n   readers do not read off random characters that represent icons */\n.fa-glass:before {\n  content: \"\"; }\n\n.fa-music:before {\n  content: \"\"; }\n\n.fa-search:before {\n  content: \"\"; }\n\n.fa-envelope-o:before {\n  content: \"\"; }\n\n.fa-heart:before {\n  content: \"\"; }\n\n.fa-star:before {\n  content: \"\"; }\n\n.fa-star-o:before {\n  content: \"\"; }\n\n.fa-user:before {\n  content: \"\"; }\n\n.fa-film:before {\n  content: \"\"; }\n\n.fa-th-large:before {\n  content: \"\"; }\n\n.fa-th:before {\n  content: \"\"; }\n\n.fa-th-list:before {\n  content: \"\"; }\n\n.fa-check:before {\n  content: \"\"; }\n\n.fa-remove:before,\n.fa-close:before,\n.fa-times:before {\n  content: \"\"; }\n\n.fa-search-plus:before {\n  content: \"\"; }\n\n.fa-search-minus:before {\n  content: \"\"; }\n\n.fa-power-off:before {\n  content: \"\"; }\n\n.fa-signal:before {\n  content: \"\"; }\n\n.fa-gear:before,\n.fa-cog:before {\n  content: \"\"; }\n\n.fa-trash-o:before {\n  content: \"\"; }\n\n.fa-home:before {\n  content: \"\"; }\n\n.fa-file-o:before {\n  content: \"\"; }\n\n.fa-clock-o:before {\n  content: \"\"; }\n\n.fa-road:before {\n  content: \"\"; }\n\n.fa-download:before {\n  content: \"\"; }\n\n.fa-arrow-circle-o-down:before {\n  content: \"\"; }\n\n.fa-arrow-circle-o-up:before {\n  content: \"\"; }\n\n.fa-inbox:before {\n  content: \"\"; }\n\n.fa-play-circle-o:before {\n  content: \"\"; }\n\n.fa-rotate-right:before,\n.fa-repeat:before {\n  content: \"\"; }\n\n.fa-refresh:before {\n  content: \"\"; }\n\n.fa-list-alt:before {\n  content: \"\"; }\n\n.fa-lock:before {\n  content: \"\"; }\n\n.fa-flag:before {\n  content: \"\"; }\n\n.fa-headphones:before {\n  content: \"\"; }\n\n.fa-volume-off:before {\n  content: \"\"; }\n\n.fa-volume-down:before {\n  content: \"\"; }\n\n.fa-volume-up:before {\n  content: \"\"; }\n\n.fa-qrcode:before {\n  content: \"\"; }\n\n.fa-barcode:before {\n  content: \"\"; }\n\n.fa-tag:before {\n  content: \"\"; }\n\n.fa-tags:before {\n  content: \"\"; }\n\n.fa-book:before {\n  content: \"\"; }\n\n.fa-bookmark:before {\n  content: \"\"; }\n\n.fa-print:before {\n  content: \"\"; }\n\n.fa-camera:before {\n  content: \"\"; }\n\n.fa-font:before {\n  content: \"\"; }\n\n.fa-bold:before {\n  content: \"\"; }\n\n.fa-italic:before {\n  content: \"\"; }\n\n.fa-text-height:before {\n  content: \"\"; }\n\n.fa-text-width:before {\n  content: \"\"; }\n\n.fa-align-left:before {\n  content: \"\"; }\n\n.fa-align-center:before {\n  content: \"\"; }\n\n.fa-align-right:before {\n  content: \"\"; }\n\n.fa-align-justify:before {\n  content: \"\"; }\n\n.fa-list:before {\n  content: \"\"; }\n\n.fa-dedent:before,\n.fa-outdent:before {\n  content: \"\"; }\n\n.fa-indent:before {\n  content: \"\"; }\n\n.fa-video-camera:before {\n  content: \"\"; }\n\n.fa-photo:before,\n.fa-image:before,\n.fa-picture-o:before {\n  content: \"\"; }\n\n.fa-pencil:before {\n  content: \"\"; }\n\n.fa-map-marker:before {\n  content: \"\"; }\n\n.fa-adjust:before {\n  content: \"\"; }\n\n.fa-tint:before {\n  content: \"\"; }\n\n.fa-edit:before,\n.fa-pencil-square-o:before {\n  content: \"\"; }\n\n.fa-share-square-o:before {\n  content: \"\"; }\n\n.fa-check-square-o:before {\n  content: \"\"; }\n\n.fa-arrows:before {\n  content: \"\"; }\n\n.fa-step-backward:before {\n  content: \"\"; }\n\n.fa-fast-backward:before {\n  content: \"\"; }\n\n.fa-backward:before {\n  content: \"\"; }\n\n.fa-play:before {\n  content: \"\"; }\n\n.fa-pause:before {\n  content: \"\"; }\n\n.fa-stop:before {\n  content: \"\"; }\n\n.fa-forward:before {\n  content: \"\"; }\n\n.fa-fast-forward:before {\n  content: \"\"; }\n\n.fa-step-forward:before {\n  content: \"\"; }\n\n.fa-eject:before {\n  content: \"\"; }\n\n.fa-chevron-left:before {\n  content: \"\"; }\n\n.fa-chevron-right:before {\n  content: \"\"; }\n\n.fa-plus-circle:before {\n  content: \"\"; }\n\n.fa-minus-circle:before {\n  content: \"\"; }\n\n.fa-times-circle:before {\n  content: \"\"; }\n\n.fa-check-circle:before {\n  content: \"\"; }\n\n.fa-question-circle:before {\n  content: \"\"; }\n\n.fa-info-circle:before {\n  content: \"\"; }\n\n.fa-crosshairs:before {\n  content: \"\"; }\n\n.fa-times-circle-o:before {\n  content: \"\"; }\n\n.fa-check-circle-o:before {\n  content: \"\"; }\n\n.fa-ban:before {\n  content: \"\"; }\n\n.fa-arrow-left:before {\n  content: \"\"; }\n\n.fa-arrow-right:before {\n  content: \"\"; }\n\n.fa-arrow-up:before {\n  content: \"\"; }\n\n.fa-arrow-down:before {\n  content: \"\"; }\n\n.fa-mail-forward:before,\n.fa-share:before {\n  content: \"\"; }\n\n.fa-expand:before {\n  content: \"\"; }\n\n.fa-compress:before {\n  content: \"\"; }\n\n.fa-plus:before {\n  content: \"\"; }\n\n.fa-minus:before {\n  content: \"\"; }\n\n.fa-asterisk:before {\n  content: \"\"; }\n\n.fa-exclamation-circle:before {\n  content: \"\"; }\n\n.fa-gift:before {\n  content: \"\"; }\n\n.fa-leaf:before {\n  content: \"\"; }\n\n.fa-fire:before {\n  content: \"\"; }\n\n.fa-eye:before {\n  content: \"\"; }\n\n.fa-eye-slash:before {\n  content: \"\"; }\n\n.fa-warning:before,\n.fa-exclamation-triangle:before {\n  content: \"\"; }\n\n.fa-plane:before {\n  content: \"\"; }\n\n.fa-calendar:before {\n  content: \"\"; }\n\n.fa-random:before {\n  content: \"\"; }\n\n.fa-comment:before {\n  content: \"\"; }\n\n.fa-magnet:before {\n  content: \"\"; }\n\n.fa-chevron-up:before {\n  content: \"\"; }\n\n.fa-chevron-down:before {\n  content: \"\"; }\n\n.fa-retweet:before {\n  content: \"\"; }\n\n.fa-shopping-cart:before {\n  content: \"\"; }\n\n.fa-folder:before {\n  content: \"\"; }\n\n.fa-folder-open:before {\n  content: \"\"; }\n\n.fa-arrows-v:before {\n  content: \"\"; }\n\n.fa-arrows-h:before {\n  content: \"\"; }\n\n.fa-bar-chart-o:before,\n.fa-bar-chart:before {\n  content: \"\"; }\n\n.fa-twitter-square:before {\n  content: \"\"; }\n\n.fa-facebook-square:before {\n  content: \"\"; }\n\n.fa-camera-retro:before {\n  content: \"\"; }\n\n.fa-key:before {\n  content: \"\"; }\n\n.fa-gears:before,\n.fa-cogs:before {\n  content: \"\"; }\n\n.fa-comments:before {\n  content: \"\"; }\n\n.fa-thumbs-o-up:before {\n  content: \"\"; }\n\n.fa-thumbs-o-down:before {\n  content: \"\"; }\n\n.fa-star-half:before {\n  content: \"\"; }\n\n.fa-heart-o:before {\n  content: \"\"; }\n\n.fa-sign-out:before {\n  content: \"\"; }\n\n.fa-linkedin-square:before {\n  content: \"\"; }\n\n.fa-thumb-tack:before {\n  content: \"\"; }\n\n.fa-external-link:before {\n  content: \"\"; }\n\n.fa-sign-in:before {\n  content: \"\"; }\n\n.fa-trophy:before {\n  content: \"\"; }\n\n.fa-github-square:before {\n  content: \"\"; }\n\n.fa-upload:before {\n  content: \"\"; }\n\n.fa-lemon-o:before {\n  content: \"\"; }\n\n.fa-phone:before {\n  content: \"\"; }\n\n.fa-square-o:before {\n  content: \"\"; }\n\n.fa-bookmark-o:before {\n  content: \"\"; }\n\n.fa-phone-square:before {\n  content: \"\"; }\n\n.fa-twitter:before {\n  content: \"\"; }\n\n.fa-facebook-f:before,\n.fa-facebook:before {\n  content: \"\"; }\n\n.fa-github:before {\n  content: \"\"; }\n\n.fa-unlock:before {\n  content: \"\"; }\n\n.fa-credit-card:before {\n  content: \"\"; }\n\n.fa-feed:before,\n.fa-rss:before {\n  content: \"\"; }\n\n.fa-hdd-o:before {\n  content: \"\"; }\n\n.fa-bullhorn:before {\n  content: \"\"; }\n\n.fa-bell:before {\n  content: \"\"; }\n\n.fa-certificate:before {\n  content: \"\"; }\n\n.fa-hand-o-right:before {\n  content: \"\"; }\n\n.fa-hand-o-left:before {\n  content: \"\"; }\n\n.fa-hand-o-up:before {\n  content: \"\"; }\n\n.fa-hand-o-down:before {\n  content: \"\"; }\n\n.fa-arrow-circle-left:before {\n  content: \"\"; }\n\n.fa-arrow-circle-right:before {\n  content: \"\"; }\n\n.fa-arrow-circle-up:before {\n  content: \"\"; }\n\n.fa-arrow-circle-down:before {\n  content: \"\"; }\n\n.fa-globe:before {\n  content: \"\"; }\n\n.fa-wrench:before {\n  content: \"\"; }\n\n.fa-tasks:before {\n  content: \"\"; }\n\n.fa-filter:before {\n  content: \"\"; }\n\n.fa-briefcase:before {\n  content: \"\"; }\n\n.fa-arrows-alt:before {\n  content: \"\"; }\n\n.fa-group:before,\n.fa-users:before {\n  content: \"\"; }\n\n.fa-chain:before,\n.fa-link:before {\n  content: \"\"; }\n\n.fa-cloud:before {\n  content: \"\"; }\n\n.fa-flask:before {\n  content: \"\"; }\n\n.fa-cut:before,\n.fa-scissors:before {\n  content: \"\"; }\n\n.fa-copy:before,\n.fa-files-o:before {\n  content: \"\"; }\n\n.fa-paperclip:before {\n  content: \"\"; }\n\n.fa-save:before,\n.fa-floppy-o:before {\n  content: \"\"; }\n\n.fa-square:before {\n  content: \"\"; }\n\n.fa-navicon:before,\n.fa-reorder:before,\n.fa-bars:before {\n  content: \"\"; }\n\n.fa-list-ul:before {\n  content: \"\"; }\n\n.fa-list-ol:before {\n  content: \"\"; }\n\n.fa-strikethrough:before {\n  content: \"\"; }\n\n.fa-underline:before {\n  content: \"\"; }\n\n.fa-table:before {\n  content: \"\"; }\n\n.fa-magic:before {\n  content: \"\"; }\n\n.fa-truck:before {\n  content: \"\"; }\n\n.fa-pinterest:before {\n  content: \"\"; }\n\n.fa-pinterest-square:before {\n  content: \"\"; }\n\n.fa-google-plus-square:before {\n  content: \"\"; }\n\n.fa-google-plus:before {\n  content: \"\"; }\n\n.fa-money:before {\n  content: \"\"; }\n\n.fa-caret-down:before {\n  content: \"\"; }\n\n.fa-caret-up:before {\n  content: \"\"; }\n\n.fa-caret-left:before {\n  content: \"\"; }\n\n.fa-caret-right:before {\n  content: \"\"; }\n\n.fa-columns:before {\n  content: \"\"; }\n\n.fa-unsorted:before,\n.fa-sort:before {\n  content: \"\"; }\n\n.fa-sort-down:before,\n.fa-sort-desc:before {\n  content: \"\"; }\n\n.fa-sort-up:before,\n.fa-sort-asc:before {\n  content: \"\"; }\n\n.fa-envelope:before {\n  content: \"\"; }\n\n.fa-linkedin:before {\n  content: \"\"; }\n\n.fa-rotate-left:before,\n.fa-undo:before {\n  content: \"\"; }\n\n.fa-legal:before,\n.fa-gavel:before {\n  content: \"\"; }\n\n.fa-dashboard:before,\n.fa-tachometer:before {\n  content: \"\"; }\n\n.fa-comment-o:before {\n  content: \"\"; }\n\n.fa-comments-o:before {\n  content: \"\"; }\n\n.fa-flash:before,\n.fa-bolt:before {\n  content: \"\"; }\n\n.fa-sitemap:before {\n  content: \"\"; }\n\n.fa-umbrella:before {\n  content: \"\"; }\n\n.fa-paste:before,\n.fa-clipboard:before {\n  content: \"\"; }\n\n.fa-lightbulb-o:before {\n  content: \"\"; }\n\n.fa-exchange:before {\n  content: \"\"; }\n\n.fa-cloud-download:before {\n  content: \"\"; }\n\n.fa-cloud-upload:before {\n  content: \"\"; }\n\n.fa-user-md:before {\n  content: \"\"; }\n\n.fa-stethoscope:before {\n  content: \"\"; }\n\n.fa-suitcase:before {\n  content: \"\"; }\n\n.fa-bell-o:before {\n  content: \"\"; }\n\n.fa-coffee:before {\n  content: \"\"; }\n\n.fa-cutlery:before {\n  content: \"\"; }\n\n.fa-file-text-o:before {\n  content: \"\"; }\n\n.fa-building-o:before {\n  content: \"\"; }\n\n.fa-hospital-o:before {\n  content: \"\"; }\n\n.fa-ambulance:before {\n  content: \"\"; }\n\n.fa-medkit:before {\n  content: \"\"; }\n\n.fa-fighter-jet:before {\n  content: \"\"; }\n\n.fa-beer:before {\n  content: \"\"; }\n\n.fa-h-square:before {\n  content: \"\"; }\n\n.fa-plus-square:before {\n  content: \"\"; }\n\n.fa-angle-double-left:before {\n  content: \"\"; }\n\n.fa-angle-double-right:before {\n  content: \"\"; }\n\n.fa-angle-double-up:before {\n  content: \"\"; }\n\n.fa-angle-double-down:before {\n  content: \"\"; }\n\n.fa-angle-left:before {\n  content: \"\"; }\n\n.fa-angle-right:before {\n  content: \"\"; }\n\n.fa-angle-up:before {\n  content: \"\"; }\n\n.fa-angle-down:before {\n  content: \"\"; }\n\n.fa-desktop:before {\n  content: \"\"; }\n\n.fa-laptop:before {\n  content: \"\"; }\n\n.fa-tablet:before {\n  content: \"\"; }\n\n.fa-mobile-phone:before,\n.fa-mobile:before {\n  content: \"\"; }\n\n.fa-circle-o:before {\n  content: \"\"; }\n\n.fa-quote-left:before {\n  content: \"\"; }\n\n.fa-quote-right:before {\n  content: \"\"; }\n\n.fa-spinner:before {\n  content: \"\"; }\n\n.fa-circle:before {\n  content: \"\"; }\n\n.fa-mail-reply:before,\n.fa-reply:before {\n  content: \"\"; }\n\n.fa-github-alt:before {\n  content: \"\"; }\n\n.fa-folder-o:before {\n  content: \"\"; }\n\n.fa-folder-open-o:before {\n  content: \"\"; }\n\n.fa-smile-o:before {\n  content: \"\"; }\n\n.fa-frown-o:before {\n  content: \"\"; }\n\n.fa-meh-o:before {\n  content: \"\"; }\n\n.fa-gamepad:before {\n  content: \"\"; }\n\n.fa-keyboard-o:before {\n  content: \"\"; }\n\n.fa-flag-o:before {\n  content: \"\"; }\n\n.fa-flag-checkered:before {\n  content: \"\"; }\n\n.fa-terminal:before {\n  content: \"\"; }\n\n.fa-code:before {\n  content: \"\"; }\n\n.fa-mail-reply-all:before,\n.fa-reply-all:before {\n  content: \"\"; }\n\n.fa-star-half-empty:before,\n.fa-star-half-full:before,\n.fa-star-half-o:before {\n  content: \"\"; }\n\n.fa-location-arrow:before {\n  content: \"\"; }\n\n.fa-crop:before {\n  content: \"\"; }\n\n.fa-code-fork:before {\n  content: \"\"; }\n\n.fa-unlink:before,\n.fa-chain-broken:before {\n  content: \"\"; }\n\n.fa-question:before {\n  content: \"\"; }\n\n.fa-info:before {\n  content: \"\"; }\n\n.fa-exclamation:before {\n  content: \"\"; }\n\n.fa-superscript:before {\n  content: \"\"; }\n\n.fa-subscript:before {\n  content: \"\"; }\n\n.fa-eraser:before {\n  content: \"\"; }\n\n.fa-puzzle-piece:before {\n  content: \"\"; }\n\n.fa-microphone:before {\n  content: \"\"; }\n\n.fa-microphone-slash:before {\n  content: \"\"; }\n\n.fa-shield:before {\n  content: \"\"; }\n\n.fa-calendar-o:before {\n  content: \"\"; }\n\n.fa-fire-extinguisher:before {\n  content: \"\"; }\n\n.fa-rocket:before {\n  content: \"\"; }\n\n.fa-maxcdn:before {\n  content: \"\"; }\n\n.fa-chevron-circle-left:before {\n  content: \"\"; }\n\n.fa-chevron-circle-right:before {\n  content: \"\"; }\n\n.fa-chevron-circle-up:before {\n  content: \"\"; }\n\n.fa-chevron-circle-down:before {\n  content: \"\"; }\n\n.fa-html5:before {\n  content: \"\"; }\n\n.fa-css3:before {\n  content: \"\"; }\n\n.fa-anchor:before {\n  content: \"\"; }\n\n.fa-unlock-alt:before {\n  content: \"\"; }\n\n.fa-bullseye:before {\n  content: \"\"; }\n\n.fa-ellipsis-h:before {\n  content: \"\"; }\n\n.fa-ellipsis-v:before {\n  content: \"\"; }\n\n.fa-rss-square:before {\n  content: \"\"; }\n\n.fa-play-circle:before {\n  content: \"\"; }\n\n.fa-ticket:before {\n  content: \"\"; }\n\n.fa-minus-square:before {\n  content: \"\"; }\n\n.fa-minus-square-o:before {\n  content: \"\"; }\n\n.fa-level-up:before {\n  content: \"\"; }\n\n.fa-level-down:before {\n  content: \"\"; }\n\n.fa-check-square:before {\n  content: \"\"; }\n\n.fa-pencil-square:before {\n  content: \"\"; }\n\n.fa-external-link-square:before {\n  content: \"\"; }\n\n.fa-share-square:before {\n  content: \"\"; }\n\n.fa-compass:before {\n  content: \"\"; }\n\n.fa-toggle-down:before,\n.fa-caret-square-o-down:before {\n  content: \"\"; }\n\n.fa-toggle-up:before,\n.fa-caret-square-o-up:before {\n  content: \"\"; }\n\n.fa-toggle-right:before,\n.fa-caret-square-o-right:before {\n  content: \"\"; }\n\n.fa-euro:before,\n.fa-eur:before {\n  content: \"\"; }\n\n.fa-gbp:before {\n  content: \"\"; }\n\n.fa-dollar:before,\n.fa-usd:before {\n  content: \"\"; }\n\n.fa-rupee:before,\n.fa-inr:before {\n  content: \"\"; }\n\n.fa-cny:before,\n.fa-rmb:before,\n.fa-yen:before,\n.fa-jpy:before {\n  content: \"\"; }\n\n.fa-ruble:before,\n.fa-rouble:before,\n.fa-rub:before {\n  content: \"\"; }\n\n.fa-won:before,\n.fa-krw:before {\n  content: \"\"; }\n\n.fa-bitcoin:before,\n.fa-btc:before {\n  content: \"\"; }\n\n.fa-file:before {\n  content: \"\"; }\n\n.fa-file-text:before {\n  content: \"\"; }\n\n.fa-sort-alpha-asc:before {\n  content: \"\"; }\n\n.fa-sort-alpha-desc:before {\n  content: \"\"; }\n\n.fa-sort-amount-asc:before {\n  content: \"\"; }\n\n.fa-sort-amount-desc:before {\n  content: \"\"; }\n\n.fa-sort-numeric-asc:before {\n  content: \"\"; }\n\n.fa-sort-numeric-desc:before {\n  content: \"\"; }\n\n.fa-thumbs-up:before {\n  content: \"\"; }\n\n.fa-thumbs-down:before {\n  content: \"\"; }\n\n.fa-youtube-square:before {\n  content: \"\"; }\n\n.fa-youtube:before {\n  content: \"\"; }\n\n.fa-xing:before {\n  content: \"\"; }\n\n.fa-xing-square:before {\n  content: \"\"; }\n\n.fa-youtube-play:before {\n  content: \"\"; }\n\n.fa-dropbox:before {\n  content: \"\"; }\n\n.fa-stack-overflow:before {\n  content: \"\"; }\n\n.fa-instagram:before {\n  content: \"\"; }\n\n.fa-flickr:before {\n  content: \"\"; }\n\n.fa-adn:before {\n  content: \"\"; }\n\n.fa-bitbucket:before {\n  content: \"\"; }\n\n.fa-bitbucket-square:before {\n  content: \"\"; }\n\n.fa-tumblr:before {\n  content: \"\"; }\n\n.fa-tumblr-square:before {\n  content: \"\"; }\n\n.fa-long-arrow-down:before {\n  content: \"\"; }\n\n.fa-long-arrow-up:before {\n  content: \"\"; }\n\n.fa-long-arrow-left:before {\n  content: \"\"; }\n\n.fa-long-arrow-right:before {\n  content: \"\"; }\n\n.fa-apple:before {\n  content: \"\"; }\n\n.fa-windows:before {\n  content: \"\"; }\n\n.fa-android:before {\n  content: \"\"; }\n\n.fa-linux:before {\n  content: \"\"; }\n\n.fa-dribbble:before {\n  content: \"\"; }\n\n.fa-skype:before {\n  content: \"\"; }\n\n.fa-foursquare:before {\n  content: \"\"; }\n\n.fa-trello:before {\n  content: \"\"; }\n\n.fa-female:before {\n  content: \"\"; }\n\n.fa-male:before {\n  content: \"\"; }\n\n.fa-gittip:before,\n.fa-gratipay:before {\n  content: \"\"; }\n\n.fa-sun-o:before {\n  content: \"\"; }\n\n.fa-moon-o:before {\n  content: \"\"; }\n\n.fa-archive:before {\n  content: \"\"; }\n\n.fa-bug:before {\n  content: \"\"; }\n\n.fa-vk:before {\n  content: \"\"; }\n\n.fa-weibo:before {\n  content: \"\"; }\n\n.fa-renren:before {\n  content: \"\"; }\n\n.fa-pagelines:before {\n  content: \"\"; }\n\n.fa-stack-exchange:before {\n  content: \"\"; }\n\n.fa-arrow-circle-o-right:before {\n  content: \"\"; }\n\n.fa-arrow-circle-o-left:before {\n  content: \"\"; }\n\n.fa-toggle-left:before,\n.fa-caret-square-o-left:before {\n  content: \"\"; }\n\n.fa-dot-circle-o:before {\n  content: \"\"; }\n\n.fa-wheelchair:before {\n  content: \"\"; }\n\n.fa-vimeo-square:before {\n  content: \"\"; }\n\n.fa-turkish-lira:before,\n.fa-try:before {\n  content: \"\"; }\n\n.fa-plus-square-o:before {\n  content: \"\"; }\n\n.fa-space-shuttle:before {\n  content: \"\"; }\n\n.fa-slack:before {\n  content: \"\"; }\n\n.fa-envelope-square:before {\n  content: \"\"; }\n\n.fa-wordpress:before {\n  content: \"\"; }\n\n.fa-openid:before {\n  content: \"\"; }\n\n.fa-institution:before,\n.fa-bank:before,\n.fa-university:before {\n  content: \"\"; }\n\n.fa-mortar-board:before,\n.fa-graduation-cap:before {\n  content: \"\"; }\n\n.fa-yahoo:before {\n  content: \"\"; }\n\n.fa-google:before {\n  content: \"\"; }\n\n.fa-reddit:before {\n  content: \"\"; }\n\n.fa-reddit-square:before {\n  content: \"\"; }\n\n.fa-stumbleupon-circle:before {\n  content: \"\"; }\n\n.fa-stumbleupon:before {\n  content: \"\"; }\n\n.fa-delicious:before {\n  content: \"\"; }\n\n.fa-digg:before {\n  content: \"\"; }\n\n.fa-pied-piper:before {\n  content: \"\"; }\n\n.fa-pied-piper-alt:before {\n  content: \"\"; }\n\n.fa-drupal:before {\n  content: \"\"; }\n\n.fa-joomla:before {\n  content: \"\"; }\n\n.fa-language:before {\n  content: \"\"; }\n\n.fa-fax:before {\n  content: \"\"; }\n\n.fa-building:before {\n  content: \"\"; }\n\n.fa-child:before {\n  content: \"\"; }\n\n.fa-paw:before {\n  content: \"\"; }\n\n.fa-spoon:before {\n  content: \"\"; }\n\n.fa-cube:before {\n  content: \"\"; }\n\n.fa-cubes:before {\n  content: \"\"; }\n\n.fa-behance:before {\n  content: \"\"; }\n\n.fa-behance-square:before {\n  content: \"\"; }\n\n.fa-steam:before {\n  content: \"\"; }\n\n.fa-steam-square:before {\n  content: \"\"; }\n\n.fa-recycle:before {\n  content: \"\"; }\n\n.fa-automobile:before,\n.fa-car:before {\n  content: \"\"; }\n\n.fa-cab:before,\n.fa-taxi:before {\n  content: \"\"; }\n\n.fa-tree:before {\n  content: \"\"; }\n\n.fa-spotify:before {\n  content: \"\"; }\n\n.fa-deviantart:before {\n  content: \"\"; }\n\n.fa-soundcloud:before {\n  content: \"\"; }\n\n.fa-database:before {\n  content: \"\"; }\n\n.fa-file-pdf-o:before {\n  content: \"\"; }\n\n.fa-file-word-o:before {\n  content: \"\"; }\n\n.fa-file-excel-o:before {\n  content: \"\"; }\n\n.fa-file-powerpoint-o:before {\n  content: \"\"; }\n\n.fa-file-photo-o:before,\n.fa-file-picture-o:before,\n.fa-file-image-o:before {\n  content: \"\"; }\n\n.fa-file-zip-o:before,\n.fa-file-archive-o:before {\n  content: \"\"; }\n\n.fa-file-sound-o:before,\n.fa-file-audio-o:before {\n  content: \"\"; }\n\n.fa-file-movie-o:before,\n.fa-file-video-o:before {\n  content: \"\"; }\n\n.fa-file-code-o:before {\n  content: \"\"; }\n\n.fa-vine:before {\n  content: \"\"; }\n\n.fa-codepen:before {\n  content: \"\"; }\n\n.fa-jsfiddle:before {\n  content: \"\"; }\n\n.fa-life-bouy:before,\n.fa-life-buoy:before,\n.fa-life-saver:before,\n.fa-support:before,\n.fa-life-ring:before {\n  content: \"\"; }\n\n.fa-circle-o-notch:before {\n  content: \"\"; }\n\n.fa-ra:before,\n.fa-rebel:before {\n  content: \"\"; }\n\n.fa-ge:before,\n.fa-empire:before {\n  content: \"\"; }\n\n.fa-git-square:before {\n  content: \"\"; }\n\n.fa-git:before {\n  content: \"\"; }\n\n.fa-y-combinator-square:before,\n.fa-yc-square:before,\n.fa-hacker-news:before {\n  content: \"\"; }\n\n.fa-tencent-weibo:before {\n  content: \"\"; }\n\n.fa-qq:before {\n  content: \"\"; }\n\n.fa-wechat:before,\n.fa-weixin:before {\n  content: \"\"; }\n\n.fa-send:before,\n.fa-paper-plane:before {\n  content: \"\"; }\n\n.fa-send-o:before,\n.fa-paper-plane-o:before {\n  content: \"\"; }\n\n.fa-history:before {\n  content: \"\"; }\n\n.fa-circle-thin:before {\n  content: \"\"; }\n\n.fa-header:before {\n  content: \"\"; }\n\n.fa-paragraph:before {\n  content: \"\"; }\n\n.fa-sliders:before {\n  content: \"\"; }\n\n.fa-share-alt:before {\n  content: \"\"; }\n\n.fa-share-alt-square:before {\n  content: \"\"; }\n\n.fa-bomb:before {\n  content: \"\"; }\n\n.fa-soccer-ball-o:before,\n.fa-futbol-o:before {\n  content: \"\"; }\n\n.fa-tty:before {\n  content: \"\"; }\n\n.fa-binoculars:before {\n  content: \"\"; }\n\n.fa-plug:before {\n  content: \"\"; }\n\n.fa-slideshare:before {\n  content: \"\"; }\n\n.fa-twitch:before {\n  content: \"\"; }\n\n.fa-yelp:before {\n  content: \"\"; }\n\n.fa-newspaper-o:before {\n  content: \"\"; }\n\n.fa-wifi:before {\n  content: \"\"; }\n\n.fa-calculator:before {\n  content: \"\"; }\n\n.fa-paypal:before {\n  content: \"\"; }\n\n.fa-google-wallet:before {\n  content: \"\"; }\n\n.fa-cc-visa:before {\n  content: \"\"; }\n\n.fa-cc-mastercard:before {\n  content: \"\"; }\n\n.fa-cc-discover:before {\n  content: \"\"; }\n\n.fa-cc-amex:before {\n  content: \"\"; }\n\n.fa-cc-paypal:before {\n  content: \"\"; }\n\n.fa-cc-stripe:before {\n  content: \"\"; }\n\n.fa-bell-slash:before {\n  content: \"\"; }\n\n.fa-bell-slash-o:before {\n  content: \"\"; }\n\n.fa-trash:before {\n  content: \"\"; }\n\n.fa-copyright:before {\n  content: \"\"; }\n\n.fa-at:before {\n  content: \"\"; }\n\n.fa-eyedropper:before {\n  content: \"\"; }\n\n.fa-paint-brush:before {\n  content: \"\"; }\n\n.fa-birthday-cake:before {\n  content: \"\"; }\n\n.fa-area-chart:before {\n  content: \"\"; }\n\n.fa-pie-chart:before {\n  content: \"\"; }\n\n.fa-line-chart:before {\n  content: \"\"; }\n\n.fa-lastfm:before {\n  content: \"\"; }\n\n.fa-lastfm-square:before {\n  content: \"\"; }\n\n.fa-toggle-off:before {\n  content: \"\"; }\n\n.fa-toggle-on:before {\n  content: \"\"; }\n\n.fa-bicycle:before {\n  content: \"\"; }\n\n.fa-bus:before {\n  content: \"\"; }\n\n.fa-ioxhost:before {\n  content: \"\"; }\n\n.fa-angellist:before {\n  content: \"\"; }\n\n.fa-cc:before {\n  content: \"\"; }\n\n.fa-shekel:before,\n.fa-sheqel:before,\n.fa-ils:before {\n  content: \"\"; }\n\n.fa-meanpath:before {\n  content: \"\"; }\n\n.fa-buysellads:before {\n  content: \"\"; }\n\n.fa-connectdevelop:before {\n  content: \"\"; }\n\n.fa-dashcube:before {\n  content: \"\"; }\n\n.fa-forumbee:before {\n  content: \"\"; }\n\n.fa-leanpub:before {\n  content: \"\"; }\n\n.fa-sellsy:before {\n  content: \"\"; }\n\n.fa-shirtsinbulk:before {\n  content: \"\"; }\n\n.fa-simplybuilt:before {\n  content: \"\"; }\n\n.fa-skyatlas:before {\n  content: \"\"; }\n\n.fa-cart-plus:before {\n  content: \"\"; }\n\n.fa-cart-arrow-down:before {\n  content: \"\"; }\n\n.fa-diamond:before {\n  content: \"\"; }\n\n.fa-ship:before {\n  content: \"\"; }\n\n.fa-user-secret:before {\n  content: \"\"; }\n\n.fa-motorcycle:before {\n  content: \"\"; }\n\n.fa-street-view:before {\n  content: \"\"; }\n\n.fa-heartbeat:before {\n  content: \"\"; }\n\n.fa-venus:before {\n  content: \"\"; }\n\n.fa-mars:before {\n  content: \"\"; }\n\n.fa-mercury:before {\n  content: \"\"; }\n\n.fa-intersex:before,\n.fa-transgender:before {\n  content: \"\"; }\n\n.fa-transgender-alt:before {\n  content: \"\"; }\n\n.fa-venus-double:before {\n  content: \"\"; }\n\n.fa-mars-double:before {\n  content: \"\"; }\n\n.fa-venus-mars:before {\n  content: \"\"; }\n\n.fa-mars-stroke:before {\n  content: \"\"; }\n\n.fa-mars-stroke-v:before {\n  content: \"\"; }\n\n.fa-mars-stroke-h:before {\n  content: \"\"; }\n\n.fa-neuter:before {\n  content: \"\"; }\n\n.fa-genderless:before {\n  content: \"\"; }\n\n.fa-facebook-official:before {\n  content: \"\"; }\n\n.fa-pinterest-p:before {\n  content: \"\"; }\n\n.fa-whatsapp:before {\n  content: \"\"; }\n\n.fa-server:before {\n  content: \"\"; }\n\n.fa-user-plus:before {\n  content: \"\"; }\n\n.fa-user-times:before {\n  content: \"\"; }\n\n.fa-hotel:before,\n.fa-bed:before {\n  content: \"\"; }\n\n.fa-viacoin:before {\n  content: \"\"; }\n\n.fa-train:before {\n  content: \"\"; }\n\n.fa-subway:before {\n  content: \"\"; }\n\n.fa-medium:before {\n  content: \"\"; }\n\n.fa-yc:before,\n.fa-y-combinator:before {\n  content: \"\"; }\n\n.fa-optin-monster:before {\n  content: \"\"; }\n\n.fa-opencart:before {\n  content: \"\"; }\n\n.fa-expeditedssl:before {\n  content: \"\"; }\n\n.fa-battery-4:before,\n.fa-battery-full:before {\n  content: \"\"; }\n\n.fa-battery-3:before,\n.fa-battery-three-quarters:before {\n  content: \"\"; }\n\n.fa-battery-2:before,\n.fa-battery-half:before {\n  content: \"\"; }\n\n.fa-battery-1:before,\n.fa-battery-quarter:before {\n  content: \"\"; }\n\n.fa-battery-0:before,\n.fa-battery-empty:before {\n  content: \"\"; }\n\n.fa-mouse-pointer:before {\n  content: \"\"; }\n\n.fa-i-cursor:before {\n  content: \"\"; }\n\n.fa-object-group:before {\n  content: \"\"; }\n\n.fa-object-ungroup:before {\n  content: \"\"; }\n\n.fa-sticky-note:before {\n  content: \"\"; }\n\n.fa-sticky-note-o:before {\n  content: \"\"; }\n\n.fa-cc-jcb:before {\n  content: \"\"; }\n\n.fa-cc-diners-club:before {\n  content: \"\"; }\n\n.fa-clone:before {\n  content: \"\"; }\n\n.fa-balance-scale:before {\n  content: \"\"; }\n\n.fa-hourglass-o:before {\n  content: \"\"; }\n\n.fa-hourglass-1:before,\n.fa-hourglass-start:before {\n  content: \"\"; }\n\n.fa-hourglass-2:before,\n.fa-hourglass-half:before {\n  content: \"\"; }\n\n.fa-hourglass-3:before,\n.fa-hourglass-end:before {\n  content: \"\"; }\n\n.fa-hourglass:before {\n  content: \"\"; }\n\n.fa-hand-grab-o:before,\n.fa-hand-rock-o:before {\n  content: \"\"; }\n\n.fa-hand-stop-o:before,\n.fa-hand-paper-o:before {\n  content: \"\"; }\n\n.fa-hand-scissors-o:before {\n  content: \"\"; }\n\n.fa-hand-lizard-o:before {\n  content: \"\"; }\n\n.fa-hand-spock-o:before {\n  content: \"\"; }\n\n.fa-hand-pointer-o:before {\n  content: \"\"; }\n\n.fa-hand-peace-o:before {\n  content: \"\"; }\n\n.fa-trademark:before {\n  content: \"\"; }\n\n.fa-registered:before {\n  content: \"\"; }\n\n.fa-creative-commons:before {\n  content: \"\"; }\n\n.fa-gg:before {\n  content: \"\"; }\n\n.fa-gg-circle:before {\n  content: \"\"; }\n\n.fa-tripadvisor:before {\n  content: \"\"; }\n\n.fa-odnoklassniki:before {\n  content: \"\"; }\n\n.fa-odnoklassniki-square:before {\n  content: \"\"; }\n\n.fa-get-pocket:before {\n  content: \"\"; }\n\n.fa-wikipedia-w:before {\n  content: \"\"; }\n\n.fa-safari:before {\n  content: \"\"; }\n\n.fa-chrome:before {\n  content: \"\"; }\n\n.fa-firefox:before {\n  content: \"\"; }\n\n.fa-opera:before {\n  content: \"\"; }\n\n.fa-internet-explorer:before {\n  content: \"\"; }\n\n.fa-tv:before,\n.fa-television:before {\n  content: \"\"; }\n\n.fa-contao:before {\n  content: \"\"; }\n\n.fa-500px:before {\n  content: \"\"; }\n\n.fa-amazon:before {\n  content: \"\"; }\n\n.fa-calendar-plus-o:before {\n  content: \"\"; }\n\n.fa-calendar-minus-o:before {\n  content: \"\"; }\n\n.fa-calendar-times-o:before {\n  content: \"\"; }\n\n.fa-calendar-check-o:before {\n  content: \"\"; }\n\n.fa-industry:before {\n  content: \"\"; }\n\n.fa-map-pin:before {\n  content: \"\"; }\n\n.fa-map-signs:before {\n  content: \"\"; }\n\n.fa-map-o:before {\n  content: \"\"; }\n\n.fa-map:before {\n  content: \"\"; }\n\n.fa-commenting:before {\n  content: \"\"; }\n\n.fa-commenting-o:before {\n  content: \"\"; }\n\n.fa-houzz:before {\n  content: \"\"; }\n\n.fa-vimeo:before {\n  content: \"\"; }\n\n.fa-black-tie:before {\n  content: \"\"; }\n\n.fa-fonticons:before {\n  content: \"\"; }\n\n@font-face {\n  font-family: \"ProximaNovaCond\";\n  src: url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondNormal-136b8b50cabde19e5e8ab530f99e81ac.eot\");\n  src: url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondNormal-136b8b50cabde19e5e8ab530f99e81ac.eot?#iefix\") format(\"embedded-opentype\"), url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondNormal-30ea31cbd1e9632c6002a58b4eeb233f.woff\") format(\"woff\"), url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondNormal-972dee448fc162e9c89cb9beaaaecbfb.ttf\") format(\"truetype\");\n  font-weight: normal;\n  font-style: normal; }\n@font-face {\n  font-family: \"ProximaNovaCond\";\n  src: url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondNormalItalic-c6b62bc44b0d3459f56ba92459c6c163.eot\");\n  src: url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondNormalItalic-c6b62bc44b0d3459f56ba92459c6c163.eot?#iefix\") format(\"embedded-opentype\"), url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondNormalItalic-174e83d6c5f650786cd413aa4276955d.woff\") format(\"woff\"), url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondNormalItalic-2a4911a4114779c4fe31e01e55573dc4.ttf\") format(\"truetype\");\n  font-weight: normal;\n  font-style: italic; }\n@font-face {\n  font-family: \"ProximaNovaCond\";\n  src: url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondBold-2f7537a1c2ebacfa4d9f42fa66f0ca68.eot\");\n  src: url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondBold-2f7537a1c2ebacfa4d9f42fa66f0ca68.eot?#iefix\") format(\"embedded-opentype\"), url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondBold-6e302c8978b1bd9d453fba318a1fa572.woff\") format(\"woff\"), url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondBold-e3a413a3f145ddf79ef77f8ce3b45201.ttf\") format(\"truetype\");\n  font-weight: bold;\n  font-style: normal; }\n@font-face {\n  font-family: \"ProximaNovaCond\";\n  src: url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondBoldItalic-86767d54bb7b6f76568c3cdf7a11c7a9.eot\");\n  src: url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondBoldItalic-86767d54bb7b6f76568c3cdf7a11c7a9.eot?#iefix\") format(\"embedded-opentype\"), url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondBoldItalic-926b0b499b8fa86bf8e9e61097c9c5b4.woff\") format(\"woff\"), url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondBoldItalic-749708412f9df0bc77e7542423cafd26.ttf\") format(\"truetype\");\n  font-weight: bold;\n  font-style: italic; }\n.report {\n  font-family: ProximaNovaCond;\n  position: fixed;\n  top: 50px;\n  left: 50px;\n  z-index: 100000000000;\n  border: 1px solid #777;\n  min-width: 300px;\n  max-width: 400px;\n  overflow: hidden;\n  background: white;\n  padding-top: 40px; }\n  .report.small {\n    max-height: 38px !important;\n    max-width: 20px; }\n  .report .content {\n    overflow: auto; }\n  .report .header {\n    position: fixed;\n    border-bottom: 1px solid #777;\n    top: 0;\n    width: 100%;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: row;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    padding: 10px;\n    -webkit-box-pack: justify;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between; }\n    .report .header i {\n      cursor: move; }\n    .report .header h4 {\n      margin: 0 10px; }\n  .report h4 {\n    margin: 20px; }\n  .report .inputs {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column; }\n  .report .group {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: row;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    margin: 10px 0; }\n    .report .group .label {\n      width: 80px;\n      text-align: right;\n      padding-right: 10px; }\n    .report .group input, .report .group textarea {\n      -webkit-box-flex: 1;\n      -webkit-flex: 1 0;\n          -ms-flex: 1 0;\n              flex: 1 0;\n      margin-right: 10px;\n      outline: none;\n      padding: 10px; }\n    .report .group textarea {\n      height: 100px;\n      overflow-y: auto;\n      outline: none;\n      padding: 10px;\n      resize: none; }\n    .report .group .screenshot {\n      width: 100%;\n      margin: 10px 10px 10px 80px;\n      cursor: pointer; }\n  .report .submit_group {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: row;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    -webkit-box-pack: end;\n    -webkit-justify-content: flex-end;\n        -ms-flex-pack: end;\n            justify-content: flex-end; }\n    .report .submit_group .submit {\n      background: #66f;\n      color: white; }\n    .report .submit_group .cancel {\n      color: red; }\n    .report .submit_group .submit, .report .submit_group .cancel, .report .submit_group .uploading {\n      margin: 10px;\n      padding: 10px; }\n  .report .screenshots {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    width: 320px !important; }\n    .report .screenshots img {\n      -webkit-box-flex: 0;\n      -webkit-flex: 0 1;\n          -ms-flex: 0 1;\n              flex: 0 1;\n      max-width: 100%;\n      border: 3px solid #777;\n      margin: 10px 0; }\n  .report .screenshot_overlay {\n    z-index: 100000000000;\n    position: fixed;\n    top: 0;\n    bottom: 0;\n    right: 0;\n    left: 0;\n    color: black;\n    opacity: 0.2; }\n  .report .submitted {\n    padding: 20px; }\n\n\n", "", {"version":3,"sources":["styles/report.scss","/Users/ap/code/labs/active/KinjaBugReporter/src/styles/_path.scss","/Users/ap/code/labs/active/KinjaBugReporter/src/styles/_core.scss","/Users/ap/code/labs/active/KinjaBugReporter/src/styles/_larger.scss","/Users/ap/code/labs/active/KinjaBugReporter/src/styles/_fixed-width.scss","/Users/ap/code/labs/active/KinjaBugReporter/src/styles/_list.scss","/Users/ap/code/labs/active/KinjaBugReporter/src/styles/_variables.scss","/Users/ap/code/labs/active/KinjaBugReporter/src/styles/_bordered-pulled.scss","/Users/ap/code/labs/active/KinjaBugReporter/src/styles/_animated.scss","/Users/ap/code/labs/active/KinjaBugReporter/src/styles/_rotated-flipped.scss","/Users/ap/code/labs/active/KinjaBugReporter/src/styles/_mixins.scss","/Users/ap/code/labs/active/KinjaBugReporter/src/styles/_stacked.scss","/Users/ap/code/labs/active/KinjaBugReporter/src/styles/_icons.scss","/Users/ap/code/labs/active/KinjaBugReporter/src/styles/_kinja_fonts.scss","/Users/ap/code/labs/active/KinjaBugReporter/src/styles/report.scss"],"names":[],"mappings":"AAAA,iBAAiB;AACjB;;;GAGG;AACH;gCACgC;ACHhC;EACE,2BAA0B;EAC1B,+FAAqE;EACrE,okBAAwG;EAMxG,oBAAmB;EACnB,mBAAkB,EAAA;ACVpB;EACE,sBAAqB;EACrB,8CAAoF;EACpF,mBAAkB;EAClB,qBAAoB;EACpB,oCAAmC;EACnC,mCAAkC,EAAA;;AFYpC,8DAA8D;AGjB9D;EACE,qBAAoB;EACpB,oBAAsB;EACtB,qBAAoB,EAAA;;AAEtB;EAAwB,eAAc,EAAA;;AACtC;EAAwB,eAAc,EAAA;;AACtC;EAAwB,eAAc,EAAA;;AACtC;EAAwB,eAAc,EAAA;;ACVtC;EACE,iBAAkB;EAClB,mBAAkB,EAAA;;ACDpB;EACE,gBAAe;EACf,uBCM8B;EDL9B,sBAAqB,EAAA;EACrB;IAAO,mBAAkB,EAAA;;AAE3B;EACE,mBAAkB;EAClB,iBAAmB;EACnB,iBCD8B;EDE9B,eAAe;EACf,mBAAkB,EAAA;EAClB;IACE,iBAAgC,EAAA;;AEbpC;EACE,0BAAyB;EACzB,0BAAoC;EACpC,oBAAmB,EAAA;;AAGrB;EAA+B,YAAW,EAAA;;AAC1C;EAAgC,aAAY,EAAA;;AAG1C;EAAgC,mBAAkB,EAAA;AAClD;EAAiC,kBAAiB,EAAA;;AP6DpD,4BAA4B;AOzD5B;EAAc,aAAY,EAAA;;AAC1B;EAAa,YAAW,EAAA;;AAGtB;EAAc,mBAAkB,EAAA;AAChC;EAAe,kBAAiB,EAAA;;ACpBlC;EACE,8CAA6C;EACrC,sCAAqC,EAAA;;AAG/C;EACE,gDAA+C;EACvC,wCAAuC,EAAA;;AAGjD;EACE;IACE,gCAA+B;IACvB,wBAAuB,EAAA;EAEjC;IACE,kCAAiC;IACzB,0BAAyB,EAAA,EAAA;AAIrC;EACE;IACE,gCAA+B;IACvB,wBAAuB,EAAA;EAEjC;IACE,kCAAiC;IACzB,0BAAyB,EAAA,EAAA;AC5BrC;ECWE,iEAA2E;EAC3E,iCAAmC;EAC/B,6BAA+B;EAC3B,yBAA2B,EAAA;;ADbrC;ECUE,iEAA2E;EAC3E,kCAAmC;EAC/B,8BAA+B;EAC3B,0BAA2B,EAAA;;ADZrC;ECSE,iEAA2E;EAC3E,kCAAmC;EAC/B,8BAA+B;EAC3B,0BAA2B,EAAA;;ADVrC;ECcE,iEAA2E;EAC3E,gCAAuC;EACnC,4BAAmC;EAC/B,wBAA+B,EAAA;;ADhBzC;ECaE,iEAA2E;EAC3E,gCAAuC;EACnC,4BAAmC;EAC/B,wBAA+B,EAAA;;ADXzC;;;;;EAKE,qBAAY;UAAZ,aAAY,EAAA;;AEfd;EACE,mBAAkB;EAClB,sBAAqB;EACrB,WAAU;EACV,YAAW;EACX,iBAAgB;EAChB,uBAAsB,EAAA;;AAExB;EACE,mBAAkB;EAClB,QAAO;EACP,YAAW;EACX,mBAAkB,EAAA;;AAEpB;EAA8B,qBAAoB,EAAA;;AAClD;EAA8B,eAAc,EAAA;;AAC5C;EAA6B,YLTH,EAAA;;AN+J1B;oEACoE;AYvKpE;EAAkC,aNsSZ,EAAA;;AMrStB;EAAkC,aNuaZ,EAAA;;AMtatB;EAAmC,aNyfZ,EAAA;;AMxfvB;EAAuC,aN8MZ,EAAA;;AM7M3B;EAAkC,aN6TZ,EAAA;;AM5TtB;EAAiC,aNwiBZ,EAAA;;AMviBrB;EAAmC,aN4iBZ,EAAA;;AM3iBvB;EAAiC,aN2nBZ,EAAA;;AM1nBrB;EAAiC,aNsPZ,EAAA;;AMrPrB;EAAqC,aNykBZ,EAAA;;AMxkBzB;EAA+B,aNukBZ,EAAA;;AMtkBnB;EAAoC,aNwkBZ,EAAA;;AMvkBxB;EAAkC,aNyHZ,EAAA;;AMxHtB;;;EAEkC,aN2kBZ,EAAA;;AM1kBtB;EAAwC,aN6eZ,EAAA;;AM5e5B;EAAyC,aN2eZ,EAAA;;AM1e7B;EAAsC,aNmcZ,EAAA;;AMlc1B;EAAmC,aN4fZ,EAAA;;AM3fvB;;EACgC,aN+IZ,EAAA;;AM9IpB;EAAoC,aNmlBZ,EAAA;;AMllBxB;EAAiC,aN8SZ,EAAA;;AM7SrB;EAAmC,aN0NZ,EAAA;;AMzNvB;EAAoC,aNgIZ,EAAA;;AM/HxB;EAAiC,aNodZ,EAAA;;AMndrB;EAAqC,aN4KZ,EAAA;;AM3KzB;EAAgD,aNOZ,EAAA;;AMNpC;EAA8C,aNSZ,EAAA;;AMRlC;EAAkC,aNuTZ,EAAA;;AMtTtB;EAA0C,aNgbZ,EAAA;;AM/a9B;;EACmC,aNwcZ,EAAA;;AMvcvB;EAAoC,aNkcZ,EAAA;;AMjcxB;EAAqC,aNyVZ,EAAA;;AMxVzB;EAAiC,aN4VZ,EAAA;;AM3VrB;EAAiC,aN8NZ,EAAA;;AM7NrB;EAAuC,aN0RZ,EAAA;;AMzR3B;EAAuC,aN2mBZ,EAAA;;AM1mB3B;EAAwC,aNymBZ,EAAA;;AMxmB5B;EAAsC,aN0mBZ,EAAA;;AMzmB1B;EAAmC,aN+aZ,EAAA;;AM9avB;EAAoC,aNeZ,EAAA;;AMdxB;EAAgC,aN4hBZ,EAAA;;AM3hBpB;EAAiC,aN4hBZ,EAAA;;AM3hBrB;EAAiC,aN0CZ,EAAA;;AMzCrB;EAAqC,aN0CZ,EAAA;;AMzCzB;EAAkC,aNsaZ,EAAA;;AMratB;EAAmC,aN2DZ,EAAA;;AM1DvB;EAAiC,aN4NZ,EAAA;;AM3NrB;EAAiC,aNkCZ,EAAA;;AMjCrB;EAAmC,aN4SZ,EAAA;;AM3SvB;EAAwC,aN0hBZ,EAAA;;AMzhB5B;EAAuC,aN0hBZ,EAAA;;AMzhB3B;EAAuC,aNxCZ,EAAA;;AMyC3B;EAAyC,aN3CZ,EAAA;;AM4C7B;EAAwC,aNzCZ,EAAA;;AM0C5B;EAA0C,aN5CZ,EAAA;;AM6C9B;EAAiC,aNgUZ,EAAA;;AM/TrB;;EACoC,aNuXZ,EAAA;;AMtXxB;EAAmC,aNwRZ,EAAA;;AMvRvB;EAAyC,aN6kBZ,EAAA;;AM5kB7B;;;EAEsC,aNmYZ,EAAA;;AMlY1B;EAAmC,aN4XZ,EAAA;;AM3XvB;EAAuC,aNwUZ,EAAA;;AMvU3B;EAAmC,aN1DZ,EAAA;;AM2DvB;EAAiC,aNuhBZ,EAAA;;AMthBrB;;EAC4C,aNyXZ,EAAA;;AMxXhC;EAA2C,aN6bZ,EAAA;;AM5b/B;EAA2C,aN+DZ,EAAA;;AM9D/B;EAAmC,aN9BZ,EAAA;;AM+BvB;EAA0C,aNyeZ,EAAA;;AMxe9B;EAA0C,aNwJZ,EAAA;;AMvJ9B;EAAqC,aN1BZ,EAAA;;AM2BzB;EAAiC,aN8XZ,EAAA;;AM7XrB;EAAkC,aN4WZ,EAAA;;AM3WtB;EAAiC,aNyeZ,EAAA;;AMxerB;EAAoC,aN+LZ,EAAA;;AM9LxB;EAAyC,aNmJZ,EAAA;;AMlJ7B;EAAyC,aNkeZ,EAAA;;AMje7B;EAAkC,aNuHZ,EAAA;;AMtHtB;EAAyC,aNyDZ,EAAA;;AMxD7B;EAA0C,aNyDZ,EAAA;;AMxD9B;EAAwC,aN0XZ,EAAA;;AMzX5B;EAAyC,aNqUZ,EAAA;;AMpU7B;EAAyC,aNigBZ,EAAA;;AMhgB7B;EAAyC,aN2CZ,EAAA;;AM1C7B;EAA4C,aN+XZ,EAAA;;AM9XhC;EAAwC,aN4PZ,EAAA;;AM3P5B;EAAuC,aNwFZ,EAAA;;AMvF3B;EAA2C,aN6fZ,EAAA;;AM5f/B;EAA2C,aNuCZ,EAAA;;AMtC/B;EAAgC,aN3CZ,EAAA;;AM4CpB;EAAuC,aNxDZ,EAAA;;AMyD3B;EAAwC,aNxDZ,EAAA;;AMyD5B;EAAqC,aNxDZ,EAAA;;AMyDzB;EAAuC,aN5DZ,EAAA;;AM6D3B;;EACkC,aN2ZZ,EAAA;;AM1ZtB;EAAmC,aNkHZ,EAAA;;AMjHvB;EAAqC,aNqEZ,EAAA;;AMpEzB;EAAiC,aNuWZ,EAAA;;AMtWrB;EAAkC,aNkTZ,EAAA;;AMjTtB;EAAqC,aN3DZ,EAAA;;AM4DzB;EAA+C,aN2GZ,EAAA;;AM1GnC;EAAiC,aNiLZ,EAAA;;AMhLrB;EAAiC,aN4PZ,EAAA;;AM3PrB;EAAiC,aNgJZ,EAAA;;AM/IrB;EAAgC,aN6GZ,EAAA;;AM5GpB;EAAsC,aN6GZ,EAAA;;AM5G1B;;EACiD,aNqGZ,EAAA;;AMpGrC;EAAkC,aNuVZ,EAAA;;AMtVtB;EAAqC,aNhBZ,EAAA;;AMiBzB;EAAmC,aNwWZ,EAAA;;AMvWvB;EAAoC,aN+CZ,EAAA;;AM9CxB;EAAmC,aN6QZ,EAAA;;AM5QvB;EAAuC,aNuBZ,EAAA;;AMtB3B;EAAyC,aNmBZ,EAAA;;AMlB7B;EAAoC,aNgXZ,EAAA;;AM/WxB;EAA0C,aN+YZ,EAAA;;AM9Y9B;EAAmC,aN4IZ,EAAA;;AM3IvB;EAAwC,aN6IZ,EAAA;;AM5I5B;EAAqC,aNhFZ,EAAA;;AMiFzB;EAAqC,aNlFZ,EAAA;;AMmFzB;;EACsC,aN3EZ,EAAA;;AM4E1B;EAA2C,aNmfZ,EAAA;;AMlf/B;EAA4C,aN+FZ,EAAA;;AM9FhC;EAAyC,aNzBZ,EAAA;;AM0B7B;EAAgC,aN6NZ,EAAA;;AM5NpB;;EACiC,aN4BZ,EAAA;;AM3BrB;EAAqC,aNiCZ,EAAA;;AMhCzB;EAAwC,aN4cZ,EAAA;;AM3c5B;EAA0C,aN0cZ,EAAA;;AMzc9B;EAAsC,aNiaZ,EAAA;;AMha1B;EAAoC,aNoLZ,EAAA;;AMnLxB;EAAqC,aN+XZ,EAAA;;AM9XzB;EAA4C,aNyOZ,EAAA;;AMxOhC;EAAuC,aNmcZ,EAAA;;AMlc3B;EAA0C,aN0EZ,EAAA;;AMzE9B;EAAoC,aN0XZ,EAAA;;AMzXxB;EAAmC,aNydZ,EAAA;;AMxdvB;EAA0C,aN+IZ,EAAA;;AM9I9B;EAAmC,aN0eZ,EAAA;;AMzevB;EAAoC,aNuNZ,EAAA;;AMtNxB;EAAkC,aN0SZ,EAAA;;AMzStB;EAAqC,aNiZZ,EAAA;;AMhZzB;EAAuC,aNhEZ,EAAA;;AMiE3B;EAAyC,aNwSZ,EAAA;;AMvS7B;EAAoC,aN0dZ,EAAA;;AMzdxB;;EACqC,aNmEZ,EAAA;;AMlEzB;EAAmC,aNmIZ,EAAA;;AMlIvB;EAAmC,aN6dZ,EAAA;;AM5dvB;EAAwC,aNmBZ,EAAA;;AMlB5B;;EACgC,aNgVZ,EAAA;;AM/UpB;EAAkC,aN0JZ,EAAA;;AMzJtB;EAAqC,aNrEZ,EAAA;;AMsEzB;EAAiC,aN5FZ,EAAA;;AM6FrB;EAAwC,aNrCZ,EAAA;;AMsC5B;EAAyC,aN6IZ,EAAA;;AM5I7B;EAAwC,aN2IZ,EAAA;;AM1I5B;EAAsC,aN4IZ,EAAA;;AM3I1B;EAAwC,aNwIZ,EAAA;;AMvI5B;EAA8C,aN1IZ,EAAA;;AM2IlC;EAA+C,aNtIZ,EAAA;;AMuInC;EAA4C,aNtIZ,EAAA;;AMuIhC;EAA8C,aN9IZ,EAAA;;AM+IlC;EAAkC,aNuHZ,EAAA;;AMtHtB;EAAmC,aN8eZ,EAAA;;AM7evB;EAAkC,aNwZZ,EAAA;;AMvZtB;EAAmC,aN4EZ,EAAA;;AM3EvB;EAAsC,aNzFZ,EAAA;;AM0F1B;EAAuC,aNvIZ,EAAA;;AMwI3B;;EACkC,aNgdZ,EAAA;;AM/ctB;;EACiC,aN8LZ,EAAA;;AM7LrB;EAAkC,aN9BZ,EAAA;;AM+BtB;EAAkC,aN4EZ,EAAA;;AM3EtB;;EACqC,aN6TZ,EAAA;;AM5TzB;;EACoC,aN8DZ,EAAA;;AM7DxB;EAAsC,aNyPZ,EAAA;;AMxP1B;;EACqC,aNuEZ,EAAA;;AMtEzB;EAAmC,aNsWZ,EAAA;;AMrWvB;;;EAEiC,aN3IZ,EAAA;;AM4IrB;EAAoC,aNuLZ,EAAA;;AMtLxB;EAAoC,aNqLZ,EAAA;;AMpLxB;EAA0C,aNmXZ,EAAA;;AMlX9B;EAAsC,aN+aZ,EAAA;;AM9a1B;EAAkC,aN0XZ,EAAA;;AMzXtB;EAAkC,aNyLZ,EAAA;;AMxLtB;EAAkC,aNiaZ,EAAA;;AMhatB;EAAsC,aN2PZ,EAAA;;AM1P1B;EAA6C,aN4PZ,EAAA;;AM3PjC;EAA+C,aN0FZ,EAAA;;AMzFnC;EAAwC,aNwFZ,EAAA;;AMvF5B;EAAkC,aNiNZ,EAAA;;AMhNtB;EAAuC,aNpGZ,EAAA;;AMqG3B;EAAqC,aN9FZ,EAAA;;AM+FzB;EAAuC,aNrGZ,EAAA;;AMsG3B;EAAwC,aNrGZ,EAAA;;AMsG5B;EAAoC,aNjDZ,EAAA;;AMkDxB;;EACiC,aNgUZ,EAAA;;AM/TrB;;EACsC,aNoUZ,EAAA;;AMnU1B;;EACqC,aNiUZ,EAAA;;AMhUzB;EAAqC,aNdZ,EAAA;;AMezB;EAAqC,aNyJZ,EAAA;;AMxJzB;;EACiC,aNyZZ,EAAA;;AMxZrB;;EACkC,aNmDZ,EAAA;;AMlDtB;;EACuC,aNkWZ,EAAA;;AMjW3B;EAAsC,aN9DZ,EAAA;;AM+D1B;EAAuC,aN3DZ,EAAA;;AM4D3B;;EACiC,aNnJZ,EAAA;;AMoJrB;EAAoC,aNuSZ,EAAA;;AMtSxB;EAAqC,aN6YZ,EAAA;;AM5YzB;;EACsC,aNrFZ,EAAA;;AMsF1B;EAAwC,aNuIZ,EAAA;;AMtI5B;EAAqC,aNzBZ,EAAA;;AM0BzB;EAA2C,aNnFZ,EAAA;;AMoF/B;EAAyC,aNnFZ,EAAA;;AMoF7B;EAAoC,aNiZZ,EAAA;;AMhZxB;EAAwC,aNoUZ,EAAA;;AMnU5B;EAAqC,aN6UZ,EAAA;;AM5UzB;EAAmC,aN1KZ,EAAA;;AM2KvB;EAAmC,aNnFZ,EAAA;;AMoFvB;EAAoC,aN5DZ,EAAA;;AM6DxB;EAAwC,aNCZ,EAAA;;AMA5B;EAAuC,aN1JZ,EAAA;;AM2J3B;EAAuC,aN4EZ,EAAA;;AM3E3B;EAAsC,aNzOZ,EAAA;;AM0O1B;EAAmC,aN4JZ,EAAA;;AM3JvB;EAAwC,aNnBZ,EAAA;;AMoB5B;EAAiC,aNvLZ,EAAA;;AMwLrB;EAAqC,aNgDZ,EAAA;;AM/CzB;EAAwC,aNmNZ,EAAA;;AMlN5B;EAA8C,aN1OZ,EAAA;;AM2OlC;EAA+C,aN1OZ,EAAA;;AM2OnC;EAA4C,aN1OZ,EAAA;;AM2OhC;EAA8C,aN9OZ,EAAA;;AM+OlC;EAAuC,aN1OZ,EAAA;;AM2O3B;EAAwC,aN1OZ,EAAA;;AM2O5B;EAAqC,aN1OZ,EAAA;;AM2OzB;EAAuC,aN9OZ,EAAA;;AM+O3B;EAAoC,aNxEZ,EAAA;;AMyExB;EAAmC,aN8FZ,EAAA;;AM7FvB;EAAmC,aN2TZ,EAAA;;AM1TvB;;EACmC,aNoJZ,EAAA;;AMnJvB;EAAqC,aNzHZ,EAAA;;AM0HzB;EAAuC,aN6MZ,EAAA;;AM5M3B;EAAwC,aN6MZ,EAAA;;AM5M5B;EAAoC,aNqRZ,EAAA;;AMpRxB;EAAmC,aN9HZ,EAAA;;AM+HvB;;EACkC,aNsNZ,EAAA;;AMrNtB;EAAuC,aNcZ,EAAA;;AMb3B;EAAqC,aNXZ,EAAA;;AMYzB;EAA0C,aNVZ,EAAA;;AMW9B;EAAoC,aN+PZ,EAAA;;AM9PxB;EAAoC,aNNZ,EAAA;;AMOxB;EAAkC,aN+HZ,EAAA;;AM9HtB;EAAoC,aNNZ,EAAA;;AMOxB;EAAuC,aNyEZ,EAAA;;AMxE3B;EAAmC,aNxBZ,EAAA;;AMyBvB;EAA2C,aN1BZ,EAAA;;AM2B/B;EAAqC,aN+SZ,EAAA;;AM9SzB;EAAiC,aNhIZ,EAAA;;AMiIrB;;EACsC,aNyMZ,EAAA;;AMxM1B;;;EAEwC,aN4QZ,EAAA;;AM3Q5B;EAA2C,aNyFZ,EAAA;;AMxF/B;EAAiC,aNlHZ,EAAA;;AMmHrB;EAAsC,aNvIZ,EAAA;;AMwI1B;;EACyC,aNtKZ,EAAA;;AMuK7B;EAAqC,aN+KZ,EAAA;;AM9KzB;EAAiC,aN4CZ,EAAA;;AM3CrB;EAAwC,aNtFZ,EAAA;;AMuF5B;EAAwC,aNqRZ,EAAA;;AMpR5B;EAAsC,aNgRZ,EAAA;;AM/Q1B;EAAmC,aN7FZ,EAAA;;AM8FvB;EAAyC,aNsKZ,EAAA;;AMrK7B;EAAuC,aNyGZ,EAAA;;AMxG3B;EAA6C,aNyGZ,EAAA;;AMxGjC;EAAmC,aNqNZ,EAAA;;AMpNvB;EAAuC,aN5MZ,EAAA;;AM6M3B;EAA8C,aNrDZ,EAAA;;AMsDlC;EAAmC,aNwLZ,EAAA;;AMvLvB;EAAmC,aN6FZ,EAAA;;AM5FvB;EAAgD,aN9KZ,EAAA;;AM+KpC;EAAiD,aN9KZ,EAAA;;AM+KrC;EAA8C,aN9KZ,EAAA;;AM+KlC;EAAgD,aNlLZ,EAAA;;AMmLpC;EAAkC,aNoBZ,EAAA;;AMnBtB;EAAiC,aNvIZ,EAAA;;AMwIrB;EAAmC,aN5SZ,EAAA;;AM6SvB;EAAuC,aN8TZ,EAAA;;AM7T3B;EAAqC,aNhOZ,EAAA;;AMiOzB;EAAuC,aNrHZ,EAAA;;AMsH3B;EAAuC,aNrHZ,EAAA;;AMsH3B;EAAuC,aNgLZ,EAAA;;AM/K3B;EAAwC,aNyIZ,EAAA;;AMxI5B;EAAmC,aNmRZ,EAAA;;AMlRvB;EAAyC,aNwFZ,EAAA;;AMvF7B;EAA2C,aNwFZ,EAAA;;AMvF/B;EAAqC,aNuCZ,EAAA;;AMtCzB;EAAuC,aNqCZ,EAAA;;AMpC3B;EAAyC,aNnMZ,EAAA;;AMoM7B;EAA0C,aNoHZ,EAAA;;AMnH9B;EAAiD,aNhHZ,EAAA;;AMiHrC;EAAyC,aNuLZ,EAAA;;AMtL7B;EAAoC,aNlKZ,EAAA;;AMmKxB;;EACgD,aN/NZ,EAAA;;AMgOpC;;EAC8C,aN9NZ,EAAA;;AM+NlC;;EACiD,aNjOZ,EAAA;;AMkOrC;;EACgC,aNnIZ,EAAA;;AMoIpB;EAAgC,aNjEZ,EAAA;;AMkEpB;;EACgC,aNuSZ,EAAA;;AMtSpB;;EACgC,aNFZ,EAAA;;AMGpB;;;;EAGgC,aNEZ,EAAA;;AMDpB;;;EAEgC,aNkJZ,EAAA;;AMjJpB;;EACgC,aNCZ,EAAA;;AMApB;;EACgC,aN3QZ,EAAA;;AM4QpB;EAAiC,aN7HZ,EAAA;;AM8HrB;EAAsC,aNjHZ,EAAA;;AMkH1B;EAA2C,aNgLZ,EAAA;;AM/K/B;EAA4C,aNgLZ,EAAA;;AM/KhC;EAA4C,aNgLZ,EAAA;;AM/KhC;EAA6C,aNgLZ,EAAA;;AM/KjC;EAA6C,aNmLZ,EAAA;;AMlLjC;EAA8C,aNmLZ,EAAA;;AMlLlC;EAAsC,aNwOZ,EAAA;;AMvO1B;EAAwC,aNoOZ,EAAA;;AMnO5B;EAA2C,aNyTZ,EAAA;;AMxT/B;EAAoC,aNsTZ,EAAA;;AMrTxB;EAAiC,aN4SZ,EAAA;;AM3SrB;EAAwC,aN4SZ,EAAA;;AM3S5B;EAAyC,aNoTZ,EAAA;;AMnT7B;EAAoC,aN9KZ,EAAA;;AM+KxB;EAA2C,aNoLZ,EAAA;;AMnL/B;EAAsC,aN9BZ,EAAA;;AM+B1B;EAAmC,aNlHZ,EAAA;;AMmHvB;EAAgC,aN/WZ,EAAA;;AMgXpB;EAAsC,aN3SZ,EAAA;;AM4S1B;EAA6C,aN3SZ,EAAA;;AM4SjC;EAAmC,aNmPZ,EAAA;;AMlPvB;EAA0C,aNmPZ,EAAA;;AMlP9B;EAA4C,aNCZ,EAAA;;AMAhC;EAA0C,aNGZ,EAAA;;AMF9B;EAA4C,aNAZ,EAAA;;AMChC;EAA6C,aNAZ,EAAA;;AMCjC;EAAkC,aNtWZ,EAAA;;AMuWtB;EAAoC,aNuRZ,EAAA;;AMtRxB;EAAoC,aNlXZ,EAAA;;AMmXxB;EAAkC,aNbZ,EAAA;;AMctB;EAAqC,aNhMZ,EAAA;;AMiMzB;EAAkC,aN0IZ,EAAA;;AMzItB;EAAuC,aNxHZ,EAAA;;AMyH3B;EAAmC,aNgOZ,EAAA;;AM/NvB;EAAmC,aNnKZ,EAAA;;AMoKvB;EAAiC,aNHZ,EAAA;;AMIrB;;EACqC,aNlGZ,EAAA;;AMmGzB;EAAkC,aNkLZ,EAAA;;AMjLtB;EAAmC,aNmBZ,EAAA;;AMlBvB;EAAoC,aNnXZ,EAAA;;AMoXxB;EAAgC,aNtTZ,EAAA;;AMuTpB;EAA+B,aN4PZ,EAAA;;AM3PnB;EAAkC,aNiQZ,EAAA;;AMhQtB;EAAmC,aNiFZ,EAAA;;AMhFvB;EAAsC,aN8BZ,EAAA;;AM7B1B;EAA2C,aNmJZ,EAAA;;AMlJ/B;EAAiD,aNpXZ,EAAA;;AMqXrC;EAAgD,aNtXZ,EAAA;;AMuXpC;;EACgD,aNzSZ,EAAA;;AM0SpC;EAAyC,aNvNZ,EAAA;;AMwN7B;EAAuC,aN2PZ,EAAA;;AM1P3B;EAAyC,aN+OZ,EAAA;;AM9O7B;;EACgC,aN8MZ,EAAA;;AM7MpB;EAA0C,aNkDZ,EAAA;;AMjD9B;EAA0C,aNkIZ,EAAA;;AMjI9B;EAAkC,aNgHZ,EAAA;;AM/GtB;EAA4C,aNnNZ,EAAA;;AMoNhC;EAAsC,aNwPZ,EAAA;;AMvP1B;EAAmC,aNUZ,EAAA;;AMTvB;;;EAEuC,aNiNZ,EAAA;;AMhN3B;;EAC2C,aNhIZ,EAAA;;AMiI/B;EAAkC,aNuPZ,EAAA;;AMtPtB;EAAmC,aNtIZ,EAAA;;AMuIvB;EAAmC,aNmDZ,EAAA;;AMlDvB;EAA0C,aNmDZ,EAAA;;AMlD9B;EAA+C,aN6IZ,EAAA;;AM5InC;EAAwC,aN2IZ,EAAA;;AM1I5B;EAAsC,aNnPZ,EAAA;;AMoP1B;EAAiC,aNhPZ,EAAA;;AMiPrB;EAAuC,aNkBZ,EAAA;;AMjB3B;EAA2C,aNkBZ,EAAA;;AMjB/B;EAAmC,aN7OZ,EAAA;;AM8OvB;EAAmC,aNvFZ,EAAA;;AMwFvB;EAAqC,aNlFZ,EAAA;;AMmFzB;EAAgC,aNnNZ,EAAA;;AMoNpB;EAAqC,aN7VZ,EAAA;;AM8VzB;EAAkC,aN1SZ,EAAA;;AM2StB;EAAgC,aNAZ,EAAA;;AMCpB;EAAkC,aNyGZ,EAAA;;AMxGtB;EAAiC,aNvQZ,EAAA;;AMwQrB;EAAkC,aNvQZ,EAAA;;AMwQtB;EAAoC,aNzXZ,EAAA;;AM0XxB;EAA2C,aNzXZ,EAAA;;AM0X/B;EAAkC,aNgHZ,EAAA;;AM/GtB;EAAyC,aNgHZ,EAAA;;AM/G7B;EAAoC,aN4BZ,EAAA;;AM3BxB;;EACgC,aNzVZ,EAAA;;AM0VpB;;EACiC,aNkIZ,EAAA;;AMjIrB;EAAiC,aNgKZ,EAAA;;AM/JrB;EAAoC,aN6FZ,EAAA;;AM5FxB;EAAuC,aN1QZ,EAAA;;AM2Q3B;EAAuC,aNuFZ,EAAA;;AMtF3B;EAAqC,aNhRZ,EAAA;;AMiRzB;EAAuC,aN5NZ,EAAA;;AM6N3B;EAAwC,aNrNZ,EAAA;;AMsN5B;EAAyC,aNlOZ,EAAA;;AMmO7B;EAA8C,aN5NZ,EAAA;;AM6NlC;;;EAEyC,aNrOZ,EAAA;;AMsO7B;;EAC2C,aN3OZ,EAAA;;AM4O/B;;EACyC,aN5OZ,EAAA;;AM6O7B;;EACyC,aNjOZ,EAAA;;AMkO7B;EAAwC,aN9OZ,EAAA;;AM+O5B;EAAiC,aNkLZ,EAAA;;AMjLrB;EAAoC,aN5TZ,EAAA;;AM6TxB;EAAqC,aN5HZ,EAAA;;AM6HzB;;;;;EAIsC,aNjHZ,EAAA;;AMkH1B;EAA2C,aN/UZ,EAAA;;AMgV/B;;EACkC,aNPZ,EAAA;;AMQtB;;EACmC,aN1RZ,EAAA;;AM2RvB;EAAuC,aNzMZ,EAAA;;AM0M3B;EAAgC,aN3MZ,EAAA;;AM4MpB;;;EAEwC,aN9LZ,EAAA;;AM+L5B;EAA0C,aN8FZ,EAAA;;AM7F9B;EAA+B,aNxBZ,EAAA;;AMyBnB;;EACmC,aNqKZ,EAAA;;AMpKvB;;EACwC,aN7DZ,EAAA;;AM8D5B;;EAC0C,aN9DZ,EAAA;;AM+D9B;EAAoC,aNnLZ,EAAA;;AMoLxB;EAAwC,aNjWZ,EAAA;;AMkW5B;EAAmC,aN1LZ,EAAA;;AM2LvB;EAAsC,aNhEZ,EAAA;;AMiE1B;EAAoC,aN0BZ,EAAA;;AMzBxB;EAAsC,aNOZ,EAAA;;AMN1B;EAA6C,aNOZ,EAAA;;AMNjC;EAAiC,aNvaZ,EAAA;;AMwarB;;EACqC,aN5OZ,EAAA;;AM6OzB;EAAgC,aN+GZ,EAAA;;AM9GpB;EAAuC,aNnbZ,EAAA;;AMob3B;EAAiC,aNnDZ,EAAA;;AMoDrB;EAAuC,aNkBZ,EAAA;;AMjB3B;EAAmC,aNgHZ,EAAA;;AM/GvB;EAAiC,aNiKZ,EAAA;;AMhKrB;EAAwC,aN5FZ,EAAA;;AM6F5B;EAAiC,aNkJZ,EAAA;;AMjJrB;EAAuC,aNpaZ,EAAA;;AMqa3B;EAAmC,aN5EZ,EAAA;;AM6EvB;EAA0C,aNhOZ,EAAA;;AMiO9B;EAAoC,aN3YZ,EAAA;;AM4YxB;EAA0C,aN/YZ,EAAA;;AMgZ9B;EAAwC,aNlZZ,EAAA;;AMmZ5B;EAAoC,aNrZZ,EAAA;;AMsZxB;EAAsC,aNjZZ,EAAA;;AMkZ1B;EAAsC,aNjZZ,EAAA;;AMkZ1B;EAAuC,aNtcZ,EAAA;;AMuc3B;EAAyC,aNtcZ,EAAA;;AMuc7B;EAAkC,aNoFZ,EAAA;;AMnFtB;EAAsC,aNnWZ,EAAA;;AMoW1B;EAA+B,aNpeZ,EAAA;;AMqenB;EAAuC,aNvTZ,EAAA;;AMwT3B;EAAwC,aNlGZ,EAAA;;AMmG5B;EAA0C,aNzcZ,EAAA;;AM0c9B;EAAuC,aN1fZ,EAAA;;AM2f3B;EAAsC,aNrFZ,EAAA;;AMsF1B;EAAuC,aNtKZ,EAAA;;AMuK3B;EAAmC,aNpLZ,EAAA;;AMqLvB;EAA0C,aNpLZ,EAAA;;AMqL9B;EAAuC,aNiEZ,EAAA;;AMhE3B;EAAsC,aNiEZ,EAAA;;AMhE1B;EAAoC,aNndZ,EAAA;;AModxB;EAAgC,aNhcZ,EAAA;;AMicpB;EAAoC,aNpMZ,EAAA;;AMqMxB;EAAsC,aN/gBZ,EAAA;;AMghB1B;EAA+B,aN5aZ,EAAA;;AM6anB;;;EAEgC,aNrNZ,EAAA;;AMsNpB;EAAqC,aNnJZ,EAAA;;AMoJzB;EAAuC,aNvcZ,EAAA;;AMwc3B;EAA2C,aN5XZ,EAAA;;AM6X/B;EAAqC,aN/WZ,EAAA;;AMgXzB;EAAqC,aN7RZ,EAAA;;AM8RzB;EAAoC,aNlMZ,EAAA;;AMmMxB;EAAmC,aNjDZ,EAAA;;AMkDvB;EAAyC,aNrCZ,EAAA;;AMsC7B;EAAwC,aNjCZ,EAAA;;AMkC5B;EAAqC,aNhCZ,EAAA;;AMiCzB;EAAsC,aN3bZ,EAAA;;AM4b1B;EAA4C,aN7bZ,EAAA;;AM8bhC;EAAoC,aNlXZ,EAAA;;AMmXxB;EAAiC,aN5CZ,EAAA;;AM6CrB;EAAwC,aN8EZ,EAAA;;AM7E5B;EAAuC,aNlJZ,EAAA;;AMmJ3B;EAAwC,aNEZ,EAAA;;AMD5B;EAAsC,aNvPZ,EAAA;;AMwP1B;EAAkC,aN6EZ,EAAA;;AM5EtB;EAAiC,aN5KZ,EAAA;;AM6KrB;EAAoC,aNnKZ,EAAA;;AMoKxB;;EACwC,aNuCZ,EAAA;;AMtC5B;EAA4C,aNuCZ,EAAA;;AMtChC;EAAyC,aNwEZ,EAAA;;AMvE7B;EAAwC,aNjLZ,EAAA;;AMkL5B;EAAuC,aNuEZ,EAAA;;AMtE3B;EAAwC,aNlLZ,EAAA;;AMmL5B;EAA0C,aNjLZ,EAAA;;AMkL9B;EAA0C,aNnLZ,EAAA;;AMoL9B;EAAmC,aN7JZ,EAAA;;AM8JvB;EAAuC,aN7SZ,EAAA;;AM8S3B;EAA8C,aNtWZ,EAAA;;AMuWlC;EAAwC,aNhIZ,EAAA;;AMiI5B;EAAqC,aN6EZ,EAAA;;AM5EzB;EAAmC,aN3EZ,EAAA;;AM4EvB;EAAsC,aNuDZ,EAAA;;AMtD1B;EAAuC,aNwDZ,EAAA;;AMvD3B;;EACgC,aN1gBZ,EAAA;;AM2gBpB;EAAoC,aN0DZ,EAAA;;AMzDxB;EAAkC,aNmBZ,EAAA;;AMlBtB;EAAmC,aNnBZ,EAAA;;AMoBvB;EAAmC,aN7LZ,EAAA;;AM8LvB;;EACyC,aN4EZ,EAAA;;AM3E7B;EAA0C,aNpKZ,EAAA;;AMqK9B;EAAqC,aNxKZ,EAAA;;AMyKzB;EAAyC,aN9XZ,EAAA;;AM+X7B;;EACyC,aNzhBZ,EAAA;;AM0hB7B;;EACmD,aNxhBZ,EAAA;;AMyhBvC;;EACyC,aN5hBZ,EAAA;;AM6hB7B;;EAC4C,aN7hBZ,EAAA;;AM8hBhC;;EAC0C,aNliBZ,EAAA;;AMmiB9B;EAA0C,aN7LZ,EAAA;;AM8L9B;EAAqC,aNnRZ,EAAA;;AMoRzB;EAAyC,aN1LZ,EAAA;;AM2L7B;EAA2C,aN1LZ,EAAA;;AM2L/B;EAAwC,aNhDZ,EAAA;;AMiD5B;EAA0C,aNhDZ,EAAA;;AMiD9B;EAAmC,aN7eZ,EAAA;;AM8evB;EAA2C,aNhfZ,EAAA;;AMif/B;EAAkC,aNldZ,EAAA;;AMmdtB;EAA0C,aNxjBZ,EAAA;;AMyjB9B;EAAwC,aNhSZ,EAAA;;AMiS5B;;EAC4C,aNjSZ,EAAA;;AMkShC;;EAC2C,aNrSZ,EAAA;;AMsS/B;;EAC0C,aNxSZ,EAAA;;AMyS9B;EAAsC,aN7SZ,EAAA;;AM8S1B;;EACwC,aN7TZ,EAAA;;AM8T5B;;EACyC,aNlUZ,EAAA;;AMmU7B;EAA4C,aN/TZ,EAAA;;AMgUhC;EAA0C,aNzUZ,EAAA;;AM0U9B;EAAyC,aNhUZ,EAAA;;AMiU7B;EAA2C,aNpUZ,EAAA;;AMqU/B;EAAyC,aNtUZ,EAAA;;AMuU7B;EAAsC,aN3BZ,EAAA;;AM4B1B;EAAuC,aN3JZ,EAAA;;AM4J3B;EAA6C,aN9cZ,EAAA;;AM+cjC;EAA+B,aNrWZ,EAAA;;AMsWnB;EAAsC,aNrWZ,EAAA;;AMsW1B;EAAwC,aNxBZ,EAAA;;AMyB5B;EAA0C,aNvNZ,EAAA;;AMwN9B;EAAiD,aNvNZ,EAAA;;AMwNrC;EAAuC,aN3WZ,EAAA;;AM4W3B;EAAwC,aNmBZ,EAAA;;AMlB5B;EAAmC,aNjJZ,EAAA;;AMkJvB;EAAmC,aNvfZ,EAAA;;AMwfvB;EAAoC,aNzYZ,EAAA;;AM0YxB;EAAkC,aN1NZ,EAAA;;AM2NtB;EAA8C,aNhTZ,EAAA;;AMiTlC;;EACuC,aNnEZ,EAAA;;AMoE3B;EAAmC,aNheZ,EAAA;;AMievB;EAAkC,aNvoBZ,EAAA;;AMwoBtB;EAAmC,aNjoBZ,EAAA;;AMkoBvB;EAA4C,aNziBZ,EAAA;;AM0iBhC;EAA6C,aN5iBZ,EAAA;;AM6iBjC;EAA6C,aN1iBZ,EAAA;;AM2iBjC;EAA6C,aN/iBZ,EAAA;;AMgjBjC;EAAqC,aNhUZ,EAAA;;AMiUzB;EAAoC,aN1QZ,EAAA;;AM2QxB;EAAsC,aN1QZ,EAAA;;AM2Q1B;EAAkC,aN7QZ,EAAA;;AM8QtB;EAAgC,aNhRZ,EAAA;;AMiRpB;EAAuC,aNnfZ,EAAA;;AMof3B;EAAyC,aNnfZ,EAAA;;AMof7B;EAAkC,aN9UZ,EAAA;;AM+UtB;EAAkC,aNlBZ,EAAA;;AMmBtB;EAAsC,aN5kBZ,EAAA;;AM6kB1B;EAAsC,aNlZZ,EAAA;;AOlR1B;EACE,+BAA8B;EAC9B,sHAAqH;EACrH,gaAAwJ;EACxJ,oBAAmB;EACnB,mBAAkB,EAAA;AAIpB;EACE,+BAA8B;EAC9B,4HAA2H;EAC3H,kbAA8J;EAC9J,oBAAmB;EACnB,mBAAkB,EAAA;AAIpB;EACE,+BAA8B;EAC9B,oHAAmH;EACnH,0ZAAsJ;EACtJ,kBAAiB;EACjB,mBAAkB,EAAA;AAIpB;EACE,+BAA8B;EAC9B,0HAAyH;EACzH,4aAA4J;EAC5J,kBAAiB;EACjB,mBAAkB,EAAA;AC7BpB;EACE,6BAA4B;EAC5B,gBAAe;EACf,UAAS;EACT,WAAU;EACV,sBAAqB;EACrB,uBAAsB;EACtB,iBAAgB;EAChB,iBAAgB;EAChB,iBAAgB;EAChB,kBAAiB;EACjB,kBAAiB,EAAA;EACjB;IACE,4BAA2B;IAC3B,gBAAe,EAAA;EAEjB;IACE,eAAc,EAAA;EAEhB;IACE,gBAAe;IACf,8BAA6B;IAC7B,OAAM;IACN,YAAW;IACX,qBAAa;IAAb,sBAAa;IAAb,qBAAa;IAAb,cAAa;IACb,+BAAmB;IAAnB,8BAAmB;IAAnB,4BAAmB;QAAnB,wBAAmB;YAAnB,oBAAmB;IACnB,cAAa;IACb,0BAA8B;IAA9B,uCAA8B;QAA9B,uBAA8B;YAA9B,+BAA8B,EAAA;IAC9B;MACE,aAAY,EAAA;IAEd;MACE,eAAc,EAAA;EAGlB;IACE,aAAY,EAAA;EAEd;IACE,qBAAa;IAAb,sBAAa;IAAb,qBAAa;IAAb,cAAa;IACb,6BAAsB;IAAtB,8BAAsB;IAAtB,+BAAsB;QAAtB,2BAAsB;YAAtB,uBAAsB,EAAA;EAExB;IACE,qBAAa;IAAb,sBAAa;IAAb,qBAAa;IAAb,cAAa;IACb,+BAAmB;IAAnB,8BAAmB;IAAnB,4BAAmB;QAAnB,wBAAmB;YAAnB,oBAAmB;IACnB,eAAc,EAAA;IACd;MACE,YAAW;MACX,kBAAiB;MACjB,oBAAmB,EAAA;IAErB;MACE,oBAAS;MAAT,kBAAS;UAAT,cAAS;cAAT,UAAS;MACT,mBAAkB;MAClB,cAAa;MACb,cAAa,EAAA;IAEf;MACE,cAAa;MACb,iBAAgB;MAChB,cAAa;MACb,cAAa;MACb,aAAY,EAAA;IAEd;MACE,YAAW;MACX,4BAA2B;MAC3B,gBAAe,EAAA;EAGnB;IACE,qBAAa;IAAb,sBAAa;IAAb,qBAAa;IAAb,cAAa;IACb,+BAAmB;IAAnB,8BAAmB;IAAnB,4BAAmB;QAAnB,wBAAmB;YAAnB,oBAAmB;IACnB,sBAAyB;IAAzB,kCAAyB;QAAzB,mBAAyB;YAAzB,0BAAyB,EAAA;IACzB;MACE,iBAAgB;MAChB,aAAY,EAAA;IAEd;MACE,WAAU,EAAA;IAEZ;MACE,aAAY;MACZ,cAAa,EAAA;EAGjB;IACE,qBAAa;IAAb,sBAAa;IAAb,qBAAa;IAAb,cAAa;IACb,6BAAsB;IAAtB,8BAAsB;IAAtB,+BAAsB;QAAtB,2BAAsB;YAAtB,uBAAsB;IACtB,0BAAmB;IAAnB,4BAAmB;QAAnB,uBAAmB;YAAnB,oBAAmB;IACnB,wBAAuB,EAAA;IACvB;MACE,oBAAS;MAAT,kBAAS;UAAT,cAAS;cAAT,UAAS;MAGT,gBAAe;MACf,uBAAsB;MACtB,eAAc,EAAA;EAGlB;IACE,sBAAqB;IACrB,gBAAe;IACf,OAAM;IACN,UAAS;IACT,SAAQ;IACR,QAAO;IACP,aAAY;IACZ,aAAY,EAAA;EAEd;IACE,cAAa,EAAA","file":"styles/report.scss","sourcesContent":["@charset \"UTF-8\";\n/*!\n *  Font Awesome 4.4.0 by @davegandy - http://fontawesome.io - @fontawesome\n *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)\n */\n/* FONT PATH\n * -------------------------- */\n@font-face {\n  font-family: 'FontAwesome';\n  src: url(\"//netdna.bootstrapcdn.com/font-awesome/4.4.0/fonts/fontawesome-webfont.eot?v=4.4.0\");\n  src: url(\"//netdna.bootstrapcdn.com/font-awesome/4.4.0/fonts/fontawesome-webfont.eot?#iefix&v=4.4.0\") format(\"embedded-opentype\"), url(\"//netdna.bootstrapcdn.com/font-awesome/4.4.0/fonts/fontawesome-webfont.woff2?v=4.4.0\") format(\"woff2\"), url(\"//netdna.bootstrapcdn.com/font-awesome/4.4.0/fonts/fontawesome-webfont.woff?v=4.4.0\") format(\"woff\"), url(\"//netdna.bootstrapcdn.com/font-awesome/4.4.0/fonts/fontawesome-webfont.ttf?v=4.4.0\") format(\"truetype\"), url(\"//netdna.bootstrapcdn.com/font-awesome/4.4.0/fonts/fontawesome-webfont.svg?v=4.4.0#fontawesomeregular\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal; }\n.fa {\n  display: inline-block;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale; }\n\n/* makes the font 33% larger relative to the icon container */\n.fa-lg {\n  font-size: 1.33333em;\n  line-height: 0.75em;\n  vertical-align: -15%; }\n\n.fa-2x {\n  font-size: 2em; }\n\n.fa-3x {\n  font-size: 3em; }\n\n.fa-4x {\n  font-size: 4em; }\n\n.fa-5x {\n  font-size: 5em; }\n\n.fa-fw {\n  width: 1.28571em;\n  text-align: center; }\n\n.fa-ul {\n  padding-left: 0;\n  margin-left: 2.14286em;\n  list-style-type: none; }\n  .fa-ul > li {\n    position: relative; }\n\n.fa-li {\n  position: absolute;\n  left: -2.14286em;\n  width: 2.14286em;\n  top: 0.14286em;\n  text-align: center; }\n  .fa-li.fa-lg {\n    left: -1.85714em; }\n\n.fa-border {\n  padding: .2em .25em .15em;\n  border: solid 0.08em #eee;\n  border-radius: .1em; }\n\n.fa-pull-left {\n  float: left; }\n\n.fa-pull-right {\n  float: right; }\n\n.fa.fa-pull-left {\n  margin-right: .3em; }\n.fa.fa-pull-right {\n  margin-left: .3em; }\n\n/* Deprecated as of 4.4.0 */\n.pull-right {\n  float: right; }\n\n.pull-left {\n  float: left; }\n\n.fa.pull-left {\n  margin-right: .3em; }\n.fa.pull-right {\n  margin-left: .3em; }\n\n.fa-spin {\n  -webkit-animation: fa-spin 2s infinite linear;\n  animation: fa-spin 2s infinite linear; }\n\n.fa-pulse {\n  -webkit-animation: fa-spin 1s infinite steps(8);\n  animation: fa-spin 1s infinite steps(8); }\n\n@-webkit-keyframes fa-spin {\n  0% {\n    -webkit-transform: rotate(0deg);\n    transform: rotate(0deg); }\n  100% {\n    -webkit-transform: rotate(359deg);\n    transform: rotate(359deg); } }\n@keyframes fa-spin {\n  0% {\n    -webkit-transform: rotate(0deg);\n    transform: rotate(0deg); }\n  100% {\n    -webkit-transform: rotate(359deg);\n    transform: rotate(359deg); } }\n.fa-rotate-90 {\n  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);\n  -webkit-transform: rotate(90deg);\n  -ms-transform: rotate(90deg);\n  transform: rotate(90deg); }\n\n.fa-rotate-180 {\n  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);\n  -webkit-transform: rotate(180deg);\n  -ms-transform: rotate(180deg);\n  transform: rotate(180deg); }\n\n.fa-rotate-270 {\n  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);\n  -webkit-transform: rotate(270deg);\n  -ms-transform: rotate(270deg);\n  transform: rotate(270deg); }\n\n.fa-flip-horizontal {\n  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0);\n  -webkit-transform: scale(-1, 1);\n  -ms-transform: scale(-1, 1);\n  transform: scale(-1, 1); }\n\n.fa-flip-vertical {\n  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);\n  -webkit-transform: scale(1, -1);\n  -ms-transform: scale(1, -1);\n  transform: scale(1, -1); }\n\n:root .fa-rotate-90,\n:root .fa-rotate-180,\n:root .fa-rotate-270,\n:root .fa-flip-horizontal,\n:root .fa-flip-vertical {\n  filter: none; }\n\n.fa-stack {\n  position: relative;\n  display: inline-block;\n  width: 2em;\n  height: 2em;\n  line-height: 2em;\n  vertical-align: middle; }\n\n.fa-stack-1x, .fa-stack-2x {\n  position: absolute;\n  left: 0;\n  width: 100%;\n  text-align: center; }\n\n.fa-stack-1x {\n  line-height: inherit; }\n\n.fa-stack-2x {\n  font-size: 2em; }\n\n.fa-inverse {\n  color: #fff; }\n\n/* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen\n   readers do not read off random characters that represent icons */\n.fa-glass:before {\n  content: \"\"; }\n\n.fa-music:before {\n  content: \"\"; }\n\n.fa-search:before {\n  content: \"\"; }\n\n.fa-envelope-o:before {\n  content: \"\"; }\n\n.fa-heart:before {\n  content: \"\"; }\n\n.fa-star:before {\n  content: \"\"; }\n\n.fa-star-o:before {\n  content: \"\"; }\n\n.fa-user:before {\n  content: \"\"; }\n\n.fa-film:before {\n  content: \"\"; }\n\n.fa-th-large:before {\n  content: \"\"; }\n\n.fa-th:before {\n  content: \"\"; }\n\n.fa-th-list:before {\n  content: \"\"; }\n\n.fa-check:before {\n  content: \"\"; }\n\n.fa-remove:before,\n.fa-close:before,\n.fa-times:before {\n  content: \"\"; }\n\n.fa-search-plus:before {\n  content: \"\"; }\n\n.fa-search-minus:before {\n  content: \"\"; }\n\n.fa-power-off:before {\n  content: \"\"; }\n\n.fa-signal:before {\n  content: \"\"; }\n\n.fa-gear:before,\n.fa-cog:before {\n  content: \"\"; }\n\n.fa-trash-o:before {\n  content: \"\"; }\n\n.fa-home:before {\n  content: \"\"; }\n\n.fa-file-o:before {\n  content: \"\"; }\n\n.fa-clock-o:before {\n  content: \"\"; }\n\n.fa-road:before {\n  content: \"\"; }\n\n.fa-download:before {\n  content: \"\"; }\n\n.fa-arrow-circle-o-down:before {\n  content: \"\"; }\n\n.fa-arrow-circle-o-up:before {\n  content: \"\"; }\n\n.fa-inbox:before {\n  content: \"\"; }\n\n.fa-play-circle-o:before {\n  content: \"\"; }\n\n.fa-rotate-right:before,\n.fa-repeat:before {\n  content: \"\"; }\n\n.fa-refresh:before {\n  content: \"\"; }\n\n.fa-list-alt:before {\n  content: \"\"; }\n\n.fa-lock:before {\n  content: \"\"; }\n\n.fa-flag:before {\n  content: \"\"; }\n\n.fa-headphones:before {\n  content: \"\"; }\n\n.fa-volume-off:before {\n  content: \"\"; }\n\n.fa-volume-down:before {\n  content: \"\"; }\n\n.fa-volume-up:before {\n  content: \"\"; }\n\n.fa-qrcode:before {\n  content: \"\"; }\n\n.fa-barcode:before {\n  content: \"\"; }\n\n.fa-tag:before {\n  content: \"\"; }\n\n.fa-tags:before {\n  content: \"\"; }\n\n.fa-book:before {\n  content: \"\"; }\n\n.fa-bookmark:before {\n  content: \"\"; }\n\n.fa-print:before {\n  content: \"\"; }\n\n.fa-camera:before {\n  content: \"\"; }\n\n.fa-font:before {\n  content: \"\"; }\n\n.fa-bold:before {\n  content: \"\"; }\n\n.fa-italic:before {\n  content: \"\"; }\n\n.fa-text-height:before {\n  content: \"\"; }\n\n.fa-text-width:before {\n  content: \"\"; }\n\n.fa-align-left:before {\n  content: \"\"; }\n\n.fa-align-center:before {\n  content: \"\"; }\n\n.fa-align-right:before {\n  content: \"\"; }\n\n.fa-align-justify:before {\n  content: \"\"; }\n\n.fa-list:before {\n  content: \"\"; }\n\n.fa-dedent:before,\n.fa-outdent:before {\n  content: \"\"; }\n\n.fa-indent:before {\n  content: \"\"; }\n\n.fa-video-camera:before {\n  content: \"\"; }\n\n.fa-photo:before,\n.fa-image:before,\n.fa-picture-o:before {\n  content: \"\"; }\n\n.fa-pencil:before {\n  content: \"\"; }\n\n.fa-map-marker:before {\n  content: \"\"; }\n\n.fa-adjust:before {\n  content: \"\"; }\n\n.fa-tint:before {\n  content: \"\"; }\n\n.fa-edit:before,\n.fa-pencil-square-o:before {\n  content: \"\"; }\n\n.fa-share-square-o:before {\n  content: \"\"; }\n\n.fa-check-square-o:before {\n  content: \"\"; }\n\n.fa-arrows:before {\n  content: \"\"; }\n\n.fa-step-backward:before {\n  content: \"\"; }\n\n.fa-fast-backward:before {\n  content: \"\"; }\n\n.fa-backward:before {\n  content: \"\"; }\n\n.fa-play:before {\n  content: \"\"; }\n\n.fa-pause:before {\n  content: \"\"; }\n\n.fa-stop:before {\n  content: \"\"; }\n\n.fa-forward:before {\n  content: \"\"; }\n\n.fa-fast-forward:before {\n  content: \"\"; }\n\n.fa-step-forward:before {\n  content: \"\"; }\n\n.fa-eject:before {\n  content: \"\"; }\n\n.fa-chevron-left:before {\n  content: \"\"; }\n\n.fa-chevron-right:before {\n  content: \"\"; }\n\n.fa-plus-circle:before {\n  content: \"\"; }\n\n.fa-minus-circle:before {\n  content: \"\"; }\n\n.fa-times-circle:before {\n  content: \"\"; }\n\n.fa-check-circle:before {\n  content: \"\"; }\n\n.fa-question-circle:before {\n  content: \"\"; }\n\n.fa-info-circle:before {\n  content: \"\"; }\n\n.fa-crosshairs:before {\n  content: \"\"; }\n\n.fa-times-circle-o:before {\n  content: \"\"; }\n\n.fa-check-circle-o:before {\n  content: \"\"; }\n\n.fa-ban:before {\n  content: \"\"; }\n\n.fa-arrow-left:before {\n  content: \"\"; }\n\n.fa-arrow-right:before {\n  content: \"\"; }\n\n.fa-arrow-up:before {\n  content: \"\"; }\n\n.fa-arrow-down:before {\n  content: \"\"; }\n\n.fa-mail-forward:before,\n.fa-share:before {\n  content: \"\"; }\n\n.fa-expand:before {\n  content: \"\"; }\n\n.fa-compress:before {\n  content: \"\"; }\n\n.fa-plus:before {\n  content: \"\"; }\n\n.fa-minus:before {\n  content: \"\"; }\n\n.fa-asterisk:before {\n  content: \"\"; }\n\n.fa-exclamation-circle:before {\n  content: \"\"; }\n\n.fa-gift:before {\n  content: \"\"; }\n\n.fa-leaf:before {\n  content: \"\"; }\n\n.fa-fire:before {\n  content: \"\"; }\n\n.fa-eye:before {\n  content: \"\"; }\n\n.fa-eye-slash:before {\n  content: \"\"; }\n\n.fa-warning:before,\n.fa-exclamation-triangle:before {\n  content: \"\"; }\n\n.fa-plane:before {\n  content: \"\"; }\n\n.fa-calendar:before {\n  content: \"\"; }\n\n.fa-random:before {\n  content: \"\"; }\n\n.fa-comment:before {\n  content: \"\"; }\n\n.fa-magnet:before {\n  content: \"\"; }\n\n.fa-chevron-up:before {\n  content: \"\"; }\n\n.fa-chevron-down:before {\n  content: \"\"; }\n\n.fa-retweet:before {\n  content: \"\"; }\n\n.fa-shopping-cart:before {\n  content: \"\"; }\n\n.fa-folder:before {\n  content: \"\"; }\n\n.fa-folder-open:before {\n  content: \"\"; }\n\n.fa-arrows-v:before {\n  content: \"\"; }\n\n.fa-arrows-h:before {\n  content: \"\"; }\n\n.fa-bar-chart-o:before,\n.fa-bar-chart:before {\n  content: \"\"; }\n\n.fa-twitter-square:before {\n  content: \"\"; }\n\n.fa-facebook-square:before {\n  content: \"\"; }\n\n.fa-camera-retro:before {\n  content: \"\"; }\n\n.fa-key:before {\n  content: \"\"; }\n\n.fa-gears:before,\n.fa-cogs:before {\n  content: \"\"; }\n\n.fa-comments:before {\n  content: \"\"; }\n\n.fa-thumbs-o-up:before {\n  content: \"\"; }\n\n.fa-thumbs-o-down:before {\n  content: \"\"; }\n\n.fa-star-half:before {\n  content: \"\"; }\n\n.fa-heart-o:before {\n  content: \"\"; }\n\n.fa-sign-out:before {\n  content: \"\"; }\n\n.fa-linkedin-square:before {\n  content: \"\"; }\n\n.fa-thumb-tack:before {\n  content: \"\"; }\n\n.fa-external-link:before {\n  content: \"\"; }\n\n.fa-sign-in:before {\n  content: \"\"; }\n\n.fa-trophy:before {\n  content: \"\"; }\n\n.fa-github-square:before {\n  content: \"\"; }\n\n.fa-upload:before {\n  content: \"\"; }\n\n.fa-lemon-o:before {\n  content: \"\"; }\n\n.fa-phone:before {\n  content: \"\"; }\n\n.fa-square-o:before {\n  content: \"\"; }\n\n.fa-bookmark-o:before {\n  content: \"\"; }\n\n.fa-phone-square:before {\n  content: \"\"; }\n\n.fa-twitter:before {\n  content: \"\"; }\n\n.fa-facebook-f:before,\n.fa-facebook:before {\n  content: \"\"; }\n\n.fa-github:before {\n  content: \"\"; }\n\n.fa-unlock:before {\n  content: \"\"; }\n\n.fa-credit-card:before {\n  content: \"\"; }\n\n.fa-feed:before,\n.fa-rss:before {\n  content: \"\"; }\n\n.fa-hdd-o:before {\n  content: \"\"; }\n\n.fa-bullhorn:before {\n  content: \"\"; }\n\n.fa-bell:before {\n  content: \"\"; }\n\n.fa-certificate:before {\n  content: \"\"; }\n\n.fa-hand-o-right:before {\n  content: \"\"; }\n\n.fa-hand-o-left:before {\n  content: \"\"; }\n\n.fa-hand-o-up:before {\n  content: \"\"; }\n\n.fa-hand-o-down:before {\n  content: \"\"; }\n\n.fa-arrow-circle-left:before {\n  content: \"\"; }\n\n.fa-arrow-circle-right:before {\n  content: \"\"; }\n\n.fa-arrow-circle-up:before {\n  content: \"\"; }\n\n.fa-arrow-circle-down:before {\n  content: \"\"; }\n\n.fa-globe:before {\n  content: \"\"; }\n\n.fa-wrench:before {\n  content: \"\"; }\n\n.fa-tasks:before {\n  content: \"\"; }\n\n.fa-filter:before {\n  content: \"\"; }\n\n.fa-briefcase:before {\n  content: \"\"; }\n\n.fa-arrows-alt:before {\n  content: \"\"; }\n\n.fa-group:before,\n.fa-users:before {\n  content: \"\"; }\n\n.fa-chain:before,\n.fa-link:before {\n  content: \"\"; }\n\n.fa-cloud:before {\n  content: \"\"; }\n\n.fa-flask:before {\n  content: \"\"; }\n\n.fa-cut:before,\n.fa-scissors:before {\n  content: \"\"; }\n\n.fa-copy:before,\n.fa-files-o:before {\n  content: \"\"; }\n\n.fa-paperclip:before {\n  content: \"\"; }\n\n.fa-save:before,\n.fa-floppy-o:before {\n  content: \"\"; }\n\n.fa-square:before {\n  content: \"\"; }\n\n.fa-navicon:before,\n.fa-reorder:before,\n.fa-bars:before {\n  content: \"\"; }\n\n.fa-list-ul:before {\n  content: \"\"; }\n\n.fa-list-ol:before {\n  content: \"\"; }\n\n.fa-strikethrough:before {\n  content: \"\"; }\n\n.fa-underline:before {\n  content: \"\"; }\n\n.fa-table:before {\n  content: \"\"; }\n\n.fa-magic:before {\n  content: \"\"; }\n\n.fa-truck:before {\n  content: \"\"; }\n\n.fa-pinterest:before {\n  content: \"\"; }\n\n.fa-pinterest-square:before {\n  content: \"\"; }\n\n.fa-google-plus-square:before {\n  content: \"\"; }\n\n.fa-google-plus:before {\n  content: \"\"; }\n\n.fa-money:before {\n  content: \"\"; }\n\n.fa-caret-down:before {\n  content: \"\"; }\n\n.fa-caret-up:before {\n  content: \"\"; }\n\n.fa-caret-left:before {\n  content: \"\"; }\n\n.fa-caret-right:before {\n  content: \"\"; }\n\n.fa-columns:before {\n  content: \"\"; }\n\n.fa-unsorted:before,\n.fa-sort:before {\n  content: \"\"; }\n\n.fa-sort-down:before,\n.fa-sort-desc:before {\n  content: \"\"; }\n\n.fa-sort-up:before,\n.fa-sort-asc:before {\n  content: \"\"; }\n\n.fa-envelope:before {\n  content: \"\"; }\n\n.fa-linkedin:before {\n  content: \"\"; }\n\n.fa-rotate-left:before,\n.fa-undo:before {\n  content: \"\"; }\n\n.fa-legal:before,\n.fa-gavel:before {\n  content: \"\"; }\n\n.fa-dashboard:before,\n.fa-tachometer:before {\n  content: \"\"; }\n\n.fa-comment-o:before {\n  content: \"\"; }\n\n.fa-comments-o:before {\n  content: \"\"; }\n\n.fa-flash:before,\n.fa-bolt:before {\n  content: \"\"; }\n\n.fa-sitemap:before {\n  content: \"\"; }\n\n.fa-umbrella:before {\n  content: \"\"; }\n\n.fa-paste:before,\n.fa-clipboard:before {\n  content: \"\"; }\n\n.fa-lightbulb-o:before {\n  content: \"\"; }\n\n.fa-exchange:before {\n  content: \"\"; }\n\n.fa-cloud-download:before {\n  content: \"\"; }\n\n.fa-cloud-upload:before {\n  content: \"\"; }\n\n.fa-user-md:before {\n  content: \"\"; }\n\n.fa-stethoscope:before {\n  content: \"\"; }\n\n.fa-suitcase:before {\n  content: \"\"; }\n\n.fa-bell-o:before {\n  content: \"\"; }\n\n.fa-coffee:before {\n  content: \"\"; }\n\n.fa-cutlery:before {\n  content: \"\"; }\n\n.fa-file-text-o:before {\n  content: \"\"; }\n\n.fa-building-o:before {\n  content: \"\"; }\n\n.fa-hospital-o:before {\n  content: \"\"; }\n\n.fa-ambulance:before {\n  content: \"\"; }\n\n.fa-medkit:before {\n  content: \"\"; }\n\n.fa-fighter-jet:before {\n  content: \"\"; }\n\n.fa-beer:before {\n  content: \"\"; }\n\n.fa-h-square:before {\n  content: \"\"; }\n\n.fa-plus-square:before {\n  content: \"\"; }\n\n.fa-angle-double-left:before {\n  content: \"\"; }\n\n.fa-angle-double-right:before {\n  content: \"\"; }\n\n.fa-angle-double-up:before {\n  content: \"\"; }\n\n.fa-angle-double-down:before {\n  content: \"\"; }\n\n.fa-angle-left:before {\n  content: \"\"; }\n\n.fa-angle-right:before {\n  content: \"\"; }\n\n.fa-angle-up:before {\n  content: \"\"; }\n\n.fa-angle-down:before {\n  content: \"\"; }\n\n.fa-desktop:before {\n  content: \"\"; }\n\n.fa-laptop:before {\n  content: \"\"; }\n\n.fa-tablet:before {\n  content: \"\"; }\n\n.fa-mobile-phone:before,\n.fa-mobile:before {\n  content: \"\"; }\n\n.fa-circle-o:before {\n  content: \"\"; }\n\n.fa-quote-left:before {\n  content: \"\"; }\n\n.fa-quote-right:before {\n  content: \"\"; }\n\n.fa-spinner:before {\n  content: \"\"; }\n\n.fa-circle:before {\n  content: \"\"; }\n\n.fa-mail-reply:before,\n.fa-reply:before {\n  content: \"\"; }\n\n.fa-github-alt:before {\n  content: \"\"; }\n\n.fa-folder-o:before {\n  content: \"\"; }\n\n.fa-folder-open-o:before {\n  content: \"\"; }\n\n.fa-smile-o:before {\n  content: \"\"; }\n\n.fa-frown-o:before {\n  content: \"\"; }\n\n.fa-meh-o:before {\n  content: \"\"; }\n\n.fa-gamepad:before {\n  content: \"\"; }\n\n.fa-keyboard-o:before {\n  content: \"\"; }\n\n.fa-flag-o:before {\n  content: \"\"; }\n\n.fa-flag-checkered:before {\n  content: \"\"; }\n\n.fa-terminal:before {\n  content: \"\"; }\n\n.fa-code:before {\n  content: \"\"; }\n\n.fa-mail-reply-all:before,\n.fa-reply-all:before {\n  content: \"\"; }\n\n.fa-star-half-empty:before,\n.fa-star-half-full:before,\n.fa-star-half-o:before {\n  content: \"\"; }\n\n.fa-location-arrow:before {\n  content: \"\"; }\n\n.fa-crop:before {\n  content: \"\"; }\n\n.fa-code-fork:before {\n  content: \"\"; }\n\n.fa-unlink:before,\n.fa-chain-broken:before {\n  content: \"\"; }\n\n.fa-question:before {\n  content: \"\"; }\n\n.fa-info:before {\n  content: \"\"; }\n\n.fa-exclamation:before {\n  content: \"\"; }\n\n.fa-superscript:before {\n  content: \"\"; }\n\n.fa-subscript:before {\n  content: \"\"; }\n\n.fa-eraser:before {\n  content: \"\"; }\n\n.fa-puzzle-piece:before {\n  content: \"\"; }\n\n.fa-microphone:before {\n  content: \"\"; }\n\n.fa-microphone-slash:before {\n  content: \"\"; }\n\n.fa-shield:before {\n  content: \"\"; }\n\n.fa-calendar-o:before {\n  content: \"\"; }\n\n.fa-fire-extinguisher:before {\n  content: \"\"; }\n\n.fa-rocket:before {\n  content: \"\"; }\n\n.fa-maxcdn:before {\n  content: \"\"; }\n\n.fa-chevron-circle-left:before {\n  content: \"\"; }\n\n.fa-chevron-circle-right:before {\n  content: \"\"; }\n\n.fa-chevron-circle-up:before {\n  content: \"\"; }\n\n.fa-chevron-circle-down:before {\n  content: \"\"; }\n\n.fa-html5:before {\n  content: \"\"; }\n\n.fa-css3:before {\n  content: \"\"; }\n\n.fa-anchor:before {\n  content: \"\"; }\n\n.fa-unlock-alt:before {\n  content: \"\"; }\n\n.fa-bullseye:before {\n  content: \"\"; }\n\n.fa-ellipsis-h:before {\n  content: \"\"; }\n\n.fa-ellipsis-v:before {\n  content: \"\"; }\n\n.fa-rss-square:before {\n  content: \"\"; }\n\n.fa-play-circle:before {\n  content: \"\"; }\n\n.fa-ticket:before {\n  content: \"\"; }\n\n.fa-minus-square:before {\n  content: \"\"; }\n\n.fa-minus-square-o:before {\n  content: \"\"; }\n\n.fa-level-up:before {\n  content: \"\"; }\n\n.fa-level-down:before {\n  content: \"\"; }\n\n.fa-check-square:before {\n  content: \"\"; }\n\n.fa-pencil-square:before {\n  content: \"\"; }\n\n.fa-external-link-square:before {\n  content: \"\"; }\n\n.fa-share-square:before {\n  content: \"\"; }\n\n.fa-compass:before {\n  content: \"\"; }\n\n.fa-toggle-down:before,\n.fa-caret-square-o-down:before {\n  content: \"\"; }\n\n.fa-toggle-up:before,\n.fa-caret-square-o-up:before {\n  content: \"\"; }\n\n.fa-toggle-right:before,\n.fa-caret-square-o-right:before {\n  content: \"\"; }\n\n.fa-euro:before,\n.fa-eur:before {\n  content: \"\"; }\n\n.fa-gbp:before {\n  content: \"\"; }\n\n.fa-dollar:before,\n.fa-usd:before {\n  content: \"\"; }\n\n.fa-rupee:before,\n.fa-inr:before {\n  content: \"\"; }\n\n.fa-cny:before,\n.fa-rmb:before,\n.fa-yen:before,\n.fa-jpy:before {\n  content: \"\"; }\n\n.fa-ruble:before,\n.fa-rouble:before,\n.fa-rub:before {\n  content: \"\"; }\n\n.fa-won:before,\n.fa-krw:before {\n  content: \"\"; }\n\n.fa-bitcoin:before,\n.fa-btc:before {\n  content: \"\"; }\n\n.fa-file:before {\n  content: \"\"; }\n\n.fa-file-text:before {\n  content: \"\"; }\n\n.fa-sort-alpha-asc:before {\n  content: \"\"; }\n\n.fa-sort-alpha-desc:before {\n  content: \"\"; }\n\n.fa-sort-amount-asc:before {\n  content: \"\"; }\n\n.fa-sort-amount-desc:before {\n  content: \"\"; }\n\n.fa-sort-numeric-asc:before {\n  content: \"\"; }\n\n.fa-sort-numeric-desc:before {\n  content: \"\"; }\n\n.fa-thumbs-up:before {\n  content: \"\"; }\n\n.fa-thumbs-down:before {\n  content: \"\"; }\n\n.fa-youtube-square:before {\n  content: \"\"; }\n\n.fa-youtube:before {\n  content: \"\"; }\n\n.fa-xing:before {\n  content: \"\"; }\n\n.fa-xing-square:before {\n  content: \"\"; }\n\n.fa-youtube-play:before {\n  content: \"\"; }\n\n.fa-dropbox:before {\n  content: \"\"; }\n\n.fa-stack-overflow:before {\n  content: \"\"; }\n\n.fa-instagram:before {\n  content: \"\"; }\n\n.fa-flickr:before {\n  content: \"\"; }\n\n.fa-adn:before {\n  content: \"\"; }\n\n.fa-bitbucket:before {\n  content: \"\"; }\n\n.fa-bitbucket-square:before {\n  content: \"\"; }\n\n.fa-tumblr:before {\n  content: \"\"; }\n\n.fa-tumblr-square:before {\n  content: \"\"; }\n\n.fa-long-arrow-down:before {\n  content: \"\"; }\n\n.fa-long-arrow-up:before {\n  content: \"\"; }\n\n.fa-long-arrow-left:before {\n  content: \"\"; }\n\n.fa-long-arrow-right:before {\n  content: \"\"; }\n\n.fa-apple:before {\n  content: \"\"; }\n\n.fa-windows:before {\n  content: \"\"; }\n\n.fa-android:before {\n  content: \"\"; }\n\n.fa-linux:before {\n  content: \"\"; }\n\n.fa-dribbble:before {\n  content: \"\"; }\n\n.fa-skype:before {\n  content: \"\"; }\n\n.fa-foursquare:before {\n  content: \"\"; }\n\n.fa-trello:before {\n  content: \"\"; }\n\n.fa-female:before {\n  content: \"\"; }\n\n.fa-male:before {\n  content: \"\"; }\n\n.fa-gittip:before,\n.fa-gratipay:before {\n  content: \"\"; }\n\n.fa-sun-o:before {\n  content: \"\"; }\n\n.fa-moon-o:before {\n  content: \"\"; }\n\n.fa-archive:before {\n  content: \"\"; }\n\n.fa-bug:before {\n  content: \"\"; }\n\n.fa-vk:before {\n  content: \"\"; }\n\n.fa-weibo:before {\n  content: \"\"; }\n\n.fa-renren:before {\n  content: \"\"; }\n\n.fa-pagelines:before {\n  content: \"\"; }\n\n.fa-stack-exchange:before {\n  content: \"\"; }\n\n.fa-arrow-circle-o-right:before {\n  content: \"\"; }\n\n.fa-arrow-circle-o-left:before {\n  content: \"\"; }\n\n.fa-toggle-left:before,\n.fa-caret-square-o-left:before {\n  content: \"\"; }\n\n.fa-dot-circle-o:before {\n  content: \"\"; }\n\n.fa-wheelchair:before {\n  content: \"\"; }\n\n.fa-vimeo-square:before {\n  content: \"\"; }\n\n.fa-turkish-lira:before,\n.fa-try:before {\n  content: \"\"; }\n\n.fa-plus-square-o:before {\n  content: \"\"; }\n\n.fa-space-shuttle:before {\n  content: \"\"; }\n\n.fa-slack:before {\n  content: \"\"; }\n\n.fa-envelope-square:before {\n  content: \"\"; }\n\n.fa-wordpress:before {\n  content: \"\"; }\n\n.fa-openid:before {\n  content: \"\"; }\n\n.fa-institution:before,\n.fa-bank:before,\n.fa-university:before {\n  content: \"\"; }\n\n.fa-mortar-board:before,\n.fa-graduation-cap:before {\n  content: \"\"; }\n\n.fa-yahoo:before {\n  content: \"\"; }\n\n.fa-google:before {\n  content: \"\"; }\n\n.fa-reddit:before {\n  content: \"\"; }\n\n.fa-reddit-square:before {\n  content: \"\"; }\n\n.fa-stumbleupon-circle:before {\n  content: \"\"; }\n\n.fa-stumbleupon:before {\n  content: \"\"; }\n\n.fa-delicious:before {\n  content: \"\"; }\n\n.fa-digg:before {\n  content: \"\"; }\n\n.fa-pied-piper:before {\n  content: \"\"; }\n\n.fa-pied-piper-alt:before {\n  content: \"\"; }\n\n.fa-drupal:before {\n  content: \"\"; }\n\n.fa-joomla:before {\n  content: \"\"; }\n\n.fa-language:before {\n  content: \"\"; }\n\n.fa-fax:before {\n  content: \"\"; }\n\n.fa-building:before {\n  content: \"\"; }\n\n.fa-child:before {\n  content: \"\"; }\n\n.fa-paw:before {\n  content: \"\"; }\n\n.fa-spoon:before {\n  content: \"\"; }\n\n.fa-cube:before {\n  content: \"\"; }\n\n.fa-cubes:before {\n  content: \"\"; }\n\n.fa-behance:before {\n  content: \"\"; }\n\n.fa-behance-square:before {\n  content: \"\"; }\n\n.fa-steam:before {\n  content: \"\"; }\n\n.fa-steam-square:before {\n  content: \"\"; }\n\n.fa-recycle:before {\n  content: \"\"; }\n\n.fa-automobile:before,\n.fa-car:before {\n  content: \"\"; }\n\n.fa-cab:before,\n.fa-taxi:before {\n  content: \"\"; }\n\n.fa-tree:before {\n  content: \"\"; }\n\n.fa-spotify:before {\n  content: \"\"; }\n\n.fa-deviantart:before {\n  content: \"\"; }\n\n.fa-soundcloud:before {\n  content: \"\"; }\n\n.fa-database:before {\n  content: \"\"; }\n\n.fa-file-pdf-o:before {\n  content: \"\"; }\n\n.fa-file-word-o:before {\n  content: \"\"; }\n\n.fa-file-excel-o:before {\n  content: \"\"; }\n\n.fa-file-powerpoint-o:before {\n  content: \"\"; }\n\n.fa-file-photo-o:before,\n.fa-file-picture-o:before,\n.fa-file-image-o:before {\n  content: \"\"; }\n\n.fa-file-zip-o:before,\n.fa-file-archive-o:before {\n  content: \"\"; }\n\n.fa-file-sound-o:before,\n.fa-file-audio-o:before {\n  content: \"\"; }\n\n.fa-file-movie-o:before,\n.fa-file-video-o:before {\n  content: \"\"; }\n\n.fa-file-code-o:before {\n  content: \"\"; }\n\n.fa-vine:before {\n  content: \"\"; }\n\n.fa-codepen:before {\n  content: \"\"; }\n\n.fa-jsfiddle:before {\n  content: \"\"; }\n\n.fa-life-bouy:before,\n.fa-life-buoy:before,\n.fa-life-saver:before,\n.fa-support:before,\n.fa-life-ring:before {\n  content: \"\"; }\n\n.fa-circle-o-notch:before {\n  content: \"\"; }\n\n.fa-ra:before,\n.fa-rebel:before {\n  content: \"\"; }\n\n.fa-ge:before,\n.fa-empire:before {\n  content: \"\"; }\n\n.fa-git-square:before {\n  content: \"\"; }\n\n.fa-git:before {\n  content: \"\"; }\n\n.fa-y-combinator-square:before,\n.fa-yc-square:before,\n.fa-hacker-news:before {\n  content: \"\"; }\n\n.fa-tencent-weibo:before {\n  content: \"\"; }\n\n.fa-qq:before {\n  content: \"\"; }\n\n.fa-wechat:before,\n.fa-weixin:before {\n  content: \"\"; }\n\n.fa-send:before,\n.fa-paper-plane:before {\n  content: \"\"; }\n\n.fa-send-o:before,\n.fa-paper-plane-o:before {\n  content: \"\"; }\n\n.fa-history:before {\n  content: \"\"; }\n\n.fa-circle-thin:before {\n  content: \"\"; }\n\n.fa-header:before {\n  content: \"\"; }\n\n.fa-paragraph:before {\n  content: \"\"; }\n\n.fa-sliders:before {\n  content: \"\"; }\n\n.fa-share-alt:before {\n  content: \"\"; }\n\n.fa-share-alt-square:before {\n  content: \"\"; }\n\n.fa-bomb:before {\n  content: \"\"; }\n\n.fa-soccer-ball-o:before,\n.fa-futbol-o:before {\n  content: \"\"; }\n\n.fa-tty:before {\n  content: \"\"; }\n\n.fa-binoculars:before {\n  content: \"\"; }\n\n.fa-plug:before {\n  content: \"\"; }\n\n.fa-slideshare:before {\n  content: \"\"; }\n\n.fa-twitch:before {\n  content: \"\"; }\n\n.fa-yelp:before {\n  content: \"\"; }\n\n.fa-newspaper-o:before {\n  content: \"\"; }\n\n.fa-wifi:before {\n  content: \"\"; }\n\n.fa-calculator:before {\n  content: \"\"; }\n\n.fa-paypal:before {\n  content: \"\"; }\n\n.fa-google-wallet:before {\n  content: \"\"; }\n\n.fa-cc-visa:before {\n  content: \"\"; }\n\n.fa-cc-mastercard:before {\n  content: \"\"; }\n\n.fa-cc-discover:before {\n  content: \"\"; }\n\n.fa-cc-amex:before {\n  content: \"\"; }\n\n.fa-cc-paypal:before {\n  content: \"\"; }\n\n.fa-cc-stripe:before {\n  content: \"\"; }\n\n.fa-bell-slash:before {\n  content: \"\"; }\n\n.fa-bell-slash-o:before {\n  content: \"\"; }\n\n.fa-trash:before {\n  content: \"\"; }\n\n.fa-copyright:before {\n  content: \"\"; }\n\n.fa-at:before {\n  content: \"\"; }\n\n.fa-eyedropper:before {\n  content: \"\"; }\n\n.fa-paint-brush:before {\n  content: \"\"; }\n\n.fa-birthday-cake:before {\n  content: \"\"; }\n\n.fa-area-chart:before {\n  content: \"\"; }\n\n.fa-pie-chart:before {\n  content: \"\"; }\n\n.fa-line-chart:before {\n  content: \"\"; }\n\n.fa-lastfm:before {\n  content: \"\"; }\n\n.fa-lastfm-square:before {\n  content: \"\"; }\n\n.fa-toggle-off:before {\n  content: \"\"; }\n\n.fa-toggle-on:before {\n  content: \"\"; }\n\n.fa-bicycle:before {\n  content: \"\"; }\n\n.fa-bus:before {\n  content: \"\"; }\n\n.fa-ioxhost:before {\n  content: \"\"; }\n\n.fa-angellist:before {\n  content: \"\"; }\n\n.fa-cc:before {\n  content: \"\"; }\n\n.fa-shekel:before,\n.fa-sheqel:before,\n.fa-ils:before {\n  content: \"\"; }\n\n.fa-meanpath:before {\n  content: \"\"; }\n\n.fa-buysellads:before {\n  content: \"\"; }\n\n.fa-connectdevelop:before {\n  content: \"\"; }\n\n.fa-dashcube:before {\n  content: \"\"; }\n\n.fa-forumbee:before {\n  content: \"\"; }\n\n.fa-leanpub:before {\n  content: \"\"; }\n\n.fa-sellsy:before {\n  content: \"\"; }\n\n.fa-shirtsinbulk:before {\n  content: \"\"; }\n\n.fa-simplybuilt:before {\n  content: \"\"; }\n\n.fa-skyatlas:before {\n  content: \"\"; }\n\n.fa-cart-plus:before {\n  content: \"\"; }\n\n.fa-cart-arrow-down:before {\n  content: \"\"; }\n\n.fa-diamond:before {\n  content: \"\"; }\n\n.fa-ship:before {\n  content: \"\"; }\n\n.fa-user-secret:before {\n  content: \"\"; }\n\n.fa-motorcycle:before {\n  content: \"\"; }\n\n.fa-street-view:before {\n  content: \"\"; }\n\n.fa-heartbeat:before {\n  content: \"\"; }\n\n.fa-venus:before {\n  content: \"\"; }\n\n.fa-mars:before {\n  content: \"\"; }\n\n.fa-mercury:before {\n  content: \"\"; }\n\n.fa-intersex:before,\n.fa-transgender:before {\n  content: \"\"; }\n\n.fa-transgender-alt:before {\n  content: \"\"; }\n\n.fa-venus-double:before {\n  content: \"\"; }\n\n.fa-mars-double:before {\n  content: \"\"; }\n\n.fa-venus-mars:before {\n  content: \"\"; }\n\n.fa-mars-stroke:before {\n  content: \"\"; }\n\n.fa-mars-stroke-v:before {\n  content: \"\"; }\n\n.fa-mars-stroke-h:before {\n  content: \"\"; }\n\n.fa-neuter:before {\n  content: \"\"; }\n\n.fa-genderless:before {\n  content: \"\"; }\n\n.fa-facebook-official:before {\n  content: \"\"; }\n\n.fa-pinterest-p:before {\n  content: \"\"; }\n\n.fa-whatsapp:before {\n  content: \"\"; }\n\n.fa-server:before {\n  content: \"\"; }\n\n.fa-user-plus:before {\n  content: \"\"; }\n\n.fa-user-times:before {\n  content: \"\"; }\n\n.fa-hotel:before,\n.fa-bed:before {\n  content: \"\"; }\n\n.fa-viacoin:before {\n  content: \"\"; }\n\n.fa-train:before {\n  content: \"\"; }\n\n.fa-subway:before {\n  content: \"\"; }\n\n.fa-medium:before {\n  content: \"\"; }\n\n.fa-yc:before,\n.fa-y-combinator:before {\n  content: \"\"; }\n\n.fa-optin-monster:before {\n  content: \"\"; }\n\n.fa-opencart:before {\n  content: \"\"; }\n\n.fa-expeditedssl:before {\n  content: \"\"; }\n\n.fa-battery-4:before,\n.fa-battery-full:before {\n  content: \"\"; }\n\n.fa-battery-3:before,\n.fa-battery-three-quarters:before {\n  content: \"\"; }\n\n.fa-battery-2:before,\n.fa-battery-half:before {\n  content: \"\"; }\n\n.fa-battery-1:before,\n.fa-battery-quarter:before {\n  content: \"\"; }\n\n.fa-battery-0:before,\n.fa-battery-empty:before {\n  content: \"\"; }\n\n.fa-mouse-pointer:before {\n  content: \"\"; }\n\n.fa-i-cursor:before {\n  content: \"\"; }\n\n.fa-object-group:before {\n  content: \"\"; }\n\n.fa-object-ungroup:before {\n  content: \"\"; }\n\n.fa-sticky-note:before {\n  content: \"\"; }\n\n.fa-sticky-note-o:before {\n  content: \"\"; }\n\n.fa-cc-jcb:before {\n  content: \"\"; }\n\n.fa-cc-diners-club:before {\n  content: \"\"; }\n\n.fa-clone:before {\n  content: \"\"; }\n\n.fa-balance-scale:before {\n  content: \"\"; }\n\n.fa-hourglass-o:before {\n  content: \"\"; }\n\n.fa-hourglass-1:before,\n.fa-hourglass-start:before {\n  content: \"\"; }\n\n.fa-hourglass-2:before,\n.fa-hourglass-half:before {\n  content: \"\"; }\n\n.fa-hourglass-3:before,\n.fa-hourglass-end:before {\n  content: \"\"; }\n\n.fa-hourglass:before {\n  content: \"\"; }\n\n.fa-hand-grab-o:before,\n.fa-hand-rock-o:before {\n  content: \"\"; }\n\n.fa-hand-stop-o:before,\n.fa-hand-paper-o:before {\n  content: \"\"; }\n\n.fa-hand-scissors-o:before {\n  content: \"\"; }\n\n.fa-hand-lizard-o:before {\n  content: \"\"; }\n\n.fa-hand-spock-o:before {\n  content: \"\"; }\n\n.fa-hand-pointer-o:before {\n  content: \"\"; }\n\n.fa-hand-peace-o:before {\n  content: \"\"; }\n\n.fa-trademark:before {\n  content: \"\"; }\n\n.fa-registered:before {\n  content: \"\"; }\n\n.fa-creative-commons:before {\n  content: \"\"; }\n\n.fa-gg:before {\n  content: \"\"; }\n\n.fa-gg-circle:before {\n  content: \"\"; }\n\n.fa-tripadvisor:before {\n  content: \"\"; }\n\n.fa-odnoklassniki:before {\n  content: \"\"; }\n\n.fa-odnoklassniki-square:before {\n  content: \"\"; }\n\n.fa-get-pocket:before {\n  content: \"\"; }\n\n.fa-wikipedia-w:before {\n  content: \"\"; }\n\n.fa-safari:before {\n  content: \"\"; }\n\n.fa-chrome:before {\n  content: \"\"; }\n\n.fa-firefox:before {\n  content: \"\"; }\n\n.fa-opera:before {\n  content: \"\"; }\n\n.fa-internet-explorer:before {\n  content: \"\"; }\n\n.fa-tv:before,\n.fa-television:before {\n  content: \"\"; }\n\n.fa-contao:before {\n  content: \"\"; }\n\n.fa-500px:before {\n  content: \"\"; }\n\n.fa-amazon:before {\n  content: \"\"; }\n\n.fa-calendar-plus-o:before {\n  content: \"\"; }\n\n.fa-calendar-minus-o:before {\n  content: \"\"; }\n\n.fa-calendar-times-o:before {\n  content: \"\"; }\n\n.fa-calendar-check-o:before {\n  content: \"\"; }\n\n.fa-industry:before {\n  content: \"\"; }\n\n.fa-map-pin:before {\n  content: \"\"; }\n\n.fa-map-signs:before {\n  content: \"\"; }\n\n.fa-map-o:before {\n  content: \"\"; }\n\n.fa-map:before {\n  content: \"\"; }\n\n.fa-commenting:before {\n  content: \"\"; }\n\n.fa-commenting-o:before {\n  content: \"\"; }\n\n.fa-houzz:before {\n  content: \"\"; }\n\n.fa-vimeo:before {\n  content: \"\"; }\n\n.fa-black-tie:before {\n  content: \"\"; }\n\n.fa-fonticons:before {\n  content: \"\"; }\n\n@font-face {\n  font-family: \"ProximaNovaCond\";\n  src: url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondNormal-136b8b50cabde19e5e8ab530f99e81ac.eot\");\n  src: url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondNormal-136b8b50cabde19e5e8ab530f99e81ac.eot?#iefix\") format(\"embedded-opentype\"), url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondNormal-30ea31cbd1e9632c6002a58b4eeb233f.woff\") format(\"woff\"), url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondNormal-972dee448fc162e9c89cb9beaaaecbfb.ttf\") format(\"truetype\");\n  font-weight: normal;\n  font-style: normal; }\n@font-face {\n  font-family: \"ProximaNovaCond\";\n  src: url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondNormalItalic-c6b62bc44b0d3459f56ba92459c6c163.eot\");\n  src: url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondNormalItalic-c6b62bc44b0d3459f56ba92459c6c163.eot?#iefix\") format(\"embedded-opentype\"), url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondNormalItalic-174e83d6c5f650786cd413aa4276955d.woff\") format(\"woff\"), url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondNormalItalic-2a4911a4114779c4fe31e01e55573dc4.ttf\") format(\"truetype\");\n  font-weight: normal;\n  font-style: italic; }\n@font-face {\n  font-family: \"ProximaNovaCond\";\n  src: url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondBold-2f7537a1c2ebacfa4d9f42fa66f0ca68.eot\");\n  src: url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondBold-2f7537a1c2ebacfa4d9f42fa66f0ca68.eot?#iefix\") format(\"embedded-opentype\"), url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondBold-6e302c8978b1bd9d453fba318a1fa572.woff\") format(\"woff\"), url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondBold-e3a413a3f145ddf79ef77f8ce3b45201.ttf\") format(\"truetype\");\n  font-weight: bold;\n  font-style: normal; }\n@font-face {\n  font-family: \"ProximaNovaCond\";\n  src: url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondBoldItalic-86767d54bb7b6f76568c3cdf7a11c7a9.eot\");\n  src: url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondBoldItalic-86767d54bb7b6f76568c3cdf7a11c7a9.eot?#iefix\") format(\"embedded-opentype\"), url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondBoldItalic-926b0b499b8fa86bf8e9e61097c9c5b4.woff\") format(\"woff\"), url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondBoldItalic-749708412f9df0bc77e7542423cafd26.ttf\") format(\"truetype\");\n  font-weight: bold;\n  font-style: italic; }\n.report {\n  font-family: ProximaNovaCond;\n  position: fixed;\n  top: 50px;\n  left: 50px;\n  z-index: 100000000000;\n  border: 1px solid #777;\n  min-width: 300px;\n  max-width: 400px;\n  overflow: hidden;\n  background: white;\n  padding-top: 40px; }\n  .report.small {\n    max-height: 38px !important;\n    max-width: 20px; }\n  .report .content {\n    overflow: auto; }\n  .report .header {\n    position: fixed;\n    border-bottom: 1px solid #777;\n    top: 0;\n    width: 100%;\n    display: flex;\n    flex-direction: row;\n    padding: 10px;\n    justify-content: space-between; }\n    .report .header i {\n      cursor: move; }\n    .report .header h4 {\n      margin: 0 10px; }\n  .report h4 {\n    margin: 20px; }\n  .report .inputs {\n    display: flex;\n    flex-direction: column; }\n  .report .group {\n    display: flex;\n    flex-direction: row;\n    margin: 10px 0; }\n    .report .group .label {\n      width: 80px;\n      text-align: right;\n      padding-right: 10px; }\n    .report .group input, .report .group textarea {\n      flex: 1 0;\n      margin-right: 10px;\n      outline: none;\n      padding: 10px; }\n    .report .group textarea {\n      height: 100px;\n      overflow-y: auto;\n      outline: none;\n      padding: 10px;\n      resize: none; }\n    .report .group .screenshot {\n      width: 100%;\n      margin: 10px 10px 10px 80px;\n      cursor: pointer; }\n  .report .submit_group {\n    display: flex;\n    flex-direction: row;\n    justify-content: flex-end; }\n    .report .submit_group .submit {\n      background: #66f;\n      color: white; }\n    .report .submit_group .cancel {\n      color: red; }\n    .report .submit_group .submit, .report .submit_group .cancel, .report .submit_group .uploading {\n      margin: 10px;\n      padding: 10px; }\n  .report .screenshots {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    width: 320px !important; }\n    .report .screenshots img {\n      flex: 0 1;\n      max-width: 100%;\n      border: 3px solid #777;\n      margin: 10px 0; }\n  .report .screenshot_overlay {\n    z-index: 100000000000;\n    position: fixed;\n    top: 0;\n    bottom: 0;\n    right: 0;\n    left: 0;\n    color: black;\n    opacity: 0.2; }\n  .report .submitted {\n    padding: 20px; }\n\n\n","/* FONT PATH\n * -------------------------- */\n\n@font-face {\n  font-family: 'FontAwesome';\n  src: url('#{$fa-font-path}/fontawesome-webfont.eot?v=#{$fa-version}');\n  src: url('#{$fa-font-path}/fontawesome-webfont.eot?#iefix&v=#{$fa-version}') format('embedded-opentype'),\n    url('#{$fa-font-path}/fontawesome-webfont.woff2?v=#{$fa-version}') format('woff2'),\n    url('#{$fa-font-path}/fontawesome-webfont.woff?v=#{$fa-version}') format('woff'),\n    url('#{$fa-font-path}/fontawesome-webfont.ttf?v=#{$fa-version}') format('truetype'),\n    url('#{$fa-font-path}/fontawesome-webfont.svg?v=#{$fa-version}#fontawesomeregular') format('svg');\n//  src: url('#{$fa-font-path}/FontAwesome.otf') format('opentype'); // used when developing fonts\n  font-weight: normal;\n  font-style: normal;\n}\n","// Base Class Definition\n// -------------------------\n\n.#{$fa-css-prefix} {\n  display: inline-block;\n  font: normal normal normal #{$fa-font-size-base}/#{$fa-line-height-base} FontAwesome; // shortening font declaration\n  font-size: inherit; // can't have font-size inherit on line above, so need to override\n  text-rendering: auto; // optimizelegibility throws things off #1094\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n\n}\n","// Icon Sizes\n// -------------------------\n\n/* makes the font 33% larger relative to the icon container */\n.#{$fa-css-prefix}-lg {\n  font-size: (4em / 3);\n  line-height: (3em / 4);\n  vertical-align: -15%;\n}\n.#{$fa-css-prefix}-2x { font-size: 2em; }\n.#{$fa-css-prefix}-3x { font-size: 3em; }\n.#{$fa-css-prefix}-4x { font-size: 4em; }\n.#{$fa-css-prefix}-5x { font-size: 5em; }\n","// Fixed Width Icons\n// -------------------------\n.#{$fa-css-prefix}-fw {\n  width: (18em / 14);\n  text-align: center;\n}\n","// List Icons\n// -------------------------\n\n.#{$fa-css-prefix}-ul {\n  padding-left: 0;\n  margin-left: $fa-li-width;\n  list-style-type: none;\n  > li { position: relative; }\n}\n.#{$fa-css-prefix}-li {\n  position: absolute;\n  left: -$fa-li-width;\n  width: $fa-li-width;\n  top: (2em / 14);\n  text-align: center;\n  &.#{$fa-css-prefix}-lg {\n    left: -$fa-li-width + (4em / 14);\n  }\n}\n","// Variables\n// --------------------------\n\n// $fa-font-path:        \"../fonts\" !default;\n$fa-font-size-base:   14px !default;\n$fa-line-height-base: 1 !default;\n$fa-font-path:        \"//netdna.bootstrapcdn.com/font-awesome/4.4.0/fonts\" !default; // for referencing Bootstrap CDN font files directly\n$fa-css-prefix:       fa !default;\n$fa-version:          \"4.4.0\" !default;\n$fa-border-color:     #eee !default;\n$fa-inverse:          #fff !default;\n$fa-li-width:         (30em / 14) !default;\n\n$fa-var-500px: \"\\f26e\";\n$fa-var-adjust: \"\\f042\";\n$fa-var-adn: \"\\f170\";\n$fa-var-align-center: \"\\f037\";\n$fa-var-align-justify: \"\\f039\";\n$fa-var-align-left: \"\\f036\";\n$fa-var-align-right: \"\\f038\";\n$fa-var-amazon: \"\\f270\";\n$fa-var-ambulance: \"\\f0f9\";\n$fa-var-anchor: \"\\f13d\";\n$fa-var-android: \"\\f17b\";\n$fa-var-angellist: \"\\f209\";\n$fa-var-angle-double-down: \"\\f103\";\n$fa-var-angle-double-left: \"\\f100\";\n$fa-var-angle-double-right: \"\\f101\";\n$fa-var-angle-double-up: \"\\f102\";\n$fa-var-angle-down: \"\\f107\";\n$fa-var-angle-left: \"\\f104\";\n$fa-var-angle-right: \"\\f105\";\n$fa-var-angle-up: \"\\f106\";\n$fa-var-apple: \"\\f179\";\n$fa-var-archive: \"\\f187\";\n$fa-var-area-chart: \"\\f1fe\";\n$fa-var-arrow-circle-down: \"\\f0ab\";\n$fa-var-arrow-circle-left: \"\\f0a8\";\n$fa-var-arrow-circle-o-down: \"\\f01a\";\n$fa-var-arrow-circle-o-left: \"\\f190\";\n$fa-var-arrow-circle-o-right: \"\\f18e\";\n$fa-var-arrow-circle-o-up: \"\\f01b\";\n$fa-var-arrow-circle-right: \"\\f0a9\";\n$fa-var-arrow-circle-up: \"\\f0aa\";\n$fa-var-arrow-down: \"\\f063\";\n$fa-var-arrow-left: \"\\f060\";\n$fa-var-arrow-right: \"\\f061\";\n$fa-var-arrow-up: \"\\f062\";\n$fa-var-arrows: \"\\f047\";\n$fa-var-arrows-alt: \"\\f0b2\";\n$fa-var-arrows-h: \"\\f07e\";\n$fa-var-arrows-v: \"\\f07d\";\n$fa-var-asterisk: \"\\f069\";\n$fa-var-at: \"\\f1fa\";\n$fa-var-automobile: \"\\f1b9\";\n$fa-var-backward: \"\\f04a\";\n$fa-var-balance-scale: \"\\f24e\";\n$fa-var-ban: \"\\f05e\";\n$fa-var-bank: \"\\f19c\";\n$fa-var-bar-chart: \"\\f080\";\n$fa-var-bar-chart-o: \"\\f080\";\n$fa-var-barcode: \"\\f02a\";\n$fa-var-bars: \"\\f0c9\";\n$fa-var-battery-0: \"\\f244\";\n$fa-var-battery-1: \"\\f243\";\n$fa-var-battery-2: \"\\f242\";\n$fa-var-battery-3: \"\\f241\";\n$fa-var-battery-4: \"\\f240\";\n$fa-var-battery-empty: \"\\f244\";\n$fa-var-battery-full: \"\\f240\";\n$fa-var-battery-half: \"\\f242\";\n$fa-var-battery-quarter: \"\\f243\";\n$fa-var-battery-three-quarters: \"\\f241\";\n$fa-var-bed: \"\\f236\";\n$fa-var-beer: \"\\f0fc\";\n$fa-var-behance: \"\\f1b4\";\n$fa-var-behance-square: \"\\f1b5\";\n$fa-var-bell: \"\\f0f3\";\n$fa-var-bell-o: \"\\f0a2\";\n$fa-var-bell-slash: \"\\f1f6\";\n$fa-var-bell-slash-o: \"\\f1f7\";\n$fa-var-bicycle: \"\\f206\";\n$fa-var-binoculars: \"\\f1e5\";\n$fa-var-birthday-cake: \"\\f1fd\";\n$fa-var-bitbucket: \"\\f171\";\n$fa-var-bitbucket-square: \"\\f172\";\n$fa-var-bitcoin: \"\\f15a\";\n$fa-var-black-tie: \"\\f27e\";\n$fa-var-bold: \"\\f032\";\n$fa-var-bolt: \"\\f0e7\";\n$fa-var-bomb: \"\\f1e2\";\n$fa-var-book: \"\\f02d\";\n$fa-var-bookmark: \"\\f02e\";\n$fa-var-bookmark-o: \"\\f097\";\n$fa-var-briefcase: \"\\f0b1\";\n$fa-var-btc: \"\\f15a\";\n$fa-var-bug: \"\\f188\";\n$fa-var-building: \"\\f1ad\";\n$fa-var-building-o: \"\\f0f7\";\n$fa-var-bullhorn: \"\\f0a1\";\n$fa-var-bullseye: \"\\f140\";\n$fa-var-bus: \"\\f207\";\n$fa-var-buysellads: \"\\f20d\";\n$fa-var-cab: \"\\f1ba\";\n$fa-var-calculator: \"\\f1ec\";\n$fa-var-calendar: \"\\f073\";\n$fa-var-calendar-check-o: \"\\f274\";\n$fa-var-calendar-minus-o: \"\\f272\";\n$fa-var-calendar-o: \"\\f133\";\n$fa-var-calendar-plus-o: \"\\f271\";\n$fa-var-calendar-times-o: \"\\f273\";\n$fa-var-camera: \"\\f030\";\n$fa-var-camera-retro: \"\\f083\";\n$fa-var-car: \"\\f1b9\";\n$fa-var-caret-down: \"\\f0d7\";\n$fa-var-caret-left: \"\\f0d9\";\n$fa-var-caret-right: \"\\f0da\";\n$fa-var-caret-square-o-down: \"\\f150\";\n$fa-var-caret-square-o-left: \"\\f191\";\n$fa-var-caret-square-o-right: \"\\f152\";\n$fa-var-caret-square-o-up: \"\\f151\";\n$fa-var-caret-up: \"\\f0d8\";\n$fa-var-cart-arrow-down: \"\\f218\";\n$fa-var-cart-plus: \"\\f217\";\n$fa-var-cc: \"\\f20a\";\n$fa-var-cc-amex: \"\\f1f3\";\n$fa-var-cc-diners-club: \"\\f24c\";\n$fa-var-cc-discover: \"\\f1f2\";\n$fa-var-cc-jcb: \"\\f24b\";\n$fa-var-cc-mastercard: \"\\f1f1\";\n$fa-var-cc-paypal: \"\\f1f4\";\n$fa-var-cc-stripe: \"\\f1f5\";\n$fa-var-cc-visa: \"\\f1f0\";\n$fa-var-certificate: \"\\f0a3\";\n$fa-var-chain: \"\\f0c1\";\n$fa-var-chain-broken: \"\\f127\";\n$fa-var-check: \"\\f00c\";\n$fa-var-check-circle: \"\\f058\";\n$fa-var-check-circle-o: \"\\f05d\";\n$fa-var-check-square: \"\\f14a\";\n$fa-var-check-square-o: \"\\f046\";\n$fa-var-chevron-circle-down: \"\\f13a\";\n$fa-var-chevron-circle-left: \"\\f137\";\n$fa-var-chevron-circle-right: \"\\f138\";\n$fa-var-chevron-circle-up: \"\\f139\";\n$fa-var-chevron-down: \"\\f078\";\n$fa-var-chevron-left: \"\\f053\";\n$fa-var-chevron-right: \"\\f054\";\n$fa-var-chevron-up: \"\\f077\";\n$fa-var-child: \"\\f1ae\";\n$fa-var-chrome: \"\\f268\";\n$fa-var-circle: \"\\f111\";\n$fa-var-circle-o: \"\\f10c\";\n$fa-var-circle-o-notch: \"\\f1ce\";\n$fa-var-circle-thin: \"\\f1db\";\n$fa-var-clipboard: \"\\f0ea\";\n$fa-var-clock-o: \"\\f017\";\n$fa-var-clone: \"\\f24d\";\n$fa-var-close: \"\\f00d\";\n$fa-var-cloud: \"\\f0c2\";\n$fa-var-cloud-download: \"\\f0ed\";\n$fa-var-cloud-upload: \"\\f0ee\";\n$fa-var-cny: \"\\f157\";\n$fa-var-code: \"\\f121\";\n$fa-var-code-fork: \"\\f126\";\n$fa-var-codepen: \"\\f1cb\";\n$fa-var-coffee: \"\\f0f4\";\n$fa-var-cog: \"\\f013\";\n$fa-var-cogs: \"\\f085\";\n$fa-var-columns: \"\\f0db\";\n$fa-var-comment: \"\\f075\";\n$fa-var-comment-o: \"\\f0e5\";\n$fa-var-commenting: \"\\f27a\";\n$fa-var-commenting-o: \"\\f27b\";\n$fa-var-comments: \"\\f086\";\n$fa-var-comments-o: \"\\f0e6\";\n$fa-var-compass: \"\\f14e\";\n$fa-var-compress: \"\\f066\";\n$fa-var-connectdevelop: \"\\f20e\";\n$fa-var-contao: \"\\f26d\";\n$fa-var-copy: \"\\f0c5\";\n$fa-var-copyright: \"\\f1f9\";\n$fa-var-creative-commons: \"\\f25e\";\n$fa-var-credit-card: \"\\f09d\";\n$fa-var-crop: \"\\f125\";\n$fa-var-crosshairs: \"\\f05b\";\n$fa-var-css3: \"\\f13c\";\n$fa-var-cube: \"\\f1b2\";\n$fa-var-cubes: \"\\f1b3\";\n$fa-var-cut: \"\\f0c4\";\n$fa-var-cutlery: \"\\f0f5\";\n$fa-var-dashboard: \"\\f0e4\";\n$fa-var-dashcube: \"\\f210\";\n$fa-var-database: \"\\f1c0\";\n$fa-var-dedent: \"\\f03b\";\n$fa-var-delicious: \"\\f1a5\";\n$fa-var-desktop: \"\\f108\";\n$fa-var-deviantart: \"\\f1bd\";\n$fa-var-diamond: \"\\f219\";\n$fa-var-digg: \"\\f1a6\";\n$fa-var-dollar: \"\\f155\";\n$fa-var-dot-circle-o: \"\\f192\";\n$fa-var-download: \"\\f019\";\n$fa-var-dribbble: \"\\f17d\";\n$fa-var-dropbox: \"\\f16b\";\n$fa-var-drupal: \"\\f1a9\";\n$fa-var-edit: \"\\f044\";\n$fa-var-eject: \"\\f052\";\n$fa-var-ellipsis-h: \"\\f141\";\n$fa-var-ellipsis-v: \"\\f142\";\n$fa-var-empire: \"\\f1d1\";\n$fa-var-envelope: \"\\f0e0\";\n$fa-var-envelope-o: \"\\f003\";\n$fa-var-envelope-square: \"\\f199\";\n$fa-var-eraser: \"\\f12d\";\n$fa-var-eur: \"\\f153\";\n$fa-var-euro: \"\\f153\";\n$fa-var-exchange: \"\\f0ec\";\n$fa-var-exclamation: \"\\f12a\";\n$fa-var-exclamation-circle: \"\\f06a\";\n$fa-var-exclamation-triangle: \"\\f071\";\n$fa-var-expand: \"\\f065\";\n$fa-var-expeditedssl: \"\\f23e\";\n$fa-var-external-link: \"\\f08e\";\n$fa-var-external-link-square: \"\\f14c\";\n$fa-var-eye: \"\\f06e\";\n$fa-var-eye-slash: \"\\f070\";\n$fa-var-eyedropper: \"\\f1fb\";\n$fa-var-facebook: \"\\f09a\";\n$fa-var-facebook-f: \"\\f09a\";\n$fa-var-facebook-official: \"\\f230\";\n$fa-var-facebook-square: \"\\f082\";\n$fa-var-fast-backward: \"\\f049\";\n$fa-var-fast-forward: \"\\f050\";\n$fa-var-fax: \"\\f1ac\";\n$fa-var-feed: \"\\f09e\";\n$fa-var-female: \"\\f182\";\n$fa-var-fighter-jet: \"\\f0fb\";\n$fa-var-file: \"\\f15b\";\n$fa-var-file-archive-o: \"\\f1c6\";\n$fa-var-file-audio-o: \"\\f1c7\";\n$fa-var-file-code-o: \"\\f1c9\";\n$fa-var-file-excel-o: \"\\f1c3\";\n$fa-var-file-image-o: \"\\f1c5\";\n$fa-var-file-movie-o: \"\\f1c8\";\n$fa-var-file-o: \"\\f016\";\n$fa-var-file-pdf-o: \"\\f1c1\";\n$fa-var-file-photo-o: \"\\f1c5\";\n$fa-var-file-picture-o: \"\\f1c5\";\n$fa-var-file-powerpoint-o: \"\\f1c4\";\n$fa-var-file-sound-o: \"\\f1c7\";\n$fa-var-file-text: \"\\f15c\";\n$fa-var-file-text-o: \"\\f0f6\";\n$fa-var-file-video-o: \"\\f1c8\";\n$fa-var-file-word-o: \"\\f1c2\";\n$fa-var-file-zip-o: \"\\f1c6\";\n$fa-var-files-o: \"\\f0c5\";\n$fa-var-film: \"\\f008\";\n$fa-var-filter: \"\\f0b0\";\n$fa-var-fire: \"\\f06d\";\n$fa-var-fire-extinguisher: \"\\f134\";\n$fa-var-firefox: \"\\f269\";\n$fa-var-flag: \"\\f024\";\n$fa-var-flag-checkered: \"\\f11e\";\n$fa-var-flag-o: \"\\f11d\";\n$fa-var-flash: \"\\f0e7\";\n$fa-var-flask: \"\\f0c3\";\n$fa-var-flickr: \"\\f16e\";\n$fa-var-floppy-o: \"\\f0c7\";\n$fa-var-folder: \"\\f07b\";\n$fa-var-folder-o: \"\\f114\";\n$fa-var-folder-open: \"\\f07c\";\n$fa-var-folder-open-o: \"\\f115\";\n$fa-var-font: \"\\f031\";\n$fa-var-fonticons: \"\\f280\";\n$fa-var-forumbee: \"\\f211\";\n$fa-var-forward: \"\\f04e\";\n$fa-var-foursquare: \"\\f180\";\n$fa-var-frown-o: \"\\f119\";\n$fa-var-futbol-o: \"\\f1e3\";\n$fa-var-gamepad: \"\\f11b\";\n$fa-var-gavel: \"\\f0e3\";\n$fa-var-gbp: \"\\f154\";\n$fa-var-ge: \"\\f1d1\";\n$fa-var-gear: \"\\f013\";\n$fa-var-gears: \"\\f085\";\n$fa-var-genderless: \"\\f22d\";\n$fa-var-get-pocket: \"\\f265\";\n$fa-var-gg: \"\\f260\";\n$fa-var-gg-circle: \"\\f261\";\n$fa-var-gift: \"\\f06b\";\n$fa-var-git: \"\\f1d3\";\n$fa-var-git-square: \"\\f1d2\";\n$fa-var-github: \"\\f09b\";\n$fa-var-github-alt: \"\\f113\";\n$fa-var-github-square: \"\\f092\";\n$fa-var-gittip: \"\\f184\";\n$fa-var-glass: \"\\f000\";\n$fa-var-globe: \"\\f0ac\";\n$fa-var-google: \"\\f1a0\";\n$fa-var-google-plus: \"\\f0d5\";\n$fa-var-google-plus-square: \"\\f0d4\";\n$fa-var-google-wallet: \"\\f1ee\";\n$fa-var-graduation-cap: \"\\f19d\";\n$fa-var-gratipay: \"\\f184\";\n$fa-var-group: \"\\f0c0\";\n$fa-var-h-square: \"\\f0fd\";\n$fa-var-hacker-news: \"\\f1d4\";\n$fa-var-hand-grab-o: \"\\f255\";\n$fa-var-hand-lizard-o: \"\\f258\";\n$fa-var-hand-o-down: \"\\f0a7\";\n$fa-var-hand-o-left: \"\\f0a5\";\n$fa-var-hand-o-right: \"\\f0a4\";\n$fa-var-hand-o-up: \"\\f0a6\";\n$fa-var-hand-paper-o: \"\\f256\";\n$fa-var-hand-peace-o: \"\\f25b\";\n$fa-var-hand-pointer-o: \"\\f25a\";\n$fa-var-hand-rock-o: \"\\f255\";\n$fa-var-hand-scissors-o: \"\\f257\";\n$fa-var-hand-spock-o: \"\\f259\";\n$fa-var-hand-stop-o: \"\\f256\";\n$fa-var-hdd-o: \"\\f0a0\";\n$fa-var-header: \"\\f1dc\";\n$fa-var-headphones: \"\\f025\";\n$fa-var-heart: \"\\f004\";\n$fa-var-heart-o: \"\\f08a\";\n$fa-var-heartbeat: \"\\f21e\";\n$fa-var-history: \"\\f1da\";\n$fa-var-home: \"\\f015\";\n$fa-var-hospital-o: \"\\f0f8\";\n$fa-var-hotel: \"\\f236\";\n$fa-var-hourglass: \"\\f254\";\n$fa-var-hourglass-1: \"\\f251\";\n$fa-var-hourglass-2: \"\\f252\";\n$fa-var-hourglass-3: \"\\f253\";\n$fa-var-hourglass-end: \"\\f253\";\n$fa-var-hourglass-half: \"\\f252\";\n$fa-var-hourglass-o: \"\\f250\";\n$fa-var-hourglass-start: \"\\f251\";\n$fa-var-houzz: \"\\f27c\";\n$fa-var-html5: \"\\f13b\";\n$fa-var-i-cursor: \"\\f246\";\n$fa-var-ils: \"\\f20b\";\n$fa-var-image: \"\\f03e\";\n$fa-var-inbox: \"\\f01c\";\n$fa-var-indent: \"\\f03c\";\n$fa-var-industry: \"\\f275\";\n$fa-var-info: \"\\f129\";\n$fa-var-info-circle: \"\\f05a\";\n$fa-var-inr: \"\\f156\";\n$fa-var-instagram: \"\\f16d\";\n$fa-var-institution: \"\\f19c\";\n$fa-var-internet-explorer: \"\\f26b\";\n$fa-var-intersex: \"\\f224\";\n$fa-var-ioxhost: \"\\f208\";\n$fa-var-italic: \"\\f033\";\n$fa-var-joomla: \"\\f1aa\";\n$fa-var-jpy: \"\\f157\";\n$fa-var-jsfiddle: \"\\f1cc\";\n$fa-var-key: \"\\f084\";\n$fa-var-keyboard-o: \"\\f11c\";\n$fa-var-krw: \"\\f159\";\n$fa-var-language: \"\\f1ab\";\n$fa-var-laptop: \"\\f109\";\n$fa-var-lastfm: \"\\f202\";\n$fa-var-lastfm-square: \"\\f203\";\n$fa-var-leaf: \"\\f06c\";\n$fa-var-leanpub: \"\\f212\";\n$fa-var-legal: \"\\f0e3\";\n$fa-var-lemon-o: \"\\f094\";\n$fa-var-level-down: \"\\f149\";\n$fa-var-level-up: \"\\f148\";\n$fa-var-life-bouy: \"\\f1cd\";\n$fa-var-life-buoy: \"\\f1cd\";\n$fa-var-life-ring: \"\\f1cd\";\n$fa-var-life-saver: \"\\f1cd\";\n$fa-var-lightbulb-o: \"\\f0eb\";\n$fa-var-line-chart: \"\\f201\";\n$fa-var-link: \"\\f0c1\";\n$fa-var-linkedin: \"\\f0e1\";\n$fa-var-linkedin-square: \"\\f08c\";\n$fa-var-linux: \"\\f17c\";\n$fa-var-list: \"\\f03a\";\n$fa-var-list-alt: \"\\f022\";\n$fa-var-list-ol: \"\\f0cb\";\n$fa-var-list-ul: \"\\f0ca\";\n$fa-var-location-arrow: \"\\f124\";\n$fa-var-lock: \"\\f023\";\n$fa-var-long-arrow-down: \"\\f175\";\n$fa-var-long-arrow-left: \"\\f177\";\n$fa-var-long-arrow-right: \"\\f178\";\n$fa-var-long-arrow-up: \"\\f176\";\n$fa-var-magic: \"\\f0d0\";\n$fa-var-magnet: \"\\f076\";\n$fa-var-mail-forward: \"\\f064\";\n$fa-var-mail-reply: \"\\f112\";\n$fa-var-mail-reply-all: \"\\f122\";\n$fa-var-male: \"\\f183\";\n$fa-var-map: \"\\f279\";\n$fa-var-map-marker: \"\\f041\";\n$fa-var-map-o: \"\\f278\";\n$fa-var-map-pin: \"\\f276\";\n$fa-var-map-signs: \"\\f277\";\n$fa-var-mars: \"\\f222\";\n$fa-var-mars-double: \"\\f227\";\n$fa-var-mars-stroke: \"\\f229\";\n$fa-var-mars-stroke-h: \"\\f22b\";\n$fa-var-mars-stroke-v: \"\\f22a\";\n$fa-var-maxcdn: \"\\f136\";\n$fa-var-meanpath: \"\\f20c\";\n$fa-var-medium: \"\\f23a\";\n$fa-var-medkit: \"\\f0fa\";\n$fa-var-meh-o: \"\\f11a\";\n$fa-var-mercury: \"\\f223\";\n$fa-var-microphone: \"\\f130\";\n$fa-var-microphone-slash: \"\\f131\";\n$fa-var-minus: \"\\f068\";\n$fa-var-minus-circle: \"\\f056\";\n$fa-var-minus-square: \"\\f146\";\n$fa-var-minus-square-o: \"\\f147\";\n$fa-var-mobile: \"\\f10b\";\n$fa-var-mobile-phone: \"\\f10b\";\n$fa-var-money: \"\\f0d6\";\n$fa-var-moon-o: \"\\f186\";\n$fa-var-mortar-board: \"\\f19d\";\n$fa-var-motorcycle: \"\\f21c\";\n$fa-var-mouse-pointer: \"\\f245\";\n$fa-var-music: \"\\f001\";\n$fa-var-navicon: \"\\f0c9\";\n$fa-var-neuter: \"\\f22c\";\n$fa-var-newspaper-o: \"\\f1ea\";\n$fa-var-object-group: \"\\f247\";\n$fa-var-object-ungroup: \"\\f248\";\n$fa-var-odnoklassniki: \"\\f263\";\n$fa-var-odnoklassniki-square: \"\\f264\";\n$fa-var-opencart: \"\\f23d\";\n$fa-var-openid: \"\\f19b\";\n$fa-var-opera: \"\\f26a\";\n$fa-var-optin-monster: \"\\f23c\";\n$fa-var-outdent: \"\\f03b\";\n$fa-var-pagelines: \"\\f18c\";\n$fa-var-paint-brush: \"\\f1fc\";\n$fa-var-paper-plane: \"\\f1d8\";\n$fa-var-paper-plane-o: \"\\f1d9\";\n$fa-var-paperclip: \"\\f0c6\";\n$fa-var-paragraph: \"\\f1dd\";\n$fa-var-paste: \"\\f0ea\";\n$fa-var-pause: \"\\f04c\";\n$fa-var-paw: \"\\f1b0\";\n$fa-var-paypal: \"\\f1ed\";\n$fa-var-pencil: \"\\f040\";\n$fa-var-pencil-square: \"\\f14b\";\n$fa-var-pencil-square-o: \"\\f044\";\n$fa-var-phone: \"\\f095\";\n$fa-var-phone-square: \"\\f098\";\n$fa-var-photo: \"\\f03e\";\n$fa-var-picture-o: \"\\f03e\";\n$fa-var-pie-chart: \"\\f200\";\n$fa-var-pied-piper: \"\\f1a7\";\n$fa-var-pied-piper-alt: \"\\f1a8\";\n$fa-var-pinterest: \"\\f0d2\";\n$fa-var-pinterest-p: \"\\f231\";\n$fa-var-pinterest-square: \"\\f0d3\";\n$fa-var-plane: \"\\f072\";\n$fa-var-play: \"\\f04b\";\n$fa-var-play-circle: \"\\f144\";\n$fa-var-play-circle-o: \"\\f01d\";\n$fa-var-plug: \"\\f1e6\";\n$fa-var-plus: \"\\f067\";\n$fa-var-plus-circle: \"\\f055\";\n$fa-var-plus-square: \"\\f0fe\";\n$fa-var-plus-square-o: \"\\f196\";\n$fa-var-power-off: \"\\f011\";\n$fa-var-print: \"\\f02f\";\n$fa-var-puzzle-piece: \"\\f12e\";\n$fa-var-qq: \"\\f1d6\";\n$fa-var-qrcode: \"\\f029\";\n$fa-var-question: \"\\f128\";\n$fa-var-question-circle: \"\\f059\";\n$fa-var-quote-left: \"\\f10d\";\n$fa-var-quote-right: \"\\f10e\";\n$fa-var-ra: \"\\f1d0\";\n$fa-var-random: \"\\f074\";\n$fa-var-rebel: \"\\f1d0\";\n$fa-var-recycle: \"\\f1b8\";\n$fa-var-reddit: \"\\f1a1\";\n$fa-var-reddit-square: \"\\f1a2\";\n$fa-var-refresh: \"\\f021\";\n$fa-var-registered: \"\\f25d\";\n$fa-var-remove: \"\\f00d\";\n$fa-var-renren: \"\\f18b\";\n$fa-var-reorder: \"\\f0c9\";\n$fa-var-repeat: \"\\f01e\";\n$fa-var-reply: \"\\f112\";\n$fa-var-reply-all: \"\\f122\";\n$fa-var-retweet: \"\\f079\";\n$fa-var-rmb: \"\\f157\";\n$fa-var-road: \"\\f018\";\n$fa-var-rocket: \"\\f135\";\n$fa-var-rotate-left: \"\\f0e2\";\n$fa-var-rotate-right: \"\\f01e\";\n$fa-var-rouble: \"\\f158\";\n$fa-var-rss: \"\\f09e\";\n$fa-var-rss-square: \"\\f143\";\n$fa-var-rub: \"\\f158\";\n$fa-var-ruble: \"\\f158\";\n$fa-var-rupee: \"\\f156\";\n$fa-var-safari: \"\\f267\";\n$fa-var-save: \"\\f0c7\";\n$fa-var-scissors: \"\\f0c4\";\n$fa-var-search: \"\\f002\";\n$fa-var-search-minus: \"\\f010\";\n$fa-var-search-plus: \"\\f00e\";\n$fa-var-sellsy: \"\\f213\";\n$fa-var-send: \"\\f1d8\";\n$fa-var-send-o: \"\\f1d9\";\n$fa-var-server: \"\\f233\";\n$fa-var-share: \"\\f064\";\n$fa-var-share-alt: \"\\f1e0\";\n$fa-var-share-alt-square: \"\\f1e1\";\n$fa-var-share-square: \"\\f14d\";\n$fa-var-share-square-o: \"\\f045\";\n$fa-var-shekel: \"\\f20b\";\n$fa-var-sheqel: \"\\f20b\";\n$fa-var-shield: \"\\f132\";\n$fa-var-ship: \"\\f21a\";\n$fa-var-shirtsinbulk: \"\\f214\";\n$fa-var-shopping-cart: \"\\f07a\";\n$fa-var-sign-in: \"\\f090\";\n$fa-var-sign-out: \"\\f08b\";\n$fa-var-signal: \"\\f012\";\n$fa-var-simplybuilt: \"\\f215\";\n$fa-var-sitemap: \"\\f0e8\";\n$fa-var-skyatlas: \"\\f216\";\n$fa-var-skype: \"\\f17e\";\n$fa-var-slack: \"\\f198\";\n$fa-var-sliders: \"\\f1de\";\n$fa-var-slideshare: \"\\f1e7\";\n$fa-var-smile-o: \"\\f118\";\n$fa-var-soccer-ball-o: \"\\f1e3\";\n$fa-var-sort: \"\\f0dc\";\n$fa-var-sort-alpha-asc: \"\\f15d\";\n$fa-var-sort-alpha-desc: \"\\f15e\";\n$fa-var-sort-amount-asc: \"\\f160\";\n$fa-var-sort-amount-desc: \"\\f161\";\n$fa-var-sort-asc: \"\\f0de\";\n$fa-var-sort-desc: \"\\f0dd\";\n$fa-var-sort-down: \"\\f0dd\";\n$fa-var-sort-numeric-asc: \"\\f162\";\n$fa-var-sort-numeric-desc: \"\\f163\";\n$fa-var-sort-up: \"\\f0de\";\n$fa-var-soundcloud: \"\\f1be\";\n$fa-var-space-shuttle: \"\\f197\";\n$fa-var-spinner: \"\\f110\";\n$fa-var-spoon: \"\\f1b1\";\n$fa-var-spotify: \"\\f1bc\";\n$fa-var-square: \"\\f0c8\";\n$fa-var-square-o: \"\\f096\";\n$fa-var-stack-exchange: \"\\f18d\";\n$fa-var-stack-overflow: \"\\f16c\";\n$fa-var-star: \"\\f005\";\n$fa-var-star-half: \"\\f089\";\n$fa-var-star-half-empty: \"\\f123\";\n$fa-var-star-half-full: \"\\f123\";\n$fa-var-star-half-o: \"\\f123\";\n$fa-var-star-o: \"\\f006\";\n$fa-var-steam: \"\\f1b6\";\n$fa-var-steam-square: \"\\f1b7\";\n$fa-var-step-backward: \"\\f048\";\n$fa-var-step-forward: \"\\f051\";\n$fa-var-stethoscope: \"\\f0f1\";\n$fa-var-sticky-note: \"\\f249\";\n$fa-var-sticky-note-o: \"\\f24a\";\n$fa-var-stop: \"\\f04d\";\n$fa-var-street-view: \"\\f21d\";\n$fa-var-strikethrough: \"\\f0cc\";\n$fa-var-stumbleupon: \"\\f1a4\";\n$fa-var-stumbleupon-circle: \"\\f1a3\";\n$fa-var-subscript: \"\\f12c\";\n$fa-var-subway: \"\\f239\";\n$fa-var-suitcase: \"\\f0f2\";\n$fa-var-sun-o: \"\\f185\";\n$fa-var-superscript: \"\\f12b\";\n$fa-var-support: \"\\f1cd\";\n$fa-var-table: \"\\f0ce\";\n$fa-var-tablet: \"\\f10a\";\n$fa-var-tachometer: \"\\f0e4\";\n$fa-var-tag: \"\\f02b\";\n$fa-var-tags: \"\\f02c\";\n$fa-var-tasks: \"\\f0ae\";\n$fa-var-taxi: \"\\f1ba\";\n$fa-var-television: \"\\f26c\";\n$fa-var-tencent-weibo: \"\\f1d5\";\n$fa-var-terminal: \"\\f120\";\n$fa-var-text-height: \"\\f034\";\n$fa-var-text-width: \"\\f035\";\n$fa-var-th: \"\\f00a\";\n$fa-var-th-large: \"\\f009\";\n$fa-var-th-list: \"\\f00b\";\n$fa-var-thumb-tack: \"\\f08d\";\n$fa-var-thumbs-down: \"\\f165\";\n$fa-var-thumbs-o-down: \"\\f088\";\n$fa-var-thumbs-o-up: \"\\f087\";\n$fa-var-thumbs-up: \"\\f164\";\n$fa-var-ticket: \"\\f145\";\n$fa-var-times: \"\\f00d\";\n$fa-var-times-circle: \"\\f057\";\n$fa-var-times-circle-o: \"\\f05c\";\n$fa-var-tint: \"\\f043\";\n$fa-var-toggle-down: \"\\f150\";\n$fa-var-toggle-left: \"\\f191\";\n$fa-var-toggle-off: \"\\f204\";\n$fa-var-toggle-on: \"\\f205\";\n$fa-var-toggle-right: \"\\f152\";\n$fa-var-toggle-up: \"\\f151\";\n$fa-var-trademark: \"\\f25c\";\n$fa-var-train: \"\\f238\";\n$fa-var-transgender: \"\\f224\";\n$fa-var-transgender-alt: \"\\f225\";\n$fa-var-trash: \"\\f1f8\";\n$fa-var-trash-o: \"\\f014\";\n$fa-var-tree: \"\\f1bb\";\n$fa-var-trello: \"\\f181\";\n$fa-var-tripadvisor: \"\\f262\";\n$fa-var-trophy: \"\\f091\";\n$fa-var-truck: \"\\f0d1\";\n$fa-var-try: \"\\f195\";\n$fa-var-tty: \"\\f1e4\";\n$fa-var-tumblr: \"\\f173\";\n$fa-var-tumblr-square: \"\\f174\";\n$fa-var-turkish-lira: \"\\f195\";\n$fa-var-tv: \"\\f26c\";\n$fa-var-twitch: \"\\f1e8\";\n$fa-var-twitter: \"\\f099\";\n$fa-var-twitter-square: \"\\f081\";\n$fa-var-umbrella: \"\\f0e9\";\n$fa-var-underline: \"\\f0cd\";\n$fa-var-undo: \"\\f0e2\";\n$fa-var-university: \"\\f19c\";\n$fa-var-unlink: \"\\f127\";\n$fa-var-unlock: \"\\f09c\";\n$fa-var-unlock-alt: \"\\f13e\";\n$fa-var-unsorted: \"\\f0dc\";\n$fa-var-upload: \"\\f093\";\n$fa-var-usd: \"\\f155\";\n$fa-var-user: \"\\f007\";\n$fa-var-user-md: \"\\f0f0\";\n$fa-var-user-plus: \"\\f234\";\n$fa-var-user-secret: \"\\f21b\";\n$fa-var-user-times: \"\\f235\";\n$fa-var-users: \"\\f0c0\";\n$fa-var-venus: \"\\f221\";\n$fa-var-venus-double: \"\\f226\";\n$fa-var-venus-mars: \"\\f228\";\n$fa-var-viacoin: \"\\f237\";\n$fa-var-video-camera: \"\\f03d\";\n$fa-var-vimeo: \"\\f27d\";\n$fa-var-vimeo-square: \"\\f194\";\n$fa-var-vine: \"\\f1ca\";\n$fa-var-vk: \"\\f189\";\n$fa-var-volume-down: \"\\f027\";\n$fa-var-volume-off: \"\\f026\";\n$fa-var-volume-up: \"\\f028\";\n$fa-var-warning: \"\\f071\";\n$fa-var-wechat: \"\\f1d7\";\n$fa-var-weibo: \"\\f18a\";\n$fa-var-weixin: \"\\f1d7\";\n$fa-var-whatsapp: \"\\f232\";\n$fa-var-wheelchair: \"\\f193\";\n$fa-var-wifi: \"\\f1eb\";\n$fa-var-wikipedia-w: \"\\f266\";\n$fa-var-windows: \"\\f17a\";\n$fa-var-won: \"\\f159\";\n$fa-var-wordpress: \"\\f19a\";\n$fa-var-wrench: \"\\f0ad\";\n$fa-var-xing: \"\\f168\";\n$fa-var-xing-square: \"\\f169\";\n$fa-var-y-combinator: \"\\f23b\";\n$fa-var-y-combinator-square: \"\\f1d4\";\n$fa-var-yahoo: \"\\f19e\";\n$fa-var-yc: \"\\f23b\";\n$fa-var-yc-square: \"\\f1d4\";\n$fa-var-yelp: \"\\f1e9\";\n$fa-var-yen: \"\\f157\";\n$fa-var-youtube: \"\\f167\";\n$fa-var-youtube-play: \"\\f16a\";\n$fa-var-youtube-square: \"\\f166\";\n\n","// Bordered & Pulled\n// -------------------------\n\n.#{$fa-css-prefix}-border {\n  padding: .2em .25em .15em;\n  border: solid .08em $fa-border-color;\n  border-radius: .1em;\n}\n\n.#{$fa-css-prefix}-pull-left { float: left; }\n.#{$fa-css-prefix}-pull-right { float: right; }\n\n.#{$fa-css-prefix} {\n  &.#{$fa-css-prefix}-pull-left { margin-right: .3em; }\n  &.#{$fa-css-prefix}-pull-right { margin-left: .3em; }\n}\n\n/* Deprecated as of 4.4.0 */\n.pull-right { float: right; }\n.pull-left { float: left; }\n\n.#{$fa-css-prefix} {\n  &.pull-left { margin-right: .3em; }\n  &.pull-right { margin-left: .3em; }\n}\n","// Spinning Icons\n// --------------------------\n\n.#{$fa-css-prefix}-spin {\n  -webkit-animation: fa-spin 2s infinite linear;\n          animation: fa-spin 2s infinite linear;\n}\n\n.#{$fa-css-prefix}-pulse {\n  -webkit-animation: fa-spin 1s infinite steps(8);\n          animation: fa-spin 1s infinite steps(8);\n}\n\n@-webkit-keyframes fa-spin {\n  0% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n  }\n  100% {\n    -webkit-transform: rotate(359deg);\n            transform: rotate(359deg);\n  }\n}\n\n@keyframes fa-spin {\n  0% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n  }\n  100% {\n    -webkit-transform: rotate(359deg);\n            transform: rotate(359deg);\n  }\n}\n","// Rotated & Flipped Icons\n// -------------------------\n\n.#{$fa-css-prefix}-rotate-90  { @include fa-icon-rotate(90deg, 1);  }\n.#{$fa-css-prefix}-rotate-180 { @include fa-icon-rotate(180deg, 2); }\n.#{$fa-css-prefix}-rotate-270 { @include fa-icon-rotate(270deg, 3); }\n\n.#{$fa-css-prefix}-flip-horizontal { @include fa-icon-flip(-1, 1, 0); }\n.#{$fa-css-prefix}-flip-vertical   { @include fa-icon-flip(1, -1, 2); }\n\n// Hook for IE8-9\n// -------------------------\n\n:root .#{$fa-css-prefix}-rotate-90,\n:root .#{$fa-css-prefix}-rotate-180,\n:root .#{$fa-css-prefix}-rotate-270,\n:root .#{$fa-css-prefix}-flip-horizontal,\n:root .#{$fa-css-prefix}-flip-vertical {\n  filter: none;\n}\n","// Mixins\n// --------------------------\n\n@mixin fa-icon() {\n  display: inline-block;\n  font: normal normal normal #{$fa-font-size-base}/#{$fa-line-height-base} FontAwesome; // shortening font declaration\n  font-size: inherit; // can't have font-size inherit on line above, so need to override\n  text-rendering: auto; // optimizelegibility throws things off #1094\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n\n}\n\n@mixin fa-icon-rotate($degrees, $rotation) {\n  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=#{$rotation});\n  -webkit-transform: rotate($degrees);\n      -ms-transform: rotate($degrees);\n          transform: rotate($degrees);\n}\n\n@mixin fa-icon-flip($horiz, $vert, $rotation) {\n  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=#{$rotation});\n  -webkit-transform: scale($horiz, $vert);\n      -ms-transform: scale($horiz, $vert);\n          transform: scale($horiz, $vert);\n}\n","// Stacked Icons\n// -------------------------\n\n.#{$fa-css-prefix}-stack {\n  position: relative;\n  display: inline-block;\n  width: 2em;\n  height: 2em;\n  line-height: 2em;\n  vertical-align: middle;\n}\n.#{$fa-css-prefix}-stack-1x, .#{$fa-css-prefix}-stack-2x {\n  position: absolute;\n  left: 0;\n  width: 100%;\n  text-align: center;\n}\n.#{$fa-css-prefix}-stack-1x { line-height: inherit; }\n.#{$fa-css-prefix}-stack-2x { font-size: 2em; }\n.#{$fa-css-prefix}-inverse { color: $fa-inverse; }\n","/* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen\n   readers do not read off random characters that represent icons */\n\n.#{$fa-css-prefix}-glass:before { content: $fa-var-glass; }\n.#{$fa-css-prefix}-music:before { content: $fa-var-music; }\n.#{$fa-css-prefix}-search:before { content: $fa-var-search; }\n.#{$fa-css-prefix}-envelope-o:before { content: $fa-var-envelope-o; }\n.#{$fa-css-prefix}-heart:before { content: $fa-var-heart; }\n.#{$fa-css-prefix}-star:before { content: $fa-var-star; }\n.#{$fa-css-prefix}-star-o:before { content: $fa-var-star-o; }\n.#{$fa-css-prefix}-user:before { content: $fa-var-user; }\n.#{$fa-css-prefix}-film:before { content: $fa-var-film; }\n.#{$fa-css-prefix}-th-large:before { content: $fa-var-th-large; }\n.#{$fa-css-prefix}-th:before { content: $fa-var-th; }\n.#{$fa-css-prefix}-th-list:before { content: $fa-var-th-list; }\n.#{$fa-css-prefix}-check:before { content: $fa-var-check; }\n.#{$fa-css-prefix}-remove:before,\n.#{$fa-css-prefix}-close:before,\n.#{$fa-css-prefix}-times:before { content: $fa-var-times; }\n.#{$fa-css-prefix}-search-plus:before { content: $fa-var-search-plus; }\n.#{$fa-css-prefix}-search-minus:before { content: $fa-var-search-minus; }\n.#{$fa-css-prefix}-power-off:before { content: $fa-var-power-off; }\n.#{$fa-css-prefix}-signal:before { content: $fa-var-signal; }\n.#{$fa-css-prefix}-gear:before,\n.#{$fa-css-prefix}-cog:before { content: $fa-var-cog; }\n.#{$fa-css-prefix}-trash-o:before { content: $fa-var-trash-o; }\n.#{$fa-css-prefix}-home:before { content: $fa-var-home; }\n.#{$fa-css-prefix}-file-o:before { content: $fa-var-file-o; }\n.#{$fa-css-prefix}-clock-o:before { content: $fa-var-clock-o; }\n.#{$fa-css-prefix}-road:before { content: $fa-var-road; }\n.#{$fa-css-prefix}-download:before { content: $fa-var-download; }\n.#{$fa-css-prefix}-arrow-circle-o-down:before { content: $fa-var-arrow-circle-o-down; }\n.#{$fa-css-prefix}-arrow-circle-o-up:before { content: $fa-var-arrow-circle-o-up; }\n.#{$fa-css-prefix}-inbox:before { content: $fa-var-inbox; }\n.#{$fa-css-prefix}-play-circle-o:before { content: $fa-var-play-circle-o; }\n.#{$fa-css-prefix}-rotate-right:before,\n.#{$fa-css-prefix}-repeat:before { content: $fa-var-repeat; }\n.#{$fa-css-prefix}-refresh:before { content: $fa-var-refresh; }\n.#{$fa-css-prefix}-list-alt:before { content: $fa-var-list-alt; }\n.#{$fa-css-prefix}-lock:before { content: $fa-var-lock; }\n.#{$fa-css-prefix}-flag:before { content: $fa-var-flag; }\n.#{$fa-css-prefix}-headphones:before { content: $fa-var-headphones; }\n.#{$fa-css-prefix}-volume-off:before { content: $fa-var-volume-off; }\n.#{$fa-css-prefix}-volume-down:before { content: $fa-var-volume-down; }\n.#{$fa-css-prefix}-volume-up:before { content: $fa-var-volume-up; }\n.#{$fa-css-prefix}-qrcode:before { content: $fa-var-qrcode; }\n.#{$fa-css-prefix}-barcode:before { content: $fa-var-barcode; }\n.#{$fa-css-prefix}-tag:before { content: $fa-var-tag; }\n.#{$fa-css-prefix}-tags:before { content: $fa-var-tags; }\n.#{$fa-css-prefix}-book:before { content: $fa-var-book; }\n.#{$fa-css-prefix}-bookmark:before { content: $fa-var-bookmark; }\n.#{$fa-css-prefix}-print:before { content: $fa-var-print; }\n.#{$fa-css-prefix}-camera:before { content: $fa-var-camera; }\n.#{$fa-css-prefix}-font:before { content: $fa-var-font; }\n.#{$fa-css-prefix}-bold:before { content: $fa-var-bold; }\n.#{$fa-css-prefix}-italic:before { content: $fa-var-italic; }\n.#{$fa-css-prefix}-text-height:before { content: $fa-var-text-height; }\n.#{$fa-css-prefix}-text-width:before { content: $fa-var-text-width; }\n.#{$fa-css-prefix}-align-left:before { content: $fa-var-align-left; }\n.#{$fa-css-prefix}-align-center:before { content: $fa-var-align-center; }\n.#{$fa-css-prefix}-align-right:before { content: $fa-var-align-right; }\n.#{$fa-css-prefix}-align-justify:before { content: $fa-var-align-justify; }\n.#{$fa-css-prefix}-list:before { content: $fa-var-list; }\n.#{$fa-css-prefix}-dedent:before,\n.#{$fa-css-prefix}-outdent:before { content: $fa-var-outdent; }\n.#{$fa-css-prefix}-indent:before { content: $fa-var-indent; }\n.#{$fa-css-prefix}-video-camera:before { content: $fa-var-video-camera; }\n.#{$fa-css-prefix}-photo:before,\n.#{$fa-css-prefix}-image:before,\n.#{$fa-css-prefix}-picture-o:before { content: $fa-var-picture-o; }\n.#{$fa-css-prefix}-pencil:before { content: $fa-var-pencil; }\n.#{$fa-css-prefix}-map-marker:before { content: $fa-var-map-marker; }\n.#{$fa-css-prefix}-adjust:before { content: $fa-var-adjust; }\n.#{$fa-css-prefix}-tint:before { content: $fa-var-tint; }\n.#{$fa-css-prefix}-edit:before,\n.#{$fa-css-prefix}-pencil-square-o:before { content: $fa-var-pencil-square-o; }\n.#{$fa-css-prefix}-share-square-o:before { content: $fa-var-share-square-o; }\n.#{$fa-css-prefix}-check-square-o:before { content: $fa-var-check-square-o; }\n.#{$fa-css-prefix}-arrows:before { content: $fa-var-arrows; }\n.#{$fa-css-prefix}-step-backward:before { content: $fa-var-step-backward; }\n.#{$fa-css-prefix}-fast-backward:before { content: $fa-var-fast-backward; }\n.#{$fa-css-prefix}-backward:before { content: $fa-var-backward; }\n.#{$fa-css-prefix}-play:before { content: $fa-var-play; }\n.#{$fa-css-prefix}-pause:before { content: $fa-var-pause; }\n.#{$fa-css-prefix}-stop:before { content: $fa-var-stop; }\n.#{$fa-css-prefix}-forward:before { content: $fa-var-forward; }\n.#{$fa-css-prefix}-fast-forward:before { content: $fa-var-fast-forward; }\n.#{$fa-css-prefix}-step-forward:before { content: $fa-var-step-forward; }\n.#{$fa-css-prefix}-eject:before { content: $fa-var-eject; }\n.#{$fa-css-prefix}-chevron-left:before { content: $fa-var-chevron-left; }\n.#{$fa-css-prefix}-chevron-right:before { content: $fa-var-chevron-right; }\n.#{$fa-css-prefix}-plus-circle:before { content: $fa-var-plus-circle; }\n.#{$fa-css-prefix}-minus-circle:before { content: $fa-var-minus-circle; }\n.#{$fa-css-prefix}-times-circle:before { content: $fa-var-times-circle; }\n.#{$fa-css-prefix}-check-circle:before { content: $fa-var-check-circle; }\n.#{$fa-css-prefix}-question-circle:before { content: $fa-var-question-circle; }\n.#{$fa-css-prefix}-info-circle:before { content: $fa-var-info-circle; }\n.#{$fa-css-prefix}-crosshairs:before { content: $fa-var-crosshairs; }\n.#{$fa-css-prefix}-times-circle-o:before { content: $fa-var-times-circle-o; }\n.#{$fa-css-prefix}-check-circle-o:before { content: $fa-var-check-circle-o; }\n.#{$fa-css-prefix}-ban:before { content: $fa-var-ban; }\n.#{$fa-css-prefix}-arrow-left:before { content: $fa-var-arrow-left; }\n.#{$fa-css-prefix}-arrow-right:before { content: $fa-var-arrow-right; }\n.#{$fa-css-prefix}-arrow-up:before { content: $fa-var-arrow-up; }\n.#{$fa-css-prefix}-arrow-down:before { content: $fa-var-arrow-down; }\n.#{$fa-css-prefix}-mail-forward:before,\n.#{$fa-css-prefix}-share:before { content: $fa-var-share; }\n.#{$fa-css-prefix}-expand:before { content: $fa-var-expand; }\n.#{$fa-css-prefix}-compress:before { content: $fa-var-compress; }\n.#{$fa-css-prefix}-plus:before { content: $fa-var-plus; }\n.#{$fa-css-prefix}-minus:before { content: $fa-var-minus; }\n.#{$fa-css-prefix}-asterisk:before { content: $fa-var-asterisk; }\n.#{$fa-css-prefix}-exclamation-circle:before { content: $fa-var-exclamation-circle; }\n.#{$fa-css-prefix}-gift:before { content: $fa-var-gift; }\n.#{$fa-css-prefix}-leaf:before { content: $fa-var-leaf; }\n.#{$fa-css-prefix}-fire:before { content: $fa-var-fire; }\n.#{$fa-css-prefix}-eye:before { content: $fa-var-eye; }\n.#{$fa-css-prefix}-eye-slash:before { content: $fa-var-eye-slash; }\n.#{$fa-css-prefix}-warning:before,\n.#{$fa-css-prefix}-exclamation-triangle:before { content: $fa-var-exclamation-triangle; }\n.#{$fa-css-prefix}-plane:before { content: $fa-var-plane; }\n.#{$fa-css-prefix}-calendar:before { content: $fa-var-calendar; }\n.#{$fa-css-prefix}-random:before { content: $fa-var-random; }\n.#{$fa-css-prefix}-comment:before { content: $fa-var-comment; }\n.#{$fa-css-prefix}-magnet:before { content: $fa-var-magnet; }\n.#{$fa-css-prefix}-chevron-up:before { content: $fa-var-chevron-up; }\n.#{$fa-css-prefix}-chevron-down:before { content: $fa-var-chevron-down; }\n.#{$fa-css-prefix}-retweet:before { content: $fa-var-retweet; }\n.#{$fa-css-prefix}-shopping-cart:before { content: $fa-var-shopping-cart; }\n.#{$fa-css-prefix}-folder:before { content: $fa-var-folder; }\n.#{$fa-css-prefix}-folder-open:before { content: $fa-var-folder-open; }\n.#{$fa-css-prefix}-arrows-v:before { content: $fa-var-arrows-v; }\n.#{$fa-css-prefix}-arrows-h:before { content: $fa-var-arrows-h; }\n.#{$fa-css-prefix}-bar-chart-o:before,\n.#{$fa-css-prefix}-bar-chart:before { content: $fa-var-bar-chart; }\n.#{$fa-css-prefix}-twitter-square:before { content: $fa-var-twitter-square; }\n.#{$fa-css-prefix}-facebook-square:before { content: $fa-var-facebook-square; }\n.#{$fa-css-prefix}-camera-retro:before { content: $fa-var-camera-retro; }\n.#{$fa-css-prefix}-key:before { content: $fa-var-key; }\n.#{$fa-css-prefix}-gears:before,\n.#{$fa-css-prefix}-cogs:before { content: $fa-var-cogs; }\n.#{$fa-css-prefix}-comments:before { content: $fa-var-comments; }\n.#{$fa-css-prefix}-thumbs-o-up:before { content: $fa-var-thumbs-o-up; }\n.#{$fa-css-prefix}-thumbs-o-down:before { content: $fa-var-thumbs-o-down; }\n.#{$fa-css-prefix}-star-half:before { content: $fa-var-star-half; }\n.#{$fa-css-prefix}-heart-o:before { content: $fa-var-heart-o; }\n.#{$fa-css-prefix}-sign-out:before { content: $fa-var-sign-out; }\n.#{$fa-css-prefix}-linkedin-square:before { content: $fa-var-linkedin-square; }\n.#{$fa-css-prefix}-thumb-tack:before { content: $fa-var-thumb-tack; }\n.#{$fa-css-prefix}-external-link:before { content: $fa-var-external-link; }\n.#{$fa-css-prefix}-sign-in:before { content: $fa-var-sign-in; }\n.#{$fa-css-prefix}-trophy:before { content: $fa-var-trophy; }\n.#{$fa-css-prefix}-github-square:before { content: $fa-var-github-square; }\n.#{$fa-css-prefix}-upload:before { content: $fa-var-upload; }\n.#{$fa-css-prefix}-lemon-o:before { content: $fa-var-lemon-o; }\n.#{$fa-css-prefix}-phone:before { content: $fa-var-phone; }\n.#{$fa-css-prefix}-square-o:before { content: $fa-var-square-o; }\n.#{$fa-css-prefix}-bookmark-o:before { content: $fa-var-bookmark-o; }\n.#{$fa-css-prefix}-phone-square:before { content: $fa-var-phone-square; }\n.#{$fa-css-prefix}-twitter:before { content: $fa-var-twitter; }\n.#{$fa-css-prefix}-facebook-f:before,\n.#{$fa-css-prefix}-facebook:before { content: $fa-var-facebook; }\n.#{$fa-css-prefix}-github:before { content: $fa-var-github; }\n.#{$fa-css-prefix}-unlock:before { content: $fa-var-unlock; }\n.#{$fa-css-prefix}-credit-card:before { content: $fa-var-credit-card; }\n.#{$fa-css-prefix}-feed:before,\n.#{$fa-css-prefix}-rss:before { content: $fa-var-rss; }\n.#{$fa-css-prefix}-hdd-o:before { content: $fa-var-hdd-o; }\n.#{$fa-css-prefix}-bullhorn:before { content: $fa-var-bullhorn; }\n.#{$fa-css-prefix}-bell:before { content: $fa-var-bell; }\n.#{$fa-css-prefix}-certificate:before { content: $fa-var-certificate; }\n.#{$fa-css-prefix}-hand-o-right:before { content: $fa-var-hand-o-right; }\n.#{$fa-css-prefix}-hand-o-left:before { content: $fa-var-hand-o-left; }\n.#{$fa-css-prefix}-hand-o-up:before { content: $fa-var-hand-o-up; }\n.#{$fa-css-prefix}-hand-o-down:before { content: $fa-var-hand-o-down; }\n.#{$fa-css-prefix}-arrow-circle-left:before { content: $fa-var-arrow-circle-left; }\n.#{$fa-css-prefix}-arrow-circle-right:before { content: $fa-var-arrow-circle-right; }\n.#{$fa-css-prefix}-arrow-circle-up:before { content: $fa-var-arrow-circle-up; }\n.#{$fa-css-prefix}-arrow-circle-down:before { content: $fa-var-arrow-circle-down; }\n.#{$fa-css-prefix}-globe:before { content: $fa-var-globe; }\n.#{$fa-css-prefix}-wrench:before { content: $fa-var-wrench; }\n.#{$fa-css-prefix}-tasks:before { content: $fa-var-tasks; }\n.#{$fa-css-prefix}-filter:before { content: $fa-var-filter; }\n.#{$fa-css-prefix}-briefcase:before { content: $fa-var-briefcase; }\n.#{$fa-css-prefix}-arrows-alt:before { content: $fa-var-arrows-alt; }\n.#{$fa-css-prefix}-group:before,\n.#{$fa-css-prefix}-users:before { content: $fa-var-users; }\n.#{$fa-css-prefix}-chain:before,\n.#{$fa-css-prefix}-link:before { content: $fa-var-link; }\n.#{$fa-css-prefix}-cloud:before { content: $fa-var-cloud; }\n.#{$fa-css-prefix}-flask:before { content: $fa-var-flask; }\n.#{$fa-css-prefix}-cut:before,\n.#{$fa-css-prefix}-scissors:before { content: $fa-var-scissors; }\n.#{$fa-css-prefix}-copy:before,\n.#{$fa-css-prefix}-files-o:before { content: $fa-var-files-o; }\n.#{$fa-css-prefix}-paperclip:before { content: $fa-var-paperclip; }\n.#{$fa-css-prefix}-save:before,\n.#{$fa-css-prefix}-floppy-o:before { content: $fa-var-floppy-o; }\n.#{$fa-css-prefix}-square:before { content: $fa-var-square; }\n.#{$fa-css-prefix}-navicon:before,\n.#{$fa-css-prefix}-reorder:before,\n.#{$fa-css-prefix}-bars:before { content: $fa-var-bars; }\n.#{$fa-css-prefix}-list-ul:before { content: $fa-var-list-ul; }\n.#{$fa-css-prefix}-list-ol:before { content: $fa-var-list-ol; }\n.#{$fa-css-prefix}-strikethrough:before { content: $fa-var-strikethrough; }\n.#{$fa-css-prefix}-underline:before { content: $fa-var-underline; }\n.#{$fa-css-prefix}-table:before { content: $fa-var-table; }\n.#{$fa-css-prefix}-magic:before { content: $fa-var-magic; }\n.#{$fa-css-prefix}-truck:before { content: $fa-var-truck; }\n.#{$fa-css-prefix}-pinterest:before { content: $fa-var-pinterest; }\n.#{$fa-css-prefix}-pinterest-square:before { content: $fa-var-pinterest-square; }\n.#{$fa-css-prefix}-google-plus-square:before { content: $fa-var-google-plus-square; }\n.#{$fa-css-prefix}-google-plus:before { content: $fa-var-google-plus; }\n.#{$fa-css-prefix}-money:before { content: $fa-var-money; }\n.#{$fa-css-prefix}-caret-down:before { content: $fa-var-caret-down; }\n.#{$fa-css-prefix}-caret-up:before { content: $fa-var-caret-up; }\n.#{$fa-css-prefix}-caret-left:before { content: $fa-var-caret-left; }\n.#{$fa-css-prefix}-caret-right:before { content: $fa-var-caret-right; }\n.#{$fa-css-prefix}-columns:before { content: $fa-var-columns; }\n.#{$fa-css-prefix}-unsorted:before,\n.#{$fa-css-prefix}-sort:before { content: $fa-var-sort; }\n.#{$fa-css-prefix}-sort-down:before,\n.#{$fa-css-prefix}-sort-desc:before { content: $fa-var-sort-desc; }\n.#{$fa-css-prefix}-sort-up:before,\n.#{$fa-css-prefix}-sort-asc:before { content: $fa-var-sort-asc; }\n.#{$fa-css-prefix}-envelope:before { content: $fa-var-envelope; }\n.#{$fa-css-prefix}-linkedin:before { content: $fa-var-linkedin; }\n.#{$fa-css-prefix}-rotate-left:before,\n.#{$fa-css-prefix}-undo:before { content: $fa-var-undo; }\n.#{$fa-css-prefix}-legal:before,\n.#{$fa-css-prefix}-gavel:before { content: $fa-var-gavel; }\n.#{$fa-css-prefix}-dashboard:before,\n.#{$fa-css-prefix}-tachometer:before { content: $fa-var-tachometer; }\n.#{$fa-css-prefix}-comment-o:before { content: $fa-var-comment-o; }\n.#{$fa-css-prefix}-comments-o:before { content: $fa-var-comments-o; }\n.#{$fa-css-prefix}-flash:before,\n.#{$fa-css-prefix}-bolt:before { content: $fa-var-bolt; }\n.#{$fa-css-prefix}-sitemap:before { content: $fa-var-sitemap; }\n.#{$fa-css-prefix}-umbrella:before { content: $fa-var-umbrella; }\n.#{$fa-css-prefix}-paste:before,\n.#{$fa-css-prefix}-clipboard:before { content: $fa-var-clipboard; }\n.#{$fa-css-prefix}-lightbulb-o:before { content: $fa-var-lightbulb-o; }\n.#{$fa-css-prefix}-exchange:before { content: $fa-var-exchange; }\n.#{$fa-css-prefix}-cloud-download:before { content: $fa-var-cloud-download; }\n.#{$fa-css-prefix}-cloud-upload:before { content: $fa-var-cloud-upload; }\n.#{$fa-css-prefix}-user-md:before { content: $fa-var-user-md; }\n.#{$fa-css-prefix}-stethoscope:before { content: $fa-var-stethoscope; }\n.#{$fa-css-prefix}-suitcase:before { content: $fa-var-suitcase; }\n.#{$fa-css-prefix}-bell-o:before { content: $fa-var-bell-o; }\n.#{$fa-css-prefix}-coffee:before { content: $fa-var-coffee; }\n.#{$fa-css-prefix}-cutlery:before { content: $fa-var-cutlery; }\n.#{$fa-css-prefix}-file-text-o:before { content: $fa-var-file-text-o; }\n.#{$fa-css-prefix}-building-o:before { content: $fa-var-building-o; }\n.#{$fa-css-prefix}-hospital-o:before { content: $fa-var-hospital-o; }\n.#{$fa-css-prefix}-ambulance:before { content: $fa-var-ambulance; }\n.#{$fa-css-prefix}-medkit:before { content: $fa-var-medkit; }\n.#{$fa-css-prefix}-fighter-jet:before { content: $fa-var-fighter-jet; }\n.#{$fa-css-prefix}-beer:before { content: $fa-var-beer; }\n.#{$fa-css-prefix}-h-square:before { content: $fa-var-h-square; }\n.#{$fa-css-prefix}-plus-square:before { content: $fa-var-plus-square; }\n.#{$fa-css-prefix}-angle-double-left:before { content: $fa-var-angle-double-left; }\n.#{$fa-css-prefix}-angle-double-right:before { content: $fa-var-angle-double-right; }\n.#{$fa-css-prefix}-angle-double-up:before { content: $fa-var-angle-double-up; }\n.#{$fa-css-prefix}-angle-double-down:before { content: $fa-var-angle-double-down; }\n.#{$fa-css-prefix}-angle-left:before { content: $fa-var-angle-left; }\n.#{$fa-css-prefix}-angle-right:before { content: $fa-var-angle-right; }\n.#{$fa-css-prefix}-angle-up:before { content: $fa-var-angle-up; }\n.#{$fa-css-prefix}-angle-down:before { content: $fa-var-angle-down; }\n.#{$fa-css-prefix}-desktop:before { content: $fa-var-desktop; }\n.#{$fa-css-prefix}-laptop:before { content: $fa-var-laptop; }\n.#{$fa-css-prefix}-tablet:before { content: $fa-var-tablet; }\n.#{$fa-css-prefix}-mobile-phone:before,\n.#{$fa-css-prefix}-mobile:before { content: $fa-var-mobile; }\n.#{$fa-css-prefix}-circle-o:before { content: $fa-var-circle-o; }\n.#{$fa-css-prefix}-quote-left:before { content: $fa-var-quote-left; }\n.#{$fa-css-prefix}-quote-right:before { content: $fa-var-quote-right; }\n.#{$fa-css-prefix}-spinner:before { content: $fa-var-spinner; }\n.#{$fa-css-prefix}-circle:before { content: $fa-var-circle; }\n.#{$fa-css-prefix}-mail-reply:before,\n.#{$fa-css-prefix}-reply:before { content: $fa-var-reply; }\n.#{$fa-css-prefix}-github-alt:before { content: $fa-var-github-alt; }\n.#{$fa-css-prefix}-folder-o:before { content: $fa-var-folder-o; }\n.#{$fa-css-prefix}-folder-open-o:before { content: $fa-var-folder-open-o; }\n.#{$fa-css-prefix}-smile-o:before { content: $fa-var-smile-o; }\n.#{$fa-css-prefix}-frown-o:before { content: $fa-var-frown-o; }\n.#{$fa-css-prefix}-meh-o:before { content: $fa-var-meh-o; }\n.#{$fa-css-prefix}-gamepad:before { content: $fa-var-gamepad; }\n.#{$fa-css-prefix}-keyboard-o:before { content: $fa-var-keyboard-o; }\n.#{$fa-css-prefix}-flag-o:before { content: $fa-var-flag-o; }\n.#{$fa-css-prefix}-flag-checkered:before { content: $fa-var-flag-checkered; }\n.#{$fa-css-prefix}-terminal:before { content: $fa-var-terminal; }\n.#{$fa-css-prefix}-code:before { content: $fa-var-code; }\n.#{$fa-css-prefix}-mail-reply-all:before,\n.#{$fa-css-prefix}-reply-all:before { content: $fa-var-reply-all; }\n.#{$fa-css-prefix}-star-half-empty:before,\n.#{$fa-css-prefix}-star-half-full:before,\n.#{$fa-css-prefix}-star-half-o:before { content: $fa-var-star-half-o; }\n.#{$fa-css-prefix}-location-arrow:before { content: $fa-var-location-arrow; }\n.#{$fa-css-prefix}-crop:before { content: $fa-var-crop; }\n.#{$fa-css-prefix}-code-fork:before { content: $fa-var-code-fork; }\n.#{$fa-css-prefix}-unlink:before,\n.#{$fa-css-prefix}-chain-broken:before { content: $fa-var-chain-broken; }\n.#{$fa-css-prefix}-question:before { content: $fa-var-question; }\n.#{$fa-css-prefix}-info:before { content: $fa-var-info; }\n.#{$fa-css-prefix}-exclamation:before { content: $fa-var-exclamation; }\n.#{$fa-css-prefix}-superscript:before { content: $fa-var-superscript; }\n.#{$fa-css-prefix}-subscript:before { content: $fa-var-subscript; }\n.#{$fa-css-prefix}-eraser:before { content: $fa-var-eraser; }\n.#{$fa-css-prefix}-puzzle-piece:before { content: $fa-var-puzzle-piece; }\n.#{$fa-css-prefix}-microphone:before { content: $fa-var-microphone; }\n.#{$fa-css-prefix}-microphone-slash:before { content: $fa-var-microphone-slash; }\n.#{$fa-css-prefix}-shield:before { content: $fa-var-shield; }\n.#{$fa-css-prefix}-calendar-o:before { content: $fa-var-calendar-o; }\n.#{$fa-css-prefix}-fire-extinguisher:before { content: $fa-var-fire-extinguisher; }\n.#{$fa-css-prefix}-rocket:before { content: $fa-var-rocket; }\n.#{$fa-css-prefix}-maxcdn:before { content: $fa-var-maxcdn; }\n.#{$fa-css-prefix}-chevron-circle-left:before { content: $fa-var-chevron-circle-left; }\n.#{$fa-css-prefix}-chevron-circle-right:before { content: $fa-var-chevron-circle-right; }\n.#{$fa-css-prefix}-chevron-circle-up:before { content: $fa-var-chevron-circle-up; }\n.#{$fa-css-prefix}-chevron-circle-down:before { content: $fa-var-chevron-circle-down; }\n.#{$fa-css-prefix}-html5:before { content: $fa-var-html5; }\n.#{$fa-css-prefix}-css3:before { content: $fa-var-css3; }\n.#{$fa-css-prefix}-anchor:before { content: $fa-var-anchor; }\n.#{$fa-css-prefix}-unlock-alt:before { content: $fa-var-unlock-alt; }\n.#{$fa-css-prefix}-bullseye:before { content: $fa-var-bullseye; }\n.#{$fa-css-prefix}-ellipsis-h:before { content: $fa-var-ellipsis-h; }\n.#{$fa-css-prefix}-ellipsis-v:before { content: $fa-var-ellipsis-v; }\n.#{$fa-css-prefix}-rss-square:before { content: $fa-var-rss-square; }\n.#{$fa-css-prefix}-play-circle:before { content: $fa-var-play-circle; }\n.#{$fa-css-prefix}-ticket:before { content: $fa-var-ticket; }\n.#{$fa-css-prefix}-minus-square:before { content: $fa-var-minus-square; }\n.#{$fa-css-prefix}-minus-square-o:before { content: $fa-var-minus-square-o; }\n.#{$fa-css-prefix}-level-up:before { content: $fa-var-level-up; }\n.#{$fa-css-prefix}-level-down:before { content: $fa-var-level-down; }\n.#{$fa-css-prefix}-check-square:before { content: $fa-var-check-square; }\n.#{$fa-css-prefix}-pencil-square:before { content: $fa-var-pencil-square; }\n.#{$fa-css-prefix}-external-link-square:before { content: $fa-var-external-link-square; }\n.#{$fa-css-prefix}-share-square:before { content: $fa-var-share-square; }\n.#{$fa-css-prefix}-compass:before { content: $fa-var-compass; }\n.#{$fa-css-prefix}-toggle-down:before,\n.#{$fa-css-prefix}-caret-square-o-down:before { content: $fa-var-caret-square-o-down; }\n.#{$fa-css-prefix}-toggle-up:before,\n.#{$fa-css-prefix}-caret-square-o-up:before { content: $fa-var-caret-square-o-up; }\n.#{$fa-css-prefix}-toggle-right:before,\n.#{$fa-css-prefix}-caret-square-o-right:before { content: $fa-var-caret-square-o-right; }\n.#{$fa-css-prefix}-euro:before,\n.#{$fa-css-prefix}-eur:before { content: $fa-var-eur; }\n.#{$fa-css-prefix}-gbp:before { content: $fa-var-gbp; }\n.#{$fa-css-prefix}-dollar:before,\n.#{$fa-css-prefix}-usd:before { content: $fa-var-usd; }\n.#{$fa-css-prefix}-rupee:before,\n.#{$fa-css-prefix}-inr:before { content: $fa-var-inr; }\n.#{$fa-css-prefix}-cny:before,\n.#{$fa-css-prefix}-rmb:before,\n.#{$fa-css-prefix}-yen:before,\n.#{$fa-css-prefix}-jpy:before { content: $fa-var-jpy; }\n.#{$fa-css-prefix}-ruble:before,\n.#{$fa-css-prefix}-rouble:before,\n.#{$fa-css-prefix}-rub:before { content: $fa-var-rub; }\n.#{$fa-css-prefix}-won:before,\n.#{$fa-css-prefix}-krw:before { content: $fa-var-krw; }\n.#{$fa-css-prefix}-bitcoin:before,\n.#{$fa-css-prefix}-btc:before { content: $fa-var-btc; }\n.#{$fa-css-prefix}-file:before { content: $fa-var-file; }\n.#{$fa-css-prefix}-file-text:before { content: $fa-var-file-text; }\n.#{$fa-css-prefix}-sort-alpha-asc:before { content: $fa-var-sort-alpha-asc; }\n.#{$fa-css-prefix}-sort-alpha-desc:before { content: $fa-var-sort-alpha-desc; }\n.#{$fa-css-prefix}-sort-amount-asc:before { content: $fa-var-sort-amount-asc; }\n.#{$fa-css-prefix}-sort-amount-desc:before { content: $fa-var-sort-amount-desc; }\n.#{$fa-css-prefix}-sort-numeric-asc:before { content: $fa-var-sort-numeric-asc; }\n.#{$fa-css-prefix}-sort-numeric-desc:before { content: $fa-var-sort-numeric-desc; }\n.#{$fa-css-prefix}-thumbs-up:before { content: $fa-var-thumbs-up; }\n.#{$fa-css-prefix}-thumbs-down:before { content: $fa-var-thumbs-down; }\n.#{$fa-css-prefix}-youtube-square:before { content: $fa-var-youtube-square; }\n.#{$fa-css-prefix}-youtube:before { content: $fa-var-youtube; }\n.#{$fa-css-prefix}-xing:before { content: $fa-var-xing; }\n.#{$fa-css-prefix}-xing-square:before { content: $fa-var-xing-square; }\n.#{$fa-css-prefix}-youtube-play:before { content: $fa-var-youtube-play; }\n.#{$fa-css-prefix}-dropbox:before { content: $fa-var-dropbox; }\n.#{$fa-css-prefix}-stack-overflow:before { content: $fa-var-stack-overflow; }\n.#{$fa-css-prefix}-instagram:before { content: $fa-var-instagram; }\n.#{$fa-css-prefix}-flickr:before { content: $fa-var-flickr; }\n.#{$fa-css-prefix}-adn:before { content: $fa-var-adn; }\n.#{$fa-css-prefix}-bitbucket:before { content: $fa-var-bitbucket; }\n.#{$fa-css-prefix}-bitbucket-square:before { content: $fa-var-bitbucket-square; }\n.#{$fa-css-prefix}-tumblr:before { content: $fa-var-tumblr; }\n.#{$fa-css-prefix}-tumblr-square:before { content: $fa-var-tumblr-square; }\n.#{$fa-css-prefix}-long-arrow-down:before { content: $fa-var-long-arrow-down; }\n.#{$fa-css-prefix}-long-arrow-up:before { content: $fa-var-long-arrow-up; }\n.#{$fa-css-prefix}-long-arrow-left:before { content: $fa-var-long-arrow-left; }\n.#{$fa-css-prefix}-long-arrow-right:before { content: $fa-var-long-arrow-right; }\n.#{$fa-css-prefix}-apple:before { content: $fa-var-apple; }\n.#{$fa-css-prefix}-windows:before { content: $fa-var-windows; }\n.#{$fa-css-prefix}-android:before { content: $fa-var-android; }\n.#{$fa-css-prefix}-linux:before { content: $fa-var-linux; }\n.#{$fa-css-prefix}-dribbble:before { content: $fa-var-dribbble; }\n.#{$fa-css-prefix}-skype:before { content: $fa-var-skype; }\n.#{$fa-css-prefix}-foursquare:before { content: $fa-var-foursquare; }\n.#{$fa-css-prefix}-trello:before { content: $fa-var-trello; }\n.#{$fa-css-prefix}-female:before { content: $fa-var-female; }\n.#{$fa-css-prefix}-male:before { content: $fa-var-male; }\n.#{$fa-css-prefix}-gittip:before,\n.#{$fa-css-prefix}-gratipay:before { content: $fa-var-gratipay; }\n.#{$fa-css-prefix}-sun-o:before { content: $fa-var-sun-o; }\n.#{$fa-css-prefix}-moon-o:before { content: $fa-var-moon-o; }\n.#{$fa-css-prefix}-archive:before { content: $fa-var-archive; }\n.#{$fa-css-prefix}-bug:before { content: $fa-var-bug; }\n.#{$fa-css-prefix}-vk:before { content: $fa-var-vk; }\n.#{$fa-css-prefix}-weibo:before { content: $fa-var-weibo; }\n.#{$fa-css-prefix}-renren:before { content: $fa-var-renren; }\n.#{$fa-css-prefix}-pagelines:before { content: $fa-var-pagelines; }\n.#{$fa-css-prefix}-stack-exchange:before { content: $fa-var-stack-exchange; }\n.#{$fa-css-prefix}-arrow-circle-o-right:before { content: $fa-var-arrow-circle-o-right; }\n.#{$fa-css-prefix}-arrow-circle-o-left:before { content: $fa-var-arrow-circle-o-left; }\n.#{$fa-css-prefix}-toggle-left:before,\n.#{$fa-css-prefix}-caret-square-o-left:before { content: $fa-var-caret-square-o-left; }\n.#{$fa-css-prefix}-dot-circle-o:before { content: $fa-var-dot-circle-o; }\n.#{$fa-css-prefix}-wheelchair:before { content: $fa-var-wheelchair; }\n.#{$fa-css-prefix}-vimeo-square:before { content: $fa-var-vimeo-square; }\n.#{$fa-css-prefix}-turkish-lira:before,\n.#{$fa-css-prefix}-try:before { content: $fa-var-try; }\n.#{$fa-css-prefix}-plus-square-o:before { content: $fa-var-plus-square-o; }\n.#{$fa-css-prefix}-space-shuttle:before { content: $fa-var-space-shuttle; }\n.#{$fa-css-prefix}-slack:before { content: $fa-var-slack; }\n.#{$fa-css-prefix}-envelope-square:before { content: $fa-var-envelope-square; }\n.#{$fa-css-prefix}-wordpress:before { content: $fa-var-wordpress; }\n.#{$fa-css-prefix}-openid:before { content: $fa-var-openid; }\n.#{$fa-css-prefix}-institution:before,\n.#{$fa-css-prefix}-bank:before,\n.#{$fa-css-prefix}-university:before { content: $fa-var-university; }\n.#{$fa-css-prefix}-mortar-board:before,\n.#{$fa-css-prefix}-graduation-cap:before { content: $fa-var-graduation-cap; }\n.#{$fa-css-prefix}-yahoo:before { content: $fa-var-yahoo; }\n.#{$fa-css-prefix}-google:before { content: $fa-var-google; }\n.#{$fa-css-prefix}-reddit:before { content: $fa-var-reddit; }\n.#{$fa-css-prefix}-reddit-square:before { content: $fa-var-reddit-square; }\n.#{$fa-css-prefix}-stumbleupon-circle:before { content: $fa-var-stumbleupon-circle; }\n.#{$fa-css-prefix}-stumbleupon:before { content: $fa-var-stumbleupon; }\n.#{$fa-css-prefix}-delicious:before { content: $fa-var-delicious; }\n.#{$fa-css-prefix}-digg:before { content: $fa-var-digg; }\n.#{$fa-css-prefix}-pied-piper:before { content: $fa-var-pied-piper; }\n.#{$fa-css-prefix}-pied-piper-alt:before { content: $fa-var-pied-piper-alt; }\n.#{$fa-css-prefix}-drupal:before { content: $fa-var-drupal; }\n.#{$fa-css-prefix}-joomla:before { content: $fa-var-joomla; }\n.#{$fa-css-prefix}-language:before { content: $fa-var-language; }\n.#{$fa-css-prefix}-fax:before { content: $fa-var-fax; }\n.#{$fa-css-prefix}-building:before { content: $fa-var-building; }\n.#{$fa-css-prefix}-child:before { content: $fa-var-child; }\n.#{$fa-css-prefix}-paw:before { content: $fa-var-paw; }\n.#{$fa-css-prefix}-spoon:before { content: $fa-var-spoon; }\n.#{$fa-css-prefix}-cube:before { content: $fa-var-cube; }\n.#{$fa-css-prefix}-cubes:before { content: $fa-var-cubes; }\n.#{$fa-css-prefix}-behance:before { content: $fa-var-behance; }\n.#{$fa-css-prefix}-behance-square:before { content: $fa-var-behance-square; }\n.#{$fa-css-prefix}-steam:before { content: $fa-var-steam; }\n.#{$fa-css-prefix}-steam-square:before { content: $fa-var-steam-square; }\n.#{$fa-css-prefix}-recycle:before { content: $fa-var-recycle; }\n.#{$fa-css-prefix}-automobile:before,\n.#{$fa-css-prefix}-car:before { content: $fa-var-car; }\n.#{$fa-css-prefix}-cab:before,\n.#{$fa-css-prefix}-taxi:before { content: $fa-var-taxi; }\n.#{$fa-css-prefix}-tree:before { content: $fa-var-tree; }\n.#{$fa-css-prefix}-spotify:before { content: $fa-var-spotify; }\n.#{$fa-css-prefix}-deviantart:before { content: $fa-var-deviantart; }\n.#{$fa-css-prefix}-soundcloud:before { content: $fa-var-soundcloud; }\n.#{$fa-css-prefix}-database:before { content: $fa-var-database; }\n.#{$fa-css-prefix}-file-pdf-o:before { content: $fa-var-file-pdf-o; }\n.#{$fa-css-prefix}-file-word-o:before { content: $fa-var-file-word-o; }\n.#{$fa-css-prefix}-file-excel-o:before { content: $fa-var-file-excel-o; }\n.#{$fa-css-prefix}-file-powerpoint-o:before { content: $fa-var-file-powerpoint-o; }\n.#{$fa-css-prefix}-file-photo-o:before,\n.#{$fa-css-prefix}-file-picture-o:before,\n.#{$fa-css-prefix}-file-image-o:before { content: $fa-var-file-image-o; }\n.#{$fa-css-prefix}-file-zip-o:before,\n.#{$fa-css-prefix}-file-archive-o:before { content: $fa-var-file-archive-o; }\n.#{$fa-css-prefix}-file-sound-o:before,\n.#{$fa-css-prefix}-file-audio-o:before { content: $fa-var-file-audio-o; }\n.#{$fa-css-prefix}-file-movie-o:before,\n.#{$fa-css-prefix}-file-video-o:before { content: $fa-var-file-video-o; }\n.#{$fa-css-prefix}-file-code-o:before { content: $fa-var-file-code-o; }\n.#{$fa-css-prefix}-vine:before { content: $fa-var-vine; }\n.#{$fa-css-prefix}-codepen:before { content: $fa-var-codepen; }\n.#{$fa-css-prefix}-jsfiddle:before { content: $fa-var-jsfiddle; }\n.#{$fa-css-prefix}-life-bouy:before,\n.#{$fa-css-prefix}-life-buoy:before,\n.#{$fa-css-prefix}-life-saver:before,\n.#{$fa-css-prefix}-support:before,\n.#{$fa-css-prefix}-life-ring:before { content: $fa-var-life-ring; }\n.#{$fa-css-prefix}-circle-o-notch:before { content: $fa-var-circle-o-notch; }\n.#{$fa-css-prefix}-ra:before,\n.#{$fa-css-prefix}-rebel:before { content: $fa-var-rebel; }\n.#{$fa-css-prefix}-ge:before,\n.#{$fa-css-prefix}-empire:before { content: $fa-var-empire; }\n.#{$fa-css-prefix}-git-square:before { content: $fa-var-git-square; }\n.#{$fa-css-prefix}-git:before { content: $fa-var-git; }\n.#{$fa-css-prefix}-y-combinator-square:before,\n.#{$fa-css-prefix}-yc-square:before,\n.#{$fa-css-prefix}-hacker-news:before { content: $fa-var-hacker-news; }\n.#{$fa-css-prefix}-tencent-weibo:before { content: $fa-var-tencent-weibo; }\n.#{$fa-css-prefix}-qq:before { content: $fa-var-qq; }\n.#{$fa-css-prefix}-wechat:before,\n.#{$fa-css-prefix}-weixin:before { content: $fa-var-weixin; }\n.#{$fa-css-prefix}-send:before,\n.#{$fa-css-prefix}-paper-plane:before { content: $fa-var-paper-plane; }\n.#{$fa-css-prefix}-send-o:before,\n.#{$fa-css-prefix}-paper-plane-o:before { content: $fa-var-paper-plane-o; }\n.#{$fa-css-prefix}-history:before { content: $fa-var-history; }\n.#{$fa-css-prefix}-circle-thin:before { content: $fa-var-circle-thin; }\n.#{$fa-css-prefix}-header:before { content: $fa-var-header; }\n.#{$fa-css-prefix}-paragraph:before { content: $fa-var-paragraph; }\n.#{$fa-css-prefix}-sliders:before { content: $fa-var-sliders; }\n.#{$fa-css-prefix}-share-alt:before { content: $fa-var-share-alt; }\n.#{$fa-css-prefix}-share-alt-square:before { content: $fa-var-share-alt-square; }\n.#{$fa-css-prefix}-bomb:before { content: $fa-var-bomb; }\n.#{$fa-css-prefix}-soccer-ball-o:before,\n.#{$fa-css-prefix}-futbol-o:before { content: $fa-var-futbol-o; }\n.#{$fa-css-prefix}-tty:before { content: $fa-var-tty; }\n.#{$fa-css-prefix}-binoculars:before { content: $fa-var-binoculars; }\n.#{$fa-css-prefix}-plug:before { content: $fa-var-plug; }\n.#{$fa-css-prefix}-slideshare:before { content: $fa-var-slideshare; }\n.#{$fa-css-prefix}-twitch:before { content: $fa-var-twitch; }\n.#{$fa-css-prefix}-yelp:before { content: $fa-var-yelp; }\n.#{$fa-css-prefix}-newspaper-o:before { content: $fa-var-newspaper-o; }\n.#{$fa-css-prefix}-wifi:before { content: $fa-var-wifi; }\n.#{$fa-css-prefix}-calculator:before { content: $fa-var-calculator; }\n.#{$fa-css-prefix}-paypal:before { content: $fa-var-paypal; }\n.#{$fa-css-prefix}-google-wallet:before { content: $fa-var-google-wallet; }\n.#{$fa-css-prefix}-cc-visa:before { content: $fa-var-cc-visa; }\n.#{$fa-css-prefix}-cc-mastercard:before { content: $fa-var-cc-mastercard; }\n.#{$fa-css-prefix}-cc-discover:before { content: $fa-var-cc-discover; }\n.#{$fa-css-prefix}-cc-amex:before { content: $fa-var-cc-amex; }\n.#{$fa-css-prefix}-cc-paypal:before { content: $fa-var-cc-paypal; }\n.#{$fa-css-prefix}-cc-stripe:before { content: $fa-var-cc-stripe; }\n.#{$fa-css-prefix}-bell-slash:before { content: $fa-var-bell-slash; }\n.#{$fa-css-prefix}-bell-slash-o:before { content: $fa-var-bell-slash-o; }\n.#{$fa-css-prefix}-trash:before { content: $fa-var-trash; }\n.#{$fa-css-prefix}-copyright:before { content: $fa-var-copyright; }\n.#{$fa-css-prefix}-at:before { content: $fa-var-at; }\n.#{$fa-css-prefix}-eyedropper:before { content: $fa-var-eyedropper; }\n.#{$fa-css-prefix}-paint-brush:before { content: $fa-var-paint-brush; }\n.#{$fa-css-prefix}-birthday-cake:before { content: $fa-var-birthday-cake; }\n.#{$fa-css-prefix}-area-chart:before { content: $fa-var-area-chart; }\n.#{$fa-css-prefix}-pie-chart:before { content: $fa-var-pie-chart; }\n.#{$fa-css-prefix}-line-chart:before { content: $fa-var-line-chart; }\n.#{$fa-css-prefix}-lastfm:before { content: $fa-var-lastfm; }\n.#{$fa-css-prefix}-lastfm-square:before { content: $fa-var-lastfm-square; }\n.#{$fa-css-prefix}-toggle-off:before { content: $fa-var-toggle-off; }\n.#{$fa-css-prefix}-toggle-on:before { content: $fa-var-toggle-on; }\n.#{$fa-css-prefix}-bicycle:before { content: $fa-var-bicycle; }\n.#{$fa-css-prefix}-bus:before { content: $fa-var-bus; }\n.#{$fa-css-prefix}-ioxhost:before { content: $fa-var-ioxhost; }\n.#{$fa-css-prefix}-angellist:before { content: $fa-var-angellist; }\n.#{$fa-css-prefix}-cc:before { content: $fa-var-cc; }\n.#{$fa-css-prefix}-shekel:before,\n.#{$fa-css-prefix}-sheqel:before,\n.#{$fa-css-prefix}-ils:before { content: $fa-var-ils; }\n.#{$fa-css-prefix}-meanpath:before { content: $fa-var-meanpath; }\n.#{$fa-css-prefix}-buysellads:before { content: $fa-var-buysellads; }\n.#{$fa-css-prefix}-connectdevelop:before { content: $fa-var-connectdevelop; }\n.#{$fa-css-prefix}-dashcube:before { content: $fa-var-dashcube; }\n.#{$fa-css-prefix}-forumbee:before { content: $fa-var-forumbee; }\n.#{$fa-css-prefix}-leanpub:before { content: $fa-var-leanpub; }\n.#{$fa-css-prefix}-sellsy:before { content: $fa-var-sellsy; }\n.#{$fa-css-prefix}-shirtsinbulk:before { content: $fa-var-shirtsinbulk; }\n.#{$fa-css-prefix}-simplybuilt:before { content: $fa-var-simplybuilt; }\n.#{$fa-css-prefix}-skyatlas:before { content: $fa-var-skyatlas; }\n.#{$fa-css-prefix}-cart-plus:before { content: $fa-var-cart-plus; }\n.#{$fa-css-prefix}-cart-arrow-down:before { content: $fa-var-cart-arrow-down; }\n.#{$fa-css-prefix}-diamond:before { content: $fa-var-diamond; }\n.#{$fa-css-prefix}-ship:before { content: $fa-var-ship; }\n.#{$fa-css-prefix}-user-secret:before { content: $fa-var-user-secret; }\n.#{$fa-css-prefix}-motorcycle:before { content: $fa-var-motorcycle; }\n.#{$fa-css-prefix}-street-view:before { content: $fa-var-street-view; }\n.#{$fa-css-prefix}-heartbeat:before { content: $fa-var-heartbeat; }\n.#{$fa-css-prefix}-venus:before { content: $fa-var-venus; }\n.#{$fa-css-prefix}-mars:before { content: $fa-var-mars; }\n.#{$fa-css-prefix}-mercury:before { content: $fa-var-mercury; }\n.#{$fa-css-prefix}-intersex:before,\n.#{$fa-css-prefix}-transgender:before { content: $fa-var-transgender; }\n.#{$fa-css-prefix}-transgender-alt:before { content: $fa-var-transgender-alt; }\n.#{$fa-css-prefix}-venus-double:before { content: $fa-var-venus-double; }\n.#{$fa-css-prefix}-mars-double:before { content: $fa-var-mars-double; }\n.#{$fa-css-prefix}-venus-mars:before { content: $fa-var-venus-mars; }\n.#{$fa-css-prefix}-mars-stroke:before { content: $fa-var-mars-stroke; }\n.#{$fa-css-prefix}-mars-stroke-v:before { content: $fa-var-mars-stroke-v; }\n.#{$fa-css-prefix}-mars-stroke-h:before { content: $fa-var-mars-stroke-h; }\n.#{$fa-css-prefix}-neuter:before { content: $fa-var-neuter; }\n.#{$fa-css-prefix}-genderless:before { content: $fa-var-genderless; }\n.#{$fa-css-prefix}-facebook-official:before { content: $fa-var-facebook-official; }\n.#{$fa-css-prefix}-pinterest-p:before { content: $fa-var-pinterest-p; }\n.#{$fa-css-prefix}-whatsapp:before { content: $fa-var-whatsapp; }\n.#{$fa-css-prefix}-server:before { content: $fa-var-server; }\n.#{$fa-css-prefix}-user-plus:before { content: $fa-var-user-plus; }\n.#{$fa-css-prefix}-user-times:before { content: $fa-var-user-times; }\n.#{$fa-css-prefix}-hotel:before,\n.#{$fa-css-prefix}-bed:before { content: $fa-var-bed; }\n.#{$fa-css-prefix}-viacoin:before { content: $fa-var-viacoin; }\n.#{$fa-css-prefix}-train:before { content: $fa-var-train; }\n.#{$fa-css-prefix}-subway:before { content: $fa-var-subway; }\n.#{$fa-css-prefix}-medium:before { content: $fa-var-medium; }\n.#{$fa-css-prefix}-yc:before,\n.#{$fa-css-prefix}-y-combinator:before { content: $fa-var-y-combinator; }\n.#{$fa-css-prefix}-optin-monster:before { content: $fa-var-optin-monster; }\n.#{$fa-css-prefix}-opencart:before { content: $fa-var-opencart; }\n.#{$fa-css-prefix}-expeditedssl:before { content: $fa-var-expeditedssl; }\n.#{$fa-css-prefix}-battery-4:before,\n.#{$fa-css-prefix}-battery-full:before { content: $fa-var-battery-full; }\n.#{$fa-css-prefix}-battery-3:before,\n.#{$fa-css-prefix}-battery-three-quarters:before { content: $fa-var-battery-three-quarters; }\n.#{$fa-css-prefix}-battery-2:before,\n.#{$fa-css-prefix}-battery-half:before { content: $fa-var-battery-half; }\n.#{$fa-css-prefix}-battery-1:before,\n.#{$fa-css-prefix}-battery-quarter:before { content: $fa-var-battery-quarter; }\n.#{$fa-css-prefix}-battery-0:before,\n.#{$fa-css-prefix}-battery-empty:before { content: $fa-var-battery-empty; }\n.#{$fa-css-prefix}-mouse-pointer:before { content: $fa-var-mouse-pointer; }\n.#{$fa-css-prefix}-i-cursor:before { content: $fa-var-i-cursor; }\n.#{$fa-css-prefix}-object-group:before { content: $fa-var-object-group; }\n.#{$fa-css-prefix}-object-ungroup:before { content: $fa-var-object-ungroup; }\n.#{$fa-css-prefix}-sticky-note:before { content: $fa-var-sticky-note; }\n.#{$fa-css-prefix}-sticky-note-o:before { content: $fa-var-sticky-note-o; }\n.#{$fa-css-prefix}-cc-jcb:before { content: $fa-var-cc-jcb; }\n.#{$fa-css-prefix}-cc-diners-club:before { content: $fa-var-cc-diners-club; }\n.#{$fa-css-prefix}-clone:before { content: $fa-var-clone; }\n.#{$fa-css-prefix}-balance-scale:before { content: $fa-var-balance-scale; }\n.#{$fa-css-prefix}-hourglass-o:before { content: $fa-var-hourglass-o; }\n.#{$fa-css-prefix}-hourglass-1:before,\n.#{$fa-css-prefix}-hourglass-start:before { content: $fa-var-hourglass-start; }\n.#{$fa-css-prefix}-hourglass-2:before,\n.#{$fa-css-prefix}-hourglass-half:before { content: $fa-var-hourglass-half; }\n.#{$fa-css-prefix}-hourglass-3:before,\n.#{$fa-css-prefix}-hourglass-end:before { content: $fa-var-hourglass-end; }\n.#{$fa-css-prefix}-hourglass:before { content: $fa-var-hourglass; }\n.#{$fa-css-prefix}-hand-grab-o:before,\n.#{$fa-css-prefix}-hand-rock-o:before { content: $fa-var-hand-rock-o; }\n.#{$fa-css-prefix}-hand-stop-o:before,\n.#{$fa-css-prefix}-hand-paper-o:before { content: $fa-var-hand-paper-o; }\n.#{$fa-css-prefix}-hand-scissors-o:before { content: $fa-var-hand-scissors-o; }\n.#{$fa-css-prefix}-hand-lizard-o:before { content: $fa-var-hand-lizard-o; }\n.#{$fa-css-prefix}-hand-spock-o:before { content: $fa-var-hand-spock-o; }\n.#{$fa-css-prefix}-hand-pointer-o:before { content: $fa-var-hand-pointer-o; }\n.#{$fa-css-prefix}-hand-peace-o:before { content: $fa-var-hand-peace-o; }\n.#{$fa-css-prefix}-trademark:before { content: $fa-var-trademark; }\n.#{$fa-css-prefix}-registered:before { content: $fa-var-registered; }\n.#{$fa-css-prefix}-creative-commons:before { content: $fa-var-creative-commons; }\n.#{$fa-css-prefix}-gg:before { content: $fa-var-gg; }\n.#{$fa-css-prefix}-gg-circle:before { content: $fa-var-gg-circle; }\n.#{$fa-css-prefix}-tripadvisor:before { content: $fa-var-tripadvisor; }\n.#{$fa-css-prefix}-odnoklassniki:before { content: $fa-var-odnoklassniki; }\n.#{$fa-css-prefix}-odnoklassniki-square:before { content: $fa-var-odnoklassniki-square; }\n.#{$fa-css-prefix}-get-pocket:before { content: $fa-var-get-pocket; }\n.#{$fa-css-prefix}-wikipedia-w:before { content: $fa-var-wikipedia-w; }\n.#{$fa-css-prefix}-safari:before { content: $fa-var-safari; }\n.#{$fa-css-prefix}-chrome:before { content: $fa-var-chrome; }\n.#{$fa-css-prefix}-firefox:before { content: $fa-var-firefox; }\n.#{$fa-css-prefix}-opera:before { content: $fa-var-opera; }\n.#{$fa-css-prefix}-internet-explorer:before { content: $fa-var-internet-explorer; }\n.#{$fa-css-prefix}-tv:before,\n.#{$fa-css-prefix}-television:before { content: $fa-var-television; }\n.#{$fa-css-prefix}-contao:before { content: $fa-var-contao; }\n.#{$fa-css-prefix}-500px:before { content: $fa-var-500px; }\n.#{$fa-css-prefix}-amazon:before { content: $fa-var-amazon; }\n.#{$fa-css-prefix}-calendar-plus-o:before { content: $fa-var-calendar-plus-o; }\n.#{$fa-css-prefix}-calendar-minus-o:before { content: $fa-var-calendar-minus-o; }\n.#{$fa-css-prefix}-calendar-times-o:before { content: $fa-var-calendar-times-o; }\n.#{$fa-css-prefix}-calendar-check-o:before { content: $fa-var-calendar-check-o; }\n.#{$fa-css-prefix}-industry:before { content: $fa-var-industry; }\n.#{$fa-css-prefix}-map-pin:before { content: $fa-var-map-pin; }\n.#{$fa-css-prefix}-map-signs:before { content: $fa-var-map-signs; }\n.#{$fa-css-prefix}-map-o:before { content: $fa-var-map-o; }\n.#{$fa-css-prefix}-map:before { content: $fa-var-map; }\n.#{$fa-css-prefix}-commenting:before { content: $fa-var-commenting; }\n.#{$fa-css-prefix}-commenting-o:before { content: $fa-var-commenting-o; }\n.#{$fa-css-prefix}-houzz:before { content: $fa-var-houzz; }\n.#{$fa-css-prefix}-vimeo:before { content: $fa-var-vimeo; }\n.#{$fa-css-prefix}-black-tie:before { content: $fa-var-black-tie; }\n.#{$fa-css-prefix}-fonticons:before { content: $fa-var-fonticons; }\n","@font-face {\n  font-family: \"ProximaNovaCond\";\n  src: url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondNormal-136b8b50cabde19e5e8ab530f99e81ac.eot\");\n  src: url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondNormal-136b8b50cabde19e5e8ab530f99e81ac.eot?#iefix\") format(\"embedded-opentype\"), url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondNormal-30ea31cbd1e9632c6002a58b4eeb233f.woff\") format(\"woff\"), url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondNormal-972dee448fc162e9c89cb9beaaaecbfb.ttf\") format(\"truetype\");\n  font-weight: normal;\n  font-style: normal;\n}\n\n\n@font-face {\n  font-family: \"ProximaNovaCond\";\n  src: url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondNormalItalic-c6b62bc44b0d3459f56ba92459c6c163.eot\");\n  src: url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondNormalItalic-c6b62bc44b0d3459f56ba92459c6c163.eot?#iefix\") format(\"embedded-opentype\"), url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondNormalItalic-174e83d6c5f650786cd413aa4276955d.woff\") format(\"woff\"), url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondNormalItalic-2a4911a4114779c4fe31e01e55573dc4.ttf\") format(\"truetype\");\n  font-weight: normal;\n  font-style: italic;\n}\n\n\n@font-face {\n  font-family: \"ProximaNovaCond\";\n  src: url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondBold-2f7537a1c2ebacfa4d9f42fa66f0ca68.eot\");\n  src: url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondBold-2f7537a1c2ebacfa4d9f42fa66f0ca68.eot?#iefix\") format(\"embedded-opentype\"), url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondBold-6e302c8978b1bd9d453fba318a1fa572.woff\") format(\"woff\"), url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondBold-e3a413a3f145ddf79ef77f8ce3b45201.ttf\") format(\"truetype\");\n  font-weight: bold;\n  font-style: normal;\n}\n\n\n@font-face {\n  font-family: \"ProximaNovaCond\";\n  src: url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondBoldItalic-86767d54bb7b6f76568c3cdf7a11c7a9.eot\");\n  src: url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondBoldItalic-86767d54bb7b6f76568c3cdf7a11c7a9.eot?#iefix\") format(\"embedded-opentype\"), url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondBoldItalic-926b0b499b8fa86bf8e9e61097c9c5b4.woff\") format(\"woff\"), url(\"http://x.kinja-static.com/assets/fonts/proxima/ProximaNovaCondBoldItalic-749708412f9df0bc77e7542423cafd26.ttf\") format(\"truetype\");\n  font-weight: bold;\n  font-style: italic;\n}\n","@import \"font-awesome\";\n@import \"kinja_fonts\";\n\n.report {\n  font-family: ProximaNovaCond;\n  position: fixed;\n  top: 50px;\n  left: 50px;\n  z-index: 100000000000;\n  border: 1px solid #777;\n  min-width: 300px;\n  max-width: 400px;\n  overflow: hidden;\n  background: white;\n  padding-top: 40px;\n  &.small {\n    max-height: 38px !important;\n    max-width: 20px;\n  }\n  .content {\n    overflow: auto;\n  }\n  .header {\n    position: fixed;\n    border-bottom: 1px solid #777;\n    top: 0;\n    width: 100%;\n    display: flex;\n    flex-direction: row;\n    padding: 10px;\n    justify-content: space-between;\n    i {\n      cursor: move;\n    }\n    h4 {\n      margin: 0 10px;\n    }\n  }\n  h4 {\n    margin: 20px;\n  }\n  .inputs {\n    display: flex;\n    flex-direction: column;\n  }\n  .group {\n    display: flex;\n    flex-direction: row;\n    margin: 10px 0;\n    .label {\n      width: 80px;\n      text-align: right;\n      padding-right: 10px;\n    }\n    input, textarea {\n      flex: 1 0;\n      margin-right: 10px;\n      outline: none;\n      padding: 10px;\n    }\n    textarea {\n      height: 100px;\n      overflow-y: auto;\n      outline: none;\n      padding: 10px;\n      resize: none;\n    }\n    .screenshot {\n      width: 100%;\n      margin: 10px 10px 10px 80px;\n      cursor: pointer;\n    }\n  }\n  .submit_group {\n    display: flex;\n    flex-direction: row;\n    justify-content: flex-end;\n    .submit {\n      background: #66f;\n      color: white;\n    }\n    .cancel {\n      color: red;\n    }\n    .submit, .cancel, .uploading {\n      margin: 10px;\n      padding: 10px;\n    }\n  }\n  .screenshots {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    width: 320px !important;\n    img {\n      flex: 0 1;\n      // height: auto;\n      // width: auto;\n      max-width: 100%;\n      border: 3px solid #777;\n      margin: 10px 0;\n    }\n  }\n  .screenshot_overlay {\n    z-index: 100000000000;\n    position: fixed;\n    top: 0;\n    bottom: 0;\n    right: 0;\n    left: 0;\n    color: black;\n    opacity: 0.2;\n  }\n  .submitted {\n    padding: 20px;\n  }\n}\n"]}]);
 
 /***/ },
 /* 3 */
@@ -20706,11 +20721,11 @@
 
 	Screenshot = __webpack_require__(167);
 
-	OnResize = __webpack_require__(170).OnResize;
+	OnResize = __webpack_require__(168).OnResize;
 
-	$ = __webpack_require__(168);
+	$ = __webpack_require__(179);
 
-	classnames = __webpack_require__(169);
+	classnames = __webpack_require__(180);
 
 	module.exports = React.createClass({
 	  mixins: [OnResize],
@@ -20719,15 +20734,33 @@
 	      screenshots: [],
 	      urls: [],
 	      screenshotting: false,
-	      yPos: 50
+	      yPos: 50,
+	      xPos: 450,
+	      uploadingImage: false,
+	      reportSubmitted: false
 	    };
 	  },
 	  handleChange: function(obj) {
 	    return this.setState(obj);
 	  },
+	  persist: function(obj) {
+	    return chrome.storage.sync.set(obj);
+	  },
+	  cancel: function(e) {
+	    console.log('cancel');
+	    React.unmountComponentAtNode(document.querySelector('#kinja_bug_reporter'));
+	    e.preventDefault();
+	    return e.stopPropagation();
+	  },
+	  end: function(e) {
+	    return this.setState({
+	      reportSubmitted: true
+	    });
+	  },
 	  recordY: function(e) {
 	    return this.setState({
-	      yPos: e.clientY
+	      yPos: e.clientY,
+	      xPos: e.clientX
 	    });
 	  },
 	  componentDidMount: function() {
@@ -20736,11 +20769,20 @@
 	        _this.upload(request.image);
 	        return _this.setState({
 	          screenshots: [request.image].concat(slice.call(_this.state.screenshots))
+	        }, function() {
+	          return console.log(this.state.screenshots.length);
 	        });
 	      };
 	    })(this));
 	  },
+	  componentWillUnmount: function() {
+	    return chrome.runtime.onMessage.removeListener();
+	  },
 	  upload: function(img) {
+	    this.setState({
+	      screenshotting: false,
+	      uploadingImage: true
+	    });
 	    return $.ajax({
 	      method: "POST",
 	      url: "https://buploader.herokuapp.com/uploader",
@@ -20759,18 +20801,17 @@
 	      },
 	      complete: (function(_this) {
 	        return function() {
-	          _this.setState({
-	            screenshotting: false
+	          return _this.setState({
+	            uploadingImage: false
 	          });
-	          return console.log('image uploaded');
 	        };
 	      })(this)
 	    });
 	  },
 	  mailto: function() {
 	    return "mailto:bugs@gawker.com?subject=" + "Bug report" + "&body=" + (encodeURIComponent("## The Bug:\n\n" + this.state.description + "\n\n## Page details:\n\nURL: " + window.location.href + "\nPage title: " + document.title + "\n\n## Screenshots:\n\n" + (this.state.urls.map(function(url) {
-	      return url + "\n";
-	    })) + "\n\n## User details:\n\nSlack: " + this.state.slack));
+	      return "" + url;
+	    }).join("\n")) + "\n\n## User details:\n\nSlack: " + (this.props.slack || this.state.slack) + "\nKinja: " + (this.props.kinja || this.state.kinja)));
 	  },
 	  screenshot: function() {
 	    Screenshot.startScreenshot();
@@ -20788,30 +20829,47 @@
 	      }, React.createElement(InputGroup, {
 	        "name": "slack",
 	        "label": "Your Slack username",
-	        "handleChange": this.handleChange
+	        "handleChange": this.handleChange,
+	        "handleBlur": this.persist
 	      }), React.createElement(InputGroup, {
 	        "name": "kinja",
 	        "label": "Your Kinja username",
-	        "handleChange": this.handleChange
+	        "handleChange": this.handleChange,
+	        "handleBlur": this.persist
 	      })));
-	      screenshots = this.state.screenshots.map(function(image, index) {
-	        return React.createElement("img", {
-	          "src": image,
-	          "key": index
-	        });
-	      });
 	    }
+	    screenshots = this.state.screenshots.map(function(image, index) {
+	      return React.createElement("img", {
+	        "src": image,
+	        "key": index
+	      });
+	    });
 	    return React.createElement(Draggable, {
 	      "zIndex": 1000000000000.,
-	      "onStop": this.recordY
+	      "onStop": this.recordY,
+	      "handle": ".fa-bars",
+	      "bounds": "parent"
 	    }, React.createElement("div", {
 	      "className": classnames("report", {
 	        small: this.state.screenshotting
-	      }),
+	      })
+	    }, React.createElement("div", {
+	      "className": "header"
+	    }, React.createElement("h4", null, "Kinja Bug Report"), React.createElement("i", {
+	      "className": "fa fa-bars"
+	    })), React.createElement("div", {
+	      "className": "content",
 	      "style": {
-	        maxHeight: this.state.window.height - this.state.yPos - 50
+	        maxHeight: this.state.window.height - this.state.yPos - 40
 	      }
-	    }, React.createElement("h4", null, "Kinja Bug Report"), setup, React.createElement("h4", null, "The Bug"), React.createElement(InputGroup, {
+	    }, (this.state.reportSubmitted ? React.createElement("div", {
+	      "className": "submitted"
+	    }, "Assuming you emailed the generated bug report, you can ", React.createElement("a", {
+	      "href": "#",
+	      "onClick": this.cancel
+	    }, "close this bug reporter"), " now. Forgot to press send? ", React.createElement("a", {
+	      "href": this.mailto()
+	    }, "Try again"), ".") : React.createElement("div", null, setup, React.createElement("h4", null, "The Bug"), React.createElement(InputGroup, {
 	      "name": "description",
 	      "handleChange": this.handleChange,
 	      "type": "textarea",
@@ -20823,17 +20881,28 @@
 	      "className": "screenshots screenshot"
 	    }, screenshots)), React.createElement("div", {
 	      "className": "group"
-	    }, React.createElement("button", {
+	    }, React.createElement("div", {
 	      "className": "screenshot",
 	      "onClick": this.screenshot
-	    }, "Attach a screenshot")), React.createElement("div", {
-	      "className": "group"
+	    }, React.createElement("i", {
+	      "className": "fa fa-camera"
+	    }), " Add a screenshot")), (this.state.uploadingImage ? React.createElement("div", {
+	      "className": "submit_group"
+	    }, React.createElement("div", {
+	      "className": "uploading"
+	    }, React.createElement("i", {
+	      "className": "fa fa-spinner fa-pulse"
+	    }), " Saving image...")) : React.createElement("div", {
+	      "className": "submit_group"
 	    }, React.createElement("a", {
-	      "href": this.mailto()
-	    }, React.createElement("button", {
+	      "href": "#",
+	      "onClick": this.cancel,
+	      "className": "cancel"
+	    }, "Cancel"), React.createElement("a", {
+	      "href": this.mailto(),
 	      "className": "submit",
-	      "onClick": this.submit
-	    }, "Submit a bug")))));
+	      "onClick": this.end
+	    }, "Submit a bug"))))))));
 	  }
 	});
 
@@ -21634,6 +21703,15 @@
 	    obj[this.props.name] = e.target.value;
 	    return this.props.handleChange(obj);
 	  },
+	  handleBlur: function(e) {
+	    var obj;
+	    if (!(this.props.name === 'kinja' || this.props.name === 'slack')) {
+	      return;
+	    }
+	    obj = {};
+	    obj[this.props.name] = e.target.value;
+	    return this.props.handleBlur(obj);
+	  },
 	  render: function() {
 	    return React.createElement("div", null, React.createElement("label", {
 	      "className": "group"
@@ -21641,7 +21719,8 @@
 	      "className": "label"
 	    }, this.props.label), (this.props.type === 'text' ? React.createElement("input", {
 	      "type": "text",
-	      "onChange": this.handleChange
+	      "onChange": this.handleChange,
+	      "onBlur": this.handleBlur
 	    }) : React.createElement("textarea", {
 	      "placeholder": this.props.placeholder,
 	      "onChange": this.handleChange
@@ -21658,7 +21737,7 @@
 
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/ap/code/labs/active/KinjaBugReporter/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/ap/code/labs/active/KinjaBugReporter/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } (function () {
 
-	var ghostElement, startPos, startY, started;
+	var ghostElement, i, startPos, startY, started;
 
 	startPos = {};
 
@@ -21667,6 +21746,8 @@
 	ghostElement = null;
 
 	started = false;
+
+	i = 0;
 
 	module.exports = {
 	  startScreenshot: function() {
@@ -21680,6 +21761,9 @@
 	  handleEvent: function(e) {
 	    switch (e.type) {
 	      case 'mousedown':
+	        if (e.target.className === "fa fa-arrows") {
+	          return;
+	        }
 	        return this.mouseDown(e);
 	      case 'keydown':
 	        return this.keyDown(e);
@@ -21752,8 +21836,22 @@
 	      x: nowPos.x - startPos.x,
 	      y: nowPos.y - startPos.y
 	    };
-	    ghostElement.style.width = diff.x + 'px';
-	    ghostElement.style.height = diff.y + 'px';
+	    if (diff.x < 0) {
+	      ghostElement.style.right = window.innerWidth - startPos.x + 'px';
+	      ghostElement.style.left = 'auto';
+	    } else {
+	      ghostElement.style.left = startPos.x + 'px';
+	      ghostElement.style.right = 'auto';
+	    }
+	    if (diff.y < 0) {
+	      ghostElement.style.bottom = window.innerHeight - startPos.y + 'px';
+	      ghostElement.style.top = 'auto';
+	    } else {
+	      ghostElement.style.top = startPos.y + 'px';
+	      ghostElement.style.bottom = 'auto';
+	    }
+	    ghostElement.style.width = Math.abs(diff.x) + 'px';
+	    ghostElement.style.height = Math.abs(diff.y) + 'px';
 	    return false;
 	  },
 	  mouseUp: function(e) {
@@ -21770,16 +21868,33 @@
 	      x: nowPos.x - startPos.x,
 	      y: nowPos.y - startPos.y
 	    };
+	    if (diff.x === 0 || diff.y === 0) {
+	      startPos = {
+	        x: 0
+	      };
+	      startY = 0;
+	      diff = {
+	        x: window.innerWidth,
+	        y: window.innerHeight
+	      };
+	    }
 	    ghostElement.parentNode.removeChild(ghostElement);
 	    setTimeout((function(_this) {
 	      return function() {
 	        var coords, gCoords;
-	        coords = {
-	          w: diff.x,
-	          h: diff.y,
-	          x: startPos.x,
-	          y: startY
-	        };
+	        coords = {};
+	        if (diff.x < 0) {
+	          coords.x = nowPos.x;
+	        } else {
+	          coords.x = startPos.x;
+	        }
+	        if (diff.y < 0) {
+	          coords.y = nowPos.y;
+	        } else {
+	          coords.y = startPos.y;
+	        }
+	        coords.w = Math.abs(diff.x);
+	        coords.h = Math.abs(diff.y);
 	        gCoords = coords;
 	        e.stopPropagation();
 	        return _this.endScreenshot(coords);
@@ -21794,6 +21909,529 @@
 
 /***/ },
 /* 168 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = {
+	  OnResize: __webpack_require__(169),
+	  OnScroll: __webpack_require__(177),
+	  OnUnload: __webpack_require__(178)
+	};
+
+
+
+/***/ },
+/* 169 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*global window */
+
+	var throttle = __webpack_require__(170);
+
+	module.exports = {
+	  getInitialState: function() {
+	    var defaults = { window: { height: 0, width: 0 }, document: { height: 0, width: 0 } };
+	    return !this.onResize ? defaults : null;
+	  },
+
+	  componentDidMount: function() {
+	    if (!this.onResize) {
+	      this.onResize = function() {
+	        this.setState({
+	          window: { height: window.innerHeight, width: window.innerWidth },
+	          document: { height: document.body.clientHeight, width: document.body.clientWidth }
+	        });
+	      }.bind(this);
+	    }
+
+	    this.onResize();
+	    this.onResizeThrottled = throttle(this.onResize, 10);
+	    window.addEventListener("resize", this.onResizeThrottled);
+	  },
+
+	  componentWillUnmount: function() {
+	    window.removeEventListener("resize", this.onResizeThrottled);
+	  }
+	};
+
+
+
+/***/ },
+/* 170 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+	 * Build: `lodash modularize modern exports="npm" -o ./npm/`
+	 * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+	 * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+	 * Available under MIT license <http://lodash.com/license>
+	 */
+	var debounce = __webpack_require__(171),
+	    isFunction = __webpack_require__(172),
+	    isObject = __webpack_require__(173);
+
+	/** Used as an internal `_.debounce` options object */
+	var debounceOptions = {
+	  'leading': false,
+	  'maxWait': 0,
+	  'trailing': false
+	};
+
+	/**
+	 * Creates a function that, when executed, will only call the `func` function
+	 * at most once per every `wait` milliseconds. Provide an options object to
+	 * indicate that `func` should be invoked on the leading and/or trailing edge
+	 * of the `wait` timeout. Subsequent calls to the throttled function will
+	 * return the result of the last `func` call.
+	 *
+	 * Note: If `leading` and `trailing` options are `true` `func` will be called
+	 * on the trailing edge of the timeout only if the the throttled function is
+	 * invoked more than once during the `wait` timeout.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Functions
+	 * @param {Function} func The function to throttle.
+	 * @param {number} wait The number of milliseconds to throttle executions to.
+	 * @param {Object} [options] The options object.
+	 * @param {boolean} [options.leading=true] Specify execution on the leading edge of the timeout.
+	 * @param {boolean} [options.trailing=true] Specify execution on the trailing edge of the timeout.
+	 * @returns {Function} Returns the new throttled function.
+	 * @example
+	 *
+	 * // avoid excessively updating the position while scrolling
+	 * var throttled = _.throttle(updatePosition, 100);
+	 * jQuery(window).on('scroll', throttled);
+	 *
+	 * // execute `renewToken` when the click event is fired, but not more than once every 5 minutes
+	 * jQuery('.interactive').on('click', _.throttle(renewToken, 300000, {
+	 *   'trailing': false
+	 * }));
+	 */
+	function throttle(func, wait, options) {
+	  var leading = true,
+	      trailing = true;
+
+	  if (!isFunction(func)) {
+	    throw new TypeError;
+	  }
+	  if (options === false) {
+	    leading = false;
+	  } else if (isObject(options)) {
+	    leading = 'leading' in options ? options.leading : leading;
+	    trailing = 'trailing' in options ? options.trailing : trailing;
+	  }
+	  debounceOptions.leading = leading;
+	  debounceOptions.maxWait = wait;
+	  debounceOptions.trailing = trailing;
+
+	  return debounce(func, wait, debounceOptions);
+	}
+
+	module.exports = throttle;
+
+
+/***/ },
+/* 171 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+	 * Build: `lodash modularize modern exports="npm" -o ./npm/`
+	 * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+	 * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+	 * Available under MIT license <http://lodash.com/license>
+	 */
+	var isFunction = __webpack_require__(172),
+	    isObject = __webpack_require__(173),
+	    now = __webpack_require__(175);
+
+	/* Native method shortcuts for methods with the same name as other `lodash` methods */
+	var nativeMax = Math.max;
+
+	/**
+	 * Creates a function that will delay the execution of `func` until after
+	 * `wait` milliseconds have elapsed since the last time it was invoked.
+	 * Provide an options object to indicate that `func` should be invoked on
+	 * the leading and/or trailing edge of the `wait` timeout. Subsequent calls
+	 * to the debounced function will return the result of the last `func` call.
+	 *
+	 * Note: If `leading` and `trailing` options are `true` `func` will be called
+	 * on the trailing edge of the timeout only if the the debounced function is
+	 * invoked more than once during the `wait` timeout.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Functions
+	 * @param {Function} func The function to debounce.
+	 * @param {number} wait The number of milliseconds to delay.
+	 * @param {Object} [options] The options object.
+	 * @param {boolean} [options.leading=false] Specify execution on the leading edge of the timeout.
+	 * @param {number} [options.maxWait] The maximum time `func` is allowed to be delayed before it's called.
+	 * @param {boolean} [options.trailing=true] Specify execution on the trailing edge of the timeout.
+	 * @returns {Function} Returns the new debounced function.
+	 * @example
+	 *
+	 * // avoid costly calculations while the window size is in flux
+	 * var lazyLayout = _.debounce(calculateLayout, 150);
+	 * jQuery(window).on('resize', lazyLayout);
+	 *
+	 * // execute `sendMail` when the click event is fired, debouncing subsequent calls
+	 * jQuery('#postbox').on('click', _.debounce(sendMail, 300, {
+	 *   'leading': true,
+	 *   'trailing': false
+	 * });
+	 *
+	 * // ensure `batchLog` is executed once after 1 second of debounced calls
+	 * var source = new EventSource('/stream');
+	 * source.addEventListener('message', _.debounce(batchLog, 250, {
+	 *   'maxWait': 1000
+	 * }, false);
+	 */
+	function debounce(func, wait, options) {
+	  var args,
+	      maxTimeoutId,
+	      result,
+	      stamp,
+	      thisArg,
+	      timeoutId,
+	      trailingCall,
+	      lastCalled = 0,
+	      maxWait = false,
+	      trailing = true;
+
+	  if (!isFunction(func)) {
+	    throw new TypeError;
+	  }
+	  wait = nativeMax(0, wait) || 0;
+	  if (options === true) {
+	    var leading = true;
+	    trailing = false;
+	  } else if (isObject(options)) {
+	    leading = options.leading;
+	    maxWait = 'maxWait' in options && (nativeMax(wait, options.maxWait) || 0);
+	    trailing = 'trailing' in options ? options.trailing : trailing;
+	  }
+	  var delayed = function() {
+	    var remaining = wait - (now() - stamp);
+	    if (remaining <= 0) {
+	      if (maxTimeoutId) {
+	        clearTimeout(maxTimeoutId);
+	      }
+	      var isCalled = trailingCall;
+	      maxTimeoutId = timeoutId = trailingCall = undefined;
+	      if (isCalled) {
+	        lastCalled = now();
+	        result = func.apply(thisArg, args);
+	        if (!timeoutId && !maxTimeoutId) {
+	          args = thisArg = null;
+	        }
+	      }
+	    } else {
+	      timeoutId = setTimeout(delayed, remaining);
+	    }
+	  };
+
+	  var maxDelayed = function() {
+	    if (timeoutId) {
+	      clearTimeout(timeoutId);
+	    }
+	    maxTimeoutId = timeoutId = trailingCall = undefined;
+	    if (trailing || (maxWait !== wait)) {
+	      lastCalled = now();
+	      result = func.apply(thisArg, args);
+	      if (!timeoutId && !maxTimeoutId) {
+	        args = thisArg = null;
+	      }
+	    }
+	  };
+
+	  return function() {
+	    args = arguments;
+	    stamp = now();
+	    thisArg = this;
+	    trailingCall = trailing && (timeoutId || !leading);
+
+	    if (maxWait === false) {
+	      var leadingCall = leading && !timeoutId;
+	    } else {
+	      if (!maxTimeoutId && !leading) {
+	        lastCalled = stamp;
+	      }
+	      var remaining = maxWait - (stamp - lastCalled),
+	          isCalled = remaining <= 0;
+
+	      if (isCalled) {
+	        if (maxTimeoutId) {
+	          maxTimeoutId = clearTimeout(maxTimeoutId);
+	        }
+	        lastCalled = stamp;
+	        result = func.apply(thisArg, args);
+	      }
+	      else if (!maxTimeoutId) {
+	        maxTimeoutId = setTimeout(maxDelayed, remaining);
+	      }
+	    }
+	    if (isCalled && timeoutId) {
+	      timeoutId = clearTimeout(timeoutId);
+	    }
+	    else if (!timeoutId && wait !== maxWait) {
+	      timeoutId = setTimeout(delayed, wait);
+	    }
+	    if (leadingCall) {
+	      isCalled = true;
+	      result = func.apply(thisArg, args);
+	    }
+	    if (isCalled && !timeoutId && !maxTimeoutId) {
+	      args = thisArg = null;
+	    }
+	    return result;
+	  };
+	}
+
+	module.exports = debounce;
+
+
+/***/ },
+/* 172 */
+/***/ function(module, exports) {
+
+	/**
+	 * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+	 * Build: `lodash modularize modern exports="npm" -o ./npm/`
+	 * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+	 * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+	 * Available under MIT license <http://lodash.com/license>
+	 */
+
+	/**
+	 * Checks if `value` is a function.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Objects
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if the `value` is a function, else `false`.
+	 * @example
+	 *
+	 * _.isFunction(_);
+	 * // => true
+	 */
+	function isFunction(value) {
+	  return typeof value == 'function';
+	}
+
+	module.exports = isFunction;
+
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+	 * Build: `lodash modularize modern exports="npm" -o ./npm/`
+	 * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+	 * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+	 * Available under MIT license <http://lodash.com/license>
+	 */
+	var objectTypes = __webpack_require__(174);
+
+	/**
+	 * Checks if `value` is the language type of Object.
+	 * (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Objects
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if the `value` is an object, else `false`.
+	 * @example
+	 *
+	 * _.isObject({});
+	 * // => true
+	 *
+	 * _.isObject([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isObject(1);
+	 * // => false
+	 */
+	function isObject(value) {
+	  // check if the value is the ECMAScript language type of Object
+	  // http://es5.github.io/#x8
+	  // and avoid a V8 bug
+	  // http://code.google.com/p/v8/issues/detail?id=2291
+	  return !!(value && objectTypes[typeof value]);
+	}
+
+	module.exports = isObject;
+
+
+/***/ },
+/* 174 */
+/***/ function(module, exports) {
+
+	/**
+	 * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+	 * Build: `lodash modularize modern exports="npm" -o ./npm/`
+	 * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+	 * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+	 * Available under MIT license <http://lodash.com/license>
+	 */
+
+	/** Used to determine if values are of the language type Object */
+	var objectTypes = {
+	  'boolean': false,
+	  'function': true,
+	  'object': true,
+	  'number': false,
+	  'string': false,
+	  'undefined': false
+	};
+
+	module.exports = objectTypes;
+
+
+/***/ },
+/* 175 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+	 * Build: `lodash modularize modern exports="npm" -o ./npm/`
+	 * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+	 * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+	 * Available under MIT license <http://lodash.com/license>
+	 */
+	var isNative = __webpack_require__(176);
+
+	/**
+	 * Gets the number of milliseconds that have elapsed since the Unix epoch
+	 * (1 January 1970 00:00:00 UTC).
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Utilities
+	 * @example
+	 *
+	 * var stamp = _.now();
+	 * _.defer(function() { console.log(_.now() - stamp); });
+	 * // => logs the number of milliseconds it took for the deferred function to be called
+	 */
+	var now = isNative(now = Date.now) && now || function() {
+	  return new Date().getTime();
+	};
+
+	module.exports = now;
+
+
+/***/ },
+/* 176 */
+/***/ function(module, exports) {
+
+	/**
+	 * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+	 * Build: `lodash modularize modern exports="npm" -o ./npm/`
+	 * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+	 * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+	 * Available under MIT license <http://lodash.com/license>
+	 */
+
+	/** Used for native method references */
+	var objectProto = Object.prototype;
+
+	/** Used to resolve the internal [[Class]] of values */
+	var toString = objectProto.toString;
+
+	/** Used to detect if a method is native */
+	var reNative = RegExp('^' +
+	  String(toString)
+	    .replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+	    .replace(/toString| for [^\]]+/g, '.*?') + '$'
+	);
+
+	/**
+	 * Checks if `value` is a native function.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if the `value` is a native function, else `false`.
+	 */
+	function isNative(value) {
+	  return typeof value == 'function' && reNative.test(value);
+	}
+
+	module.exports = isNative;
+
+
+/***/ },
+/* 177 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*global window */
+
+	var throttle = __webpack_require__(170);
+
+	module.exports = {
+	  getInitialState: function() {
+	    return !this.onScroll ? { scroll: { x: 0, y: 0 } } : null;
+	  },
+
+	  componentDidMount: function() {
+	    if (!this.onScroll) {
+	      this.onScroll = function() {
+	        this.setState({ scroll: { x: window.pageXOffset, y: window.pageYOffset } });
+	      }.bind(this);
+	    }
+
+	    this.onScroll();
+	    this.onScrollThrottled = throttle(this.onScroll, 10);
+	    window.addEventListener("scroll", this.onScrollThrottled);
+	  },
+
+	  componentWillUnmount: function() {
+	    window.removeEventListener("scroll", this.onScrollThrottled);
+	  }
+	};
+
+
+/***/ },
+/* 178 */
+/***/ function(module, exports) {
+
+	/*global window */
+
+	module.exports = {
+	  componentDidMount: function() {
+	    if (this.onUnload) {
+	      window.addEventListener("unload", this.onUnload);
+	    }
+	    if (this.onBeforeUnload) {
+	      window.addEventListener("beforeunload", this.onBeforeUnload);
+	    }
+	  },
+
+	  componentWillUnmount: function() {
+	    if (this.onUnload) {
+	      window.removeEventListener("unload", this.onUnload);
+	    }
+	    if (this.onBeforeUnload) {
+	      window.removeEventListener("beforeunload", this.onBeforeUnload);
+	    }
+	  }
+	};
+
+
+/***/ },
+/* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -31009,7 +31647,7 @@
 
 
 /***/ },
-/* 169 */
+/* 180 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -31061,529 +31699,6 @@
 		}
 
 	}());
-
-
-/***/ },
-/* 170 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = {
-	  OnResize: __webpack_require__(171),
-	  OnScroll: __webpack_require__(179),
-	  OnUnload: __webpack_require__(180)
-	};
-
-
-
-/***/ },
-/* 171 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*global window */
-
-	var throttle = __webpack_require__(172);
-
-	module.exports = {
-	  getInitialState: function() {
-	    var defaults = { window: { height: 0, width: 0 }, document: { height: 0, width: 0 } };
-	    return !this.onResize ? defaults : null;
-	  },
-
-	  componentDidMount: function() {
-	    if (!this.onResize) {
-	      this.onResize = function() {
-	        this.setState({
-	          window: { height: window.innerHeight, width: window.innerWidth },
-	          document: { height: document.body.clientHeight, width: document.body.clientWidth }
-	        });
-	      }.bind(this);
-	    }
-
-	    this.onResize();
-	    this.onResizeThrottled = throttle(this.onResize, 10);
-	    window.addEventListener("resize", this.onResizeThrottled);
-	  },
-
-	  componentWillUnmount: function() {
-	    window.removeEventListener("resize", this.onResizeThrottled);
-	  }
-	};
-
-
-
-/***/ },
-/* 172 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
-	 * Build: `lodash modularize modern exports="npm" -o ./npm/`
-	 * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
-	 * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
-	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
-	 * Available under MIT license <http://lodash.com/license>
-	 */
-	var debounce = __webpack_require__(173),
-	    isFunction = __webpack_require__(174),
-	    isObject = __webpack_require__(175);
-
-	/** Used as an internal `_.debounce` options object */
-	var debounceOptions = {
-	  'leading': false,
-	  'maxWait': 0,
-	  'trailing': false
-	};
-
-	/**
-	 * Creates a function that, when executed, will only call the `func` function
-	 * at most once per every `wait` milliseconds. Provide an options object to
-	 * indicate that `func` should be invoked on the leading and/or trailing edge
-	 * of the `wait` timeout. Subsequent calls to the throttled function will
-	 * return the result of the last `func` call.
-	 *
-	 * Note: If `leading` and `trailing` options are `true` `func` will be called
-	 * on the trailing edge of the timeout only if the the throttled function is
-	 * invoked more than once during the `wait` timeout.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @category Functions
-	 * @param {Function} func The function to throttle.
-	 * @param {number} wait The number of milliseconds to throttle executions to.
-	 * @param {Object} [options] The options object.
-	 * @param {boolean} [options.leading=true] Specify execution on the leading edge of the timeout.
-	 * @param {boolean} [options.trailing=true] Specify execution on the trailing edge of the timeout.
-	 * @returns {Function} Returns the new throttled function.
-	 * @example
-	 *
-	 * // avoid excessively updating the position while scrolling
-	 * var throttled = _.throttle(updatePosition, 100);
-	 * jQuery(window).on('scroll', throttled);
-	 *
-	 * // execute `renewToken` when the click event is fired, but not more than once every 5 minutes
-	 * jQuery('.interactive').on('click', _.throttle(renewToken, 300000, {
-	 *   'trailing': false
-	 * }));
-	 */
-	function throttle(func, wait, options) {
-	  var leading = true,
-	      trailing = true;
-
-	  if (!isFunction(func)) {
-	    throw new TypeError;
-	  }
-	  if (options === false) {
-	    leading = false;
-	  } else if (isObject(options)) {
-	    leading = 'leading' in options ? options.leading : leading;
-	    trailing = 'trailing' in options ? options.trailing : trailing;
-	  }
-	  debounceOptions.leading = leading;
-	  debounceOptions.maxWait = wait;
-	  debounceOptions.trailing = trailing;
-
-	  return debounce(func, wait, debounceOptions);
-	}
-
-	module.exports = throttle;
-
-
-/***/ },
-/* 173 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
-	 * Build: `lodash modularize modern exports="npm" -o ./npm/`
-	 * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
-	 * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
-	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
-	 * Available under MIT license <http://lodash.com/license>
-	 */
-	var isFunction = __webpack_require__(174),
-	    isObject = __webpack_require__(175),
-	    now = __webpack_require__(177);
-
-	/* Native method shortcuts for methods with the same name as other `lodash` methods */
-	var nativeMax = Math.max;
-
-	/**
-	 * Creates a function that will delay the execution of `func` until after
-	 * `wait` milliseconds have elapsed since the last time it was invoked.
-	 * Provide an options object to indicate that `func` should be invoked on
-	 * the leading and/or trailing edge of the `wait` timeout. Subsequent calls
-	 * to the debounced function will return the result of the last `func` call.
-	 *
-	 * Note: If `leading` and `trailing` options are `true` `func` will be called
-	 * on the trailing edge of the timeout only if the the debounced function is
-	 * invoked more than once during the `wait` timeout.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @category Functions
-	 * @param {Function} func The function to debounce.
-	 * @param {number} wait The number of milliseconds to delay.
-	 * @param {Object} [options] The options object.
-	 * @param {boolean} [options.leading=false] Specify execution on the leading edge of the timeout.
-	 * @param {number} [options.maxWait] The maximum time `func` is allowed to be delayed before it's called.
-	 * @param {boolean} [options.trailing=true] Specify execution on the trailing edge of the timeout.
-	 * @returns {Function} Returns the new debounced function.
-	 * @example
-	 *
-	 * // avoid costly calculations while the window size is in flux
-	 * var lazyLayout = _.debounce(calculateLayout, 150);
-	 * jQuery(window).on('resize', lazyLayout);
-	 *
-	 * // execute `sendMail` when the click event is fired, debouncing subsequent calls
-	 * jQuery('#postbox').on('click', _.debounce(sendMail, 300, {
-	 *   'leading': true,
-	 *   'trailing': false
-	 * });
-	 *
-	 * // ensure `batchLog` is executed once after 1 second of debounced calls
-	 * var source = new EventSource('/stream');
-	 * source.addEventListener('message', _.debounce(batchLog, 250, {
-	 *   'maxWait': 1000
-	 * }, false);
-	 */
-	function debounce(func, wait, options) {
-	  var args,
-	      maxTimeoutId,
-	      result,
-	      stamp,
-	      thisArg,
-	      timeoutId,
-	      trailingCall,
-	      lastCalled = 0,
-	      maxWait = false,
-	      trailing = true;
-
-	  if (!isFunction(func)) {
-	    throw new TypeError;
-	  }
-	  wait = nativeMax(0, wait) || 0;
-	  if (options === true) {
-	    var leading = true;
-	    trailing = false;
-	  } else if (isObject(options)) {
-	    leading = options.leading;
-	    maxWait = 'maxWait' in options && (nativeMax(wait, options.maxWait) || 0);
-	    trailing = 'trailing' in options ? options.trailing : trailing;
-	  }
-	  var delayed = function() {
-	    var remaining = wait - (now() - stamp);
-	    if (remaining <= 0) {
-	      if (maxTimeoutId) {
-	        clearTimeout(maxTimeoutId);
-	      }
-	      var isCalled = trailingCall;
-	      maxTimeoutId = timeoutId = trailingCall = undefined;
-	      if (isCalled) {
-	        lastCalled = now();
-	        result = func.apply(thisArg, args);
-	        if (!timeoutId && !maxTimeoutId) {
-	          args = thisArg = null;
-	        }
-	      }
-	    } else {
-	      timeoutId = setTimeout(delayed, remaining);
-	    }
-	  };
-
-	  var maxDelayed = function() {
-	    if (timeoutId) {
-	      clearTimeout(timeoutId);
-	    }
-	    maxTimeoutId = timeoutId = trailingCall = undefined;
-	    if (trailing || (maxWait !== wait)) {
-	      lastCalled = now();
-	      result = func.apply(thisArg, args);
-	      if (!timeoutId && !maxTimeoutId) {
-	        args = thisArg = null;
-	      }
-	    }
-	  };
-
-	  return function() {
-	    args = arguments;
-	    stamp = now();
-	    thisArg = this;
-	    trailingCall = trailing && (timeoutId || !leading);
-
-	    if (maxWait === false) {
-	      var leadingCall = leading && !timeoutId;
-	    } else {
-	      if (!maxTimeoutId && !leading) {
-	        lastCalled = stamp;
-	      }
-	      var remaining = maxWait - (stamp - lastCalled),
-	          isCalled = remaining <= 0;
-
-	      if (isCalled) {
-	        if (maxTimeoutId) {
-	          maxTimeoutId = clearTimeout(maxTimeoutId);
-	        }
-	        lastCalled = stamp;
-	        result = func.apply(thisArg, args);
-	      }
-	      else if (!maxTimeoutId) {
-	        maxTimeoutId = setTimeout(maxDelayed, remaining);
-	      }
-	    }
-	    if (isCalled && timeoutId) {
-	      timeoutId = clearTimeout(timeoutId);
-	    }
-	    else if (!timeoutId && wait !== maxWait) {
-	      timeoutId = setTimeout(delayed, wait);
-	    }
-	    if (leadingCall) {
-	      isCalled = true;
-	      result = func.apply(thisArg, args);
-	    }
-	    if (isCalled && !timeoutId && !maxTimeoutId) {
-	      args = thisArg = null;
-	    }
-	    return result;
-	  };
-	}
-
-	module.exports = debounce;
-
-
-/***/ },
-/* 174 */
-/***/ function(module, exports) {
-
-	/**
-	 * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
-	 * Build: `lodash modularize modern exports="npm" -o ./npm/`
-	 * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
-	 * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
-	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
-	 * Available under MIT license <http://lodash.com/license>
-	 */
-
-	/**
-	 * Checks if `value` is a function.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @category Objects
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if the `value` is a function, else `false`.
-	 * @example
-	 *
-	 * _.isFunction(_);
-	 * // => true
-	 */
-	function isFunction(value) {
-	  return typeof value == 'function';
-	}
-
-	module.exports = isFunction;
-
-
-/***/ },
-/* 175 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
-	 * Build: `lodash modularize modern exports="npm" -o ./npm/`
-	 * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
-	 * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
-	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
-	 * Available under MIT license <http://lodash.com/license>
-	 */
-	var objectTypes = __webpack_require__(176);
-
-	/**
-	 * Checks if `value` is the language type of Object.
-	 * (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
-	 *
-	 * @static
-	 * @memberOf _
-	 * @category Objects
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if the `value` is an object, else `false`.
-	 * @example
-	 *
-	 * _.isObject({});
-	 * // => true
-	 *
-	 * _.isObject([1, 2, 3]);
-	 * // => true
-	 *
-	 * _.isObject(1);
-	 * // => false
-	 */
-	function isObject(value) {
-	  // check if the value is the ECMAScript language type of Object
-	  // http://es5.github.io/#x8
-	  // and avoid a V8 bug
-	  // http://code.google.com/p/v8/issues/detail?id=2291
-	  return !!(value && objectTypes[typeof value]);
-	}
-
-	module.exports = isObject;
-
-
-/***/ },
-/* 176 */
-/***/ function(module, exports) {
-
-	/**
-	 * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
-	 * Build: `lodash modularize modern exports="npm" -o ./npm/`
-	 * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
-	 * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
-	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
-	 * Available under MIT license <http://lodash.com/license>
-	 */
-
-	/** Used to determine if values are of the language type Object */
-	var objectTypes = {
-	  'boolean': false,
-	  'function': true,
-	  'object': true,
-	  'number': false,
-	  'string': false,
-	  'undefined': false
-	};
-
-	module.exports = objectTypes;
-
-
-/***/ },
-/* 177 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
-	 * Build: `lodash modularize modern exports="npm" -o ./npm/`
-	 * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
-	 * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
-	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
-	 * Available under MIT license <http://lodash.com/license>
-	 */
-	var isNative = __webpack_require__(178);
-
-	/**
-	 * Gets the number of milliseconds that have elapsed since the Unix epoch
-	 * (1 January 1970 00:00:00 UTC).
-	 *
-	 * @static
-	 * @memberOf _
-	 * @category Utilities
-	 * @example
-	 *
-	 * var stamp = _.now();
-	 * _.defer(function() { console.log(_.now() - stamp); });
-	 * // => logs the number of milliseconds it took for the deferred function to be called
-	 */
-	var now = isNative(now = Date.now) && now || function() {
-	  return new Date().getTime();
-	};
-
-	module.exports = now;
-
-
-/***/ },
-/* 178 */
-/***/ function(module, exports) {
-
-	/**
-	 * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
-	 * Build: `lodash modularize modern exports="npm" -o ./npm/`
-	 * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
-	 * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
-	 * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
-	 * Available under MIT license <http://lodash.com/license>
-	 */
-
-	/** Used for native method references */
-	var objectProto = Object.prototype;
-
-	/** Used to resolve the internal [[Class]] of values */
-	var toString = objectProto.toString;
-
-	/** Used to detect if a method is native */
-	var reNative = RegExp('^' +
-	  String(toString)
-	    .replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-	    .replace(/toString| for [^\]]+/g, '.*?') + '$'
-	);
-
-	/**
-	 * Checks if `value` is a native function.
-	 *
-	 * @private
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if the `value` is a native function, else `false`.
-	 */
-	function isNative(value) {
-	  return typeof value == 'function' && reNative.test(value);
-	}
-
-	module.exports = isNative;
-
-
-/***/ },
-/* 179 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*global window */
-
-	var throttle = __webpack_require__(172);
-
-	module.exports = {
-	  getInitialState: function() {
-	    return !this.onScroll ? { scroll: { x: 0, y: 0 } } : null;
-	  },
-
-	  componentDidMount: function() {
-	    if (!this.onScroll) {
-	      this.onScroll = function() {
-	        this.setState({ scroll: { x: window.pageXOffset, y: window.pageYOffset } });
-	      }.bind(this);
-	    }
-
-	    this.onScroll();
-	    this.onScrollThrottled = throttle(this.onScroll, 10);
-	    window.addEventListener("scroll", this.onScrollThrottled);
-	  },
-
-	  componentWillUnmount: function() {
-	    window.removeEventListener("scroll", this.onScrollThrottled);
-	  }
-	};
-
-
-/***/ },
-/* 180 */
-/***/ function(module, exports) {
-
-	/*global window */
-
-	module.exports = {
-	  componentDidMount: function() {
-	    if (this.onUnload) {
-	      window.addEventListener("unload", this.onUnload);
-	    }
-	    if (this.onBeforeUnload) {
-	      window.addEventListener("beforeunload", this.onBeforeUnload);
-	    }
-	  },
-
-	  componentWillUnmount: function() {
-	    if (this.onUnload) {
-	      window.removeEventListener("unload", this.onUnload);
-	    }
-	    if (this.onBeforeUnload) {
-	      window.removeEventListener("beforeunload", this.onBeforeUnload);
-	    }
-	  }
-	};
 
 
 /***/ }

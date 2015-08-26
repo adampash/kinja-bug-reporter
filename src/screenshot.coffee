@@ -2,6 +2,7 @@ startPos = {}
 startY = null
 ghostElement = null
 started = false
+i = 0
 
 module.exports =
   startScreenshot: ->
@@ -18,6 +19,7 @@ module.exports =
   handleEvent: (e) ->
     switch e.type
       when 'mousedown'
+        return if e.target.className is "fa fa-arrows"
         @mouseDown(e)
       when 'keydown'
         @keyDown(e)
@@ -88,8 +90,21 @@ module.exports =
     nowPos = {x: e.pageX, y: e.pageY}
     diff = {x: nowPos.x - startPos.x, y: nowPos.y - startPos.y}
 
-    ghostElement.style.width = diff.x + 'px'
-    ghostElement.style.height = diff.y + 'px'
+    if diff.x < 0
+      ghostElement.style.right = window.innerWidth - startPos.x + 'px'
+      ghostElement.style.left = 'auto'
+    else
+      ghostElement.style.left = startPos.x + 'px'
+      ghostElement.style.right = 'auto'
+    if diff.y < 0
+      ghostElement.style.bottom = window.innerHeight - startPos.y + 'px'
+      ghostElement.style.top = 'auto'
+    else
+      ghostElement.style.top = startPos.y + 'px'
+      ghostElement.style.bottom = 'auto'
+
+    ghostElement.style.width = Math.abs(diff.x) + 'px'
+    ghostElement.style.height = Math.abs(diff.y) + 'px'
 
     return false
 
@@ -100,16 +115,29 @@ module.exports =
 
     nowPos = {x: e.pageX, y: e.pageY}
     diff = {x: nowPos.x - startPos.x, y: nowPos.y - startPos.y}
+    if diff.x is 0 or diff.y is 0
+      startPos =
+        x: 0
+      startY = 0
+      diff =
+        x: window.innerWidth
+        y: window.innerHeight
 
     ghostElement.parentNode.removeChild(ghostElement)
 
     setTimeout =>
-      coords = {
-        w: diff.x,
-        h: diff.y,
-        x: startPos.x,
-        y: startY
-      }
+      coords = {}
+      if diff.x < 0
+        coords.x = nowPos.x
+      else
+        coords.x = startPos.x
+      if diff.y < 0
+        coords.y = nowPos.y
+      else
+        coords.y = startPos.y
+
+      coords.w = Math.abs(diff.x)
+      coords.h = Math.abs(diff.y)
       gCoords = coords
       e.stopPropagation()
       @endScreenshot(coords)

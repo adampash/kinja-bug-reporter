@@ -10,6 +10,12 @@ module.exports = React.createClass
     obj[@props.name] = e.target.value
     @props.handleChange(obj)
 
+  handleBlur: (e) ->
+    return unless @props.name is 'kinja' or @props.name is 'slack'
+    obj = {}
+    obj[@props.name] = e.target.value
+    @props.handleBlur(obj)
+
   render: ->
     <div>
       <label className="group">
@@ -17,7 +23,7 @@ module.exports = React.createClass
           {@props.label}
         </div>
         {if @props.type is 'text'
-          <input type="text" onChange={@handleChange} />
+          <input type="text" onChange={@handleChange} onBlur={@handleBlur} />
          else
           <textarea placeholder={@props.placeholder} onChange={@handleChange} />
         }

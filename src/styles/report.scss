@@ -1,18 +1,43 @@
+@import "font-awesome";
+@import "kinja_fonts";
+
 .report {
+  font-family: ProximaNovaCond;
   position: fixed;
   top: 50px;
   left: 50px;
   z-index: 100000000000;
   border: 1px solid #777;
   min-width: 300px;
-  overflow: scroll;
+  max-width: 400px;
+  overflow: hidden;
   background: white;
+  padding-top: 40px;
   &.small {
-    max-height: 20px;
+    max-height: 38px !important;
     max-width: 20px;
   }
+  .content {
+    overflow: auto;
+  }
+  .header {
+    position: fixed;
+    border-bottom: 1px solid #777;
+    top: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    justify-content: space-between;
+    i {
+      cursor: move;
+    }
+    h4 {
+      margin: 0 10px;
+    }
+  }
   h4 {
-
+    margin: 20px;
   }
   .inputs {
     display: flex;
@@ -30,19 +55,36 @@
     input, textarea {
       flex: 1 0;
       margin-right: 10px;
+      outline: none;
+      padding: 10px;
     }
     textarea {
       height: 100px;
       overflow-y: auto;
+      outline: none;
+      padding: 10px;
       resize: none;
     }
     .screenshot {
       width: 100%;
       margin: 10px 10px 10px 80px;
+      cursor: pointer;
     }
+  }
+  .submit_group {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
     .submit {
-      width: 100%;
+      background: #66f;
+      color: white;
+    }
+    .cancel {
+      color: red;
+    }
+    .submit, .cancel, .uploading {
       margin: 10px;
+      padding: 10px;
     }
   }
   .screenshots {
@@ -68,5 +110,8 @@
     left: 0;
     color: black;
     opacity: 0.2;
+  }
+  .submitted {
+    padding: 20px;
   }
 }
