@@ -67,7 +67,7 @@ module.exports = React.createClass
         @setState uploadingImage: false
 
   mailto: ->
-    "mailto:bugs@gawker.com?subject=#{"Bug report"}&body=#{encodeURIComponent "## The Bug:\n\n#{@state.description}\n\n## Page details:\n\nURL: #{window.location.href}\nPage title: #{document.title}\n\n## Screenshots:\n\n#{@state.urls.map((url) -> "#{url}").join("\n")}\n\n## User details:\n\nSlack: #{@props.slack or @state.slack}\nKinja: #{@props.kinja or @state.kinja}"}"
+    "mailto:bugs@gawker.com?subject=#{"Bug report: #{document.title}"}&body=#{encodeURIComponent "## The Bug:\n\n#{@state.description}\n\n## Page details:\n\nURL: #{window.location.href}\nPage title: #{document.title}\n\n## Screenshots:\n\n#{@state.urls.map((url) -> "#{url}").join("\n")}\n\n## User details:\n\nSlack: #{@props.slack or @state.slack}\nKinja: #{@props.kinja or @state.kinja}"}"
 
   screenshot: ->
     Screenshot.startScreenshot()
@@ -145,7 +145,7 @@ module.exports = React.createClass
                 <a href="#" onClick={@cancel} className="cancel">
                   Cancel
                 </a>
-                <a href={@mailto()} className="submit" onClick={@end}>
+                <a href={@mailto()} className="submit" target="_blank" onClick={@end}>
                   Submit a bug
                 </a>
               </div>
