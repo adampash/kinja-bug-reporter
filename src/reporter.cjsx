@@ -7,7 +7,6 @@ child.id = "kinja_bug_reporter"
 child.setAttribute 'style', "height: #{window.innerHeight}px; position: relative"
 document.body.appendChild(child)
 window.addEventListener 'resize', ->
-  console.log 'hi'
   el = document.querySelector('#kinja_bug_reporter')
   el.setAttribute 'style', "height: #{window.innerHeight}px;"
 
