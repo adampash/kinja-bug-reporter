@@ -64,7 +64,6 @@
 
 	window.addEventListener('resize', function() {
 	  var el;
-	  console.log('hi');
 	  el = document.querySelector('#kinja_bug_reporter');
 	  return el.setAttribute('style', "height: " + window.innerHeight + "px;");
 	});
@@ -20809,7 +20808,7 @@
 	    });
 	  },
 	  mailto: function() {
-	    return "mailto:bugs@gawker.com?subject=" + "Bug report" + "&body=" + (encodeURIComponent("## The Bug:\n\n" + this.state.description + "\n\n## Page details:\n\nURL: " + window.location.href + "\nPage title: " + document.title + "\n\n## Screenshots:\n\n" + (this.state.urls.map(function(url) {
+	    return "mailto:bugs@gawker.com?subject=" + ("Bug report: " + document.title) + "&body=" + (encodeURIComponent("## The Bug:\n\n" + this.state.description + "\n\n## Page details:\n\nURL: " + window.location.href + "\nPage title: " + document.title + "\n\n## Screenshots:\n\n" + (this.state.urls.map(function(url) {
 	      return "" + url;
 	    }).join("\n")) + "\n\n## User details:\n\nSlack: " + (this.props.slack || this.state.slack) + "\nKinja: " + (this.props.kinja || this.state.kinja)));
 	  },
@@ -20868,7 +20867,8 @@
 	      "href": "#",
 	      "onClick": this.cancel
 	    }, "close this bug reporter"), " now. Forgot to press send? ", React.createElement("a", {
-	      "href": this.mailto()
+	      "href": this.mailto(),
+	      "target": "_blank"
 	    }, "Try again"), ".") : React.createElement("div", null, setup, React.createElement("h4", null, "The Bug"), React.createElement(InputGroup, {
 	      "name": "description",
 	      "handleChange": this.handleChange,
@@ -20901,7 +20901,9 @@
 	    }, "Cancel"), React.createElement("a", {
 	      "href": this.mailto(),
 	      "className": "submit",
-	      "onClick": this.end
+	      "target": "_blank",
+	      "onClick": this.end,
+	      "target": "_blank"
 	    }, "Submit a bug"))))))));
 	  }
 	});

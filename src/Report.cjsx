@@ -111,7 +111,7 @@ module.exports = React.createClass
         >
         { if @state.reportSubmitted
             <div className="submitted">
-              Assuming you emailed the generated bug report, you can <a href="#" onClick={@cancel}>close this bug reporter</a> now. Forgot to press send? <a href={@mailto()}>Try again</a>.
+              Assuming you emailed the generated bug report, you can <a href="#" onClick={@cancel}>close this bug reporter</a> now. Forgot to press send? <a href={@mailto()} target="_blank">Try again</a>.
             </div>
           else
             <div>
@@ -145,7 +145,7 @@ module.exports = React.createClass
                 <a href="#" onClick={@cancel} className="cancel">
                   Cancel
                 </a>
-                <a href={@mailto()} className="submit" target="_blank" onClick={@end}>
+                <a href={@mailto()} className="submit" target="_blank" onClick={@end} target="_blank">
                   Submit a bug
                 </a>
               </div>
