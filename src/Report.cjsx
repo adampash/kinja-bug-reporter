@@ -67,7 +67,7 @@ module.exports = React.createClass
         @setState uploadingImage: false
 
   mailto: ->
-    "mailto:bugs@gawker.com?subject=#{"Bug report: #{document.title}"}&body=#{encodeURIComponent "## The Bug:\n\n#{@state.description}\n\n## Page details:\n\nURL: #{window.location.href}\nPage title: #{document.title}\n\n## Screenshots:\n\n#{@state.urls.map((url) -> "#{url}").join("\n")}\n\n## User details:\n\nSlack: #{@props.slack or @state.slack}\nKinja: #{@props.kinja or @state.kinja}"}"
+    "mailto:bugs@gawker.com?subject=#{"Bug report: #{@state.short_description}"}&body=#{encodeURIComponent "## The Bug:\n\n#{@state.description}\n\n## Page details:\n\nURL: #{window.location.href}\nPage title: #{document.title}\n\n## Screenshots:\n\n#{@state.urls.map((url) -> "#{url}").join("\n")}\n\n## User details:\n\nSlack: #{@props.slack or @state.slack}\nKinja: #{@props.kinja or @state.kinja}"}"
 
   screenshot: ->
     Screenshot.startScreenshot()
@@ -118,11 +118,17 @@ module.exports = React.createClass
             {setup}
             <h4>The Bug</h4>
             <InputGroup
+              name="short_description"
+              handleChange={@handleChange}
+              label="What's wrong?"
+              placeholder="Summarize the bug in one sentence"
+            />
+            <InputGroup
               name="description"
               handleChange={@handleChange}
               type="textarea"
               label="Describe the bug"
-              placeholder="What's the bug? When did the issue start? Has anyone else on your staff experienced the issue? Etc."
+              placeholder="Go into more detail: Where are you seeing this? When did the issue start? Has anyone else on your staff experienced the issue? Etc."
             />
             <div className="group">
               <div className="screenshots screenshot">

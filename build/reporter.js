@@ -20808,7 +20808,7 @@
 	    });
 	  },
 	  mailto: function() {
-	    return "mailto:bugs@gawker.com?subject=" + ("Bug report: " + document.title) + "&body=" + (encodeURIComponent("## The Bug:\n\n" + this.state.description + "\n\n## Page details:\n\nURL: " + window.location.href + "\nPage title: " + document.title + "\n\n## Screenshots:\n\n" + (this.state.urls.map(function(url) {
+	    return "mailto:bugs@gawker.com?subject=" + ("Bug report: " + this.state.short_description) + "&body=" + (encodeURIComponent("## The Bug:\n\n" + this.state.description + "\n\n## Page details:\n\nURL: " + window.location.href + "\nPage title: " + document.title + "\n\n## Screenshots:\n\n" + (this.state.urls.map(function(url) {
 	      return "" + url;
 	    }).join("\n")) + "\n\n## User details:\n\nSlack: " + (this.props.slack || this.state.slack) + "\nKinja: " + (this.props.kinja || this.state.kinja)));
 	  },
@@ -20870,11 +20870,16 @@
 	      "href": this.mailto(),
 	      "target": "_blank"
 	    }, "Try again"), ".") : React.createElement("div", null, setup, React.createElement("h4", null, "The Bug"), React.createElement(InputGroup, {
+	      "name": "short_description",
+	      "handleChange": this.handleChange,
+	      "label": "What's wrong?",
+	      "placeholder": "Summarize the bug in one sentence"
+	    }), React.createElement(InputGroup, {
 	      "name": "description",
 	      "handleChange": this.handleChange,
 	      "type": "textarea",
 	      "label": "Describe the bug",
-	      "placeholder": "What's the bug? When did the issue start? Has anyone else on your staff experienced the issue? Etc."
+	      "placeholder": "Go into more detail: Where are you seeing this? When did the issue start? Has anyone else on your staff experienced the issue? Etc."
 	    }), React.createElement("div", {
 	      "className": "group"
 	    }, React.createElement("div", {
