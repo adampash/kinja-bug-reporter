@@ -31,6 +31,12 @@ module.exports =
 
   endScreenshot: (coords) ->
     started = false
+    console.log coords
+    if window.matchMedia("(-webkit-device-pixel-ratio: 2)").matches
+      coords.x = coords.x * 2
+      coords.y = coords.y * 2
+      coords.w = coords.w * 2
+      coords.h = coords.h * 2
     document.removeEventListener('mousedown', @, false)
     document.removeEventListener('keydown', @, false)
     document.removeEventListener('mousemove', @, false)
@@ -43,6 +49,7 @@ module.exports =
     document.body.style.cursor = 'default'
 
     console.log('sending message with screenshoot')
+    console.log "MSG:", msg
     chrome.runtime.sendMessage(null, msg, null, (response) ->)
 
   # // end messages
@@ -114,7 +121,7 @@ module.exports =
     e.preventDefault()
 
     nowPos = {x: e.pageX, y: e.pageY}
-    diff = {x: nowPos.x - startPos.x, y: nowPos.y - startPos.y}
+    diff = {x: nowPos.x - startPos.x, y: nowPos.y - startPos.y - window.scrollY}
     if diff.x is 0 or diff.y is 0
       startPos =
         x: 0
@@ -124,23 +131,29 @@ module.exports =
         y: window.innerHeight
 
     ghostElement.parentNode.removeChild(ghostElement)
-
     setTimeout =>
       coords = {}
-      if diff.x < 0
-        coords.x = nowPos.x
-      else
-        coords.x = startPos.x
-      if diff.y < 0
-        coords.y = nowPos.y
-      else
-        coords.y = startPos.y
 
-      coords.w = Math.abs(diff.x)
-      coords.h = Math.abs(diff.y)
+      coords.w = @pxToInt ghostElement.style.width
+      coords.h = @pxToInt ghostElement.style.height
+      if startPos.x < nowPos.x
+        coords.x = e.x - coords.w
+        console.log 'yes'
+      else
+        coords.x = e.x
+      if startPos.y < nowPos.y
+        coords.y = e.y - coords.h
+        console.log 'yes'
+      else
+        coords.y = e.y
+
       gCoords = coords
+
       e.stopPropagation()
       @endScreenshot(coords)
     , 50
 
     return false
+
+  pxToInt: (val) ->
+    parseInt val.substr(0, val.length - 2)
