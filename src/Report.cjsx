@@ -93,8 +93,8 @@ module.exports = React.createClass
                   />
                 </div>
               </div>
-    screenshots = @state.screenshots.map (image, index) ->
-      <img src={image} key={index} />
+    screenshots = @state.screenshots.map (image, index) =>
+      <img src={@state.urls[index] || image} key={index} />
     <Draggable
       zIndex={1000000000000}
       onStop={@recordY}

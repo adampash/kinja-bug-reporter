@@ -88,13 +88,11 @@
     }
   }
   .screenshots {
-    display: flex;
     flex-direction: column;
     align-items: center;
     width: 320px !important;
     img {
       flex: 0 1;
-      // width: auto;
       max-width: 100%;
       border: 3px solid #777;
       margin: 10px 0;
